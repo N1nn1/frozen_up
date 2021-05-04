@@ -56,7 +56,7 @@ public class ChocolateMilkItem extends Item {
 
       if (entityLiving instanceof PlayerEntity) {
     	int newFoodLevel = ((PlayerEntity)entityLiving).getHungerManager().getFoodLevel() + 3;
-    	((PlayerEntity) entityLiving).getHungerManager().setFoodLevel(newFoodLevel);;  
+    	((PlayerEntity) entityLiving).getHungerManager().setFoodLevel(newFoodLevel);
       }
       
       if (entityLiving instanceof ServerPlayerEntity) {

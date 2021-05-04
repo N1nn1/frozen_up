@@ -247,13 +247,6 @@ public class ChillooEntity extends TameableEntity {
         compound.putInt("FeatherLayTime", this.timeUntilNextFeather);
     }
 
-    /*
-    @Override
-    public ItemStack getPickedResult(HitResult target) {
-        return new ItemStack(FrozenUpItems.CHILLOO_SPAWN_EGG);
-    }
-     */
-
     @Override
     public void handleStatus(byte id) {
         if (id == DIG_ANIMATION_ID) this.digTimer = 40;

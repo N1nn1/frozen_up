@@ -42,7 +42,7 @@ public class HotChocolateItem extends Item {
 
 		if (entityLiving instanceof PlayerEntity) {
 			int newFoodLevel = ((PlayerEntity)entityLiving).getHungerManager().getFoodLevel() + 8;
-			((PlayerEntity) entityLiving).getHungerManager().setFoodLevel(newFoodLevel);;  
+			((PlayerEntity) entityLiving).getHungerManager().setFoodLevel(newFoodLevel);
 		}
 
 		if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.creativeMode) {
