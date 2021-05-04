@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "frozenup:block/chilloo_feather_lamp"
+    },
+    "lit=true": {
+      "model": "frozenup:block/chilloo_feather_lamp_on"
+    }
+  }
+}

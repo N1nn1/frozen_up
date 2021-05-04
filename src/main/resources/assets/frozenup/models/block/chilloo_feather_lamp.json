@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "bottom": "frozenup:block/chilloo_feather_block",
+        "top": "frozenup:block/chilloo_feather_block",
+        "side": "frozenup:block/chilloo_feather_lamp"
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#G#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "frozenup:chilloo_feather_block"
+        },
+        "G": {
+            "item": "minecraft:glowstone"
+        }
+    },
+    "result": {
+        "item": "frozenup:chilloo_feather_lamp",
+        "count": 8
+    }
+}

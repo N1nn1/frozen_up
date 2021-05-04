@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "frozenup:truffle"
+    }
+  ],
+  "result": {
+    "item": "frozenup:truffle_muffin",
+    "count": 1
+  }
+}

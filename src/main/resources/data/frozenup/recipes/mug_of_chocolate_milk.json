@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "frozenup:mug_of_milk"
+    },
+	{
+		"item": "minecraft:cocoa_beans"
+	}
+  ],
+  "result": {
+    "item": "frozenup:mug_of_chocolate_milk"
+  }
+}

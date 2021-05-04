@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "frozenup:frozen_truffle"
+  },
+  "result": "frozenup:truffle",
+  "experience": 0.1,
+  "cookingtime": 400
+}

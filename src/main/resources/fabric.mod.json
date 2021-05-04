@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "frozenup",
+  "version": "${version}",
+  "name": "Frozen-Up-Fabric",
+  "description": "?",
+  "authors": [
+    "Team-Draco"
+  ],
+  "contributors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/frozenup/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "teamdraco.frozenup.FrozenUp"
+    ],
+    "client": [
+      "teamdraco.frozenup.FrozenUpClient"
+    ],
+    "server": []
+  },
+  "mixins": [
+    "frozenup.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*"
+  }
+}

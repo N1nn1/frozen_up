@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/carpet",
+  "textures": {
+    "wool": "frozenup:block/chilloo_feather_block"
+  }
+}

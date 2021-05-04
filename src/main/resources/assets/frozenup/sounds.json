@@ -1,0 +1,33 @@
+{
+  "chilloo.ambient": {
+    "subtitle": "frozenup.chilloo.ambient",
+    "sounds": [
+      {
+        "name": "frozenup:chilloo/ambient_1",
+        "streaming": true
+      },
+      {
+        "name": "frozenup:chilloo/ambient_2",
+        "streaming": true
+      }
+    ]
+  },
+  "chilloo.hurt": {
+    "subtitle": "frozenup.chilloo.hurt",
+    "sounds": [
+      {
+        "name": "frozenup:chilloo/hurt",
+        "streaming": true
+      }
+    ]
+  },
+  "chilloo.death": {
+    "subtitle": "frozenup.chilloo.death",
+    "sounds": [
+      {
+        "name": "frozenup:chilloo/death",
+        "streaming": true
+      }
+    ]
+  }
+}
