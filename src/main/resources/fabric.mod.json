@@ -11,6 +11,7 @@
   "contact": {},
   "license": "All-Rights-Reserved",
   "icon": "assets/frozenup/icon.png",
+  "accessWidener" : "frozenup.accesswidener",
   "environment": "*",
   "entrypoints": {
     "main": [
