@@ -1,7 +1,9 @@
 package teamdraco.frozenup.entity.ai;
 
-import teamdraco.frozenup.FrozenUp;
-import teamdraco.frozenup.entity.ChillooEntity;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.function.Predicate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,9 +17,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.function.Predicate;
+import teamdraco.frozenup.FrozenUp;
+import teamdraco.frozenup.entity.ChillooEntity;
 
 public class DiggingGoal extends Goal {
     private static final Identifier DIGGING_LOOT = new Identifier(FrozenUp.MOD_ID, "entities/chilloo_digging");
@@ -36,6 +37,7 @@ public class DiggingGoal extends Goal {
      * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
      * method as well.
      */
+    @Override
     public boolean canStart() {
         if (digTimer > 0) {
             --digTimer;
@@ -50,6 +52,7 @@ public class DiggingGoal extends Goal {
         }
     }
 
+    @Override
     public void start() {
         eatingGrassTimer = 40;
         digTimer = 6000;
@@ -57,10 +60,12 @@ public class DiggingGoal extends Goal {
         entity.getNavigation().stop();
     }
 
+    @Override
     public void stop() {
         eatingGrassTimer = 0;
     }
 
+    @Override
     public boolean shouldContinue() {
         return eatingGrassTimer > 0;
     }
@@ -69,6 +74,7 @@ public class DiggingGoal extends Goal {
         return eatingGrassTimer;
     }
 
+    @Override
     public void tick() {
         if (digTimer > 0) {
             --digTimer;

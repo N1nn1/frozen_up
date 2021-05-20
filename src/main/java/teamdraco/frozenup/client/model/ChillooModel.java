@@ -1,22 +1,25 @@
 package teamdraco.frozenup.client.model;
 
-import teamdraco.frozenup.entity.ChillooEntity;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.entity.model.AnimalModel;
-import net.minecraft.util.math.MathHelper;
-
 import java.util.Collections;
 import java.util.List;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.render.entity.model.AnimalModel;
+import net.minecraft.util.math.MathHelper;
+import teamdraco.frozenup.entity.ChillooEntity;
+
+@Environment(EnvType.CLIENT)
 public class ChillooModel extends AnimalModel<ChillooEntity> {
     public ModelPart body;
     public ModelPart tail;
     public ModelPart head;
-    public ModelPart left_leg;
-    public ModelPart right_leg;
-    public ModelPart body_feathers;
-    public ModelPart tail_feathers;
-    public ModelPart head_feathers;
+    public ModelPart leftLeg;
+    public ModelPart rightLeg;
+    public ModelPart bodyFeathers;
+    public ModelPart tailFeathers;
+    public ModelPart headFeathers;
 
     private final List<ModelPart> headParts;
     private final List<ModelPart> bodyParts;
@@ -26,21 +29,21 @@ public class ChillooModel extends AnimalModel<ChillooEntity> {
 
         this.textureWidth = 112;
         this.textureHeight = 64;
-        this.right_leg = new ModelPart(this, 0, 25);
-        this.right_leg.setPivot(4.5F, 1.0F, 7.5F);
-        this.right_leg.addCuboid(-3.0F, 0.0F, -2.5F, 5.0F, 11.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.head_feathers = new ModelPart(this, 0, 55);
-        this.head_feathers.setPivot(0.0F, 6.0F, 0.0F);
-        this.head_feathers.addCuboid(-3.0F, 0.0F, -5.5F, 6.0F, 2.0F, 7.0F, 0.0F, 0.0F, 0.0F);
+        this.rightLeg = new ModelPart(this, 0, 25);
+        this.rightLeg.setPivot(4.5F, 1.0F, 7.5F);
+        this.rightLeg.addCuboid(-3.0F, 0.0F, -2.5F, 5.0F, 11.0F, 5.0F, 0.0F, 0.0F, 0.0F);
+        this.headFeathers = new ModelPart(this, 0, 55);
+        this.headFeathers.setPivot(0.0F, 6.0F, 0.0F);
+        this.headFeathers.addCuboid(-3.0F, 0.0F, -5.5F, 6.0F, 2.0F, 7.0F, 0.0F, 0.0F, 0.0F);
         this.head = new ModelPart(this, 36, 0);
         this.head.setPivot(0.0F, 12.0F, -10.0F);
         this.head.addCuboid(-4.0F, 0.0F, -7.0F, 8.0F, 6.0F, 9.0F, 0.0F, 0.0F, 0.0F);
-        this.tail_feathers = new ModelPart(this, 60, 42);
-        this.tail_feathers.setPivot(0.0F, 0.0F, 0.0F);
-        this.tail_feathers.addCuboid(-1.5F, 3.0F, 0.0F, 3.0F, 4.0F, 18.0F, 0.0F, 0.0F, 0.0F);
-        this.body_feathers = new ModelPart(this, 4, 25);
-        this.body_feathers.setPivot(0.0F, 0.0F, 0.0F);
-        this.body_feathers.addCuboid(-5.0F, 6.0F, 0.0F, 10.0F, 3.0F, 16.0F, 0.0F, 0.0F, 0.0F);
+        this.tailFeathers = new ModelPart(this, 60, 42);
+        this.tailFeathers.setPivot(0.0F, 0.0F, 0.0F);
+        this.tailFeathers.addCuboid(-1.5F, 3.0F, 0.0F, 3.0F, 4.0F, 18.0F, 0.0F, 0.0F, 0.0F);
+        this.bodyFeathers = new ModelPart(this, 4, 25);
+        this.bodyFeathers.setPivot(0.0F, 0.0F, 0.0F);
+        this.bodyFeathers.addCuboid(-5.0F, 6.0F, 0.0F, 10.0F, 3.0F, 16.0F, 0.0F, 0.0F, 0.0F);
         this.body = new ModelPart(this, 0, 0);
         this.body.setPivot(0.0F, 12.0F, -8.0F);
         this.body.addCuboid(-5.0F, -3.0F, 0.0F, 10.0F, 9.0F, 16.0F, 0.0F, 0.0F, 0.0F);
@@ -48,16 +51,16 @@ public class ChillooModel extends AnimalModel<ChillooEntity> {
         this.tail.setPivot(0.0F, 0.0F, 14.0F);
         this.tail.addCuboid(-1.5F, 0.0F, 0.0F, 3.0F, 3.0F, 18.0F, 0.0F, 0.0F, 0.0F);
         this.setRotateAngle(tail, -0.5235987755982988F, 0.0F, 0.0F);
-        this.left_leg = new ModelPart(this, 0, 25);
-        this.left_leg.mirror = true;
-        this.left_leg.setPivot(-4.5F, 1.0F, 7.5F);
-        this.left_leg.addCuboid(-2.0F, 0.0F, -2.5F, 5.0F, 11.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.body.addChild(this.right_leg);
-        this.head.addChild(this.head_feathers);
-        this.tail.addChild(this.tail_feathers);
-        this.body.addChild(this.body_feathers);
+        this.leftLeg = new ModelPart(this, 0, 25);
+        this.leftLeg.mirror = true;
+        this.leftLeg.setPivot(-4.5F, 1.0F, 7.5F);
+        this.leftLeg.addCuboid(-2.0F, 0.0F, -2.5F, 5.0F, 11.0F, 5.0F, 0.0F, 0.0F, 0.0F);
+        this.body.addChild(this.rightLeg);
+        this.head.addChild(this.headFeathers);
+        this.tail.addChild(this.tailFeathers);
+        this.body.addChild(this.bodyFeathers);
         this.body.addChild(this.tail);
-        this.body.addChild(this.left_leg);
+        this.body.addChild(this.leftLeg);
 
         this.headParts = Collections.singletonList(head);
         this.bodyParts = Collections.singletonList(body);
@@ -82,11 +85,11 @@ public class ChillooModel extends AnimalModel<ChillooEntity> {
             this.tail.setPivot(0.0F, 0.0F, 14.0F);
             this.setRotateAngle(tail, 1.7453292519943295F, 0.0F, 0.0F);
 
-            this.left_leg.setPivot(-4.5F, 4.0F, 12.0F);
-            this.setRotateAngle(left_leg, -0.47123889803846897F, 0.17453292519943295F, 0.2617993877991494F);
+            this.leftLeg.setPivot(-4.5F, 4.0F, 12.0F);
+            this.setRotateAngle(leftLeg, -0.47123889803846897F, 0.17453292519943295F, 0.2617993877991494F);
 
-            this.right_leg.setPivot(4.5F, 4.0F, 12.0F);
-            this.setRotateAngle(right_leg, -0.47123889803846897F, -0.17453292519943295F, -0.2617993877991494F);
+            this.rightLeg.setPivot(4.5F, 4.0F, 12.0F);
+            this.setRotateAngle(rightLeg, -0.47123889803846897F, -0.17453292519943295F, -0.2617993877991494F);
         } else {
             this.head.roll = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.2F * limbDistance;
             this.head.pivotY = 12f;
@@ -96,19 +99,19 @@ public class ChillooModel extends AnimalModel<ChillooEntity> {
             this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.6F * limbDistance - 0.4F;
             this.tail.pivotZ = 14f;
 
-            this.right_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
-            this.right_leg.yaw = 0f;
-            this.right_leg.roll = 0f;
-            this.right_leg.pivotX = 4.5f;
-            this.right_leg.pivotY = 1.0f;
-            this.right_leg.pivotZ = 7.5f;
+            this.rightLeg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
+            this.rightLeg.yaw = 0f;
+            this.rightLeg.roll = 0f;
+            this.rightLeg.pivotX = 4.5f;
+            this.rightLeg.pivotY = 1.0f;
+            this.rightLeg.pivotZ = 7.5f;
 
-            this.left_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
-            this.left_leg.yaw = 0f;
-            this.left_leg.roll = 0f;
-            this.left_leg.pivotX = -4.5f;
-            this.left_leg.pivotY = 1.0f;
-            this.left_leg.pivotZ = 7.5f;
+            this.leftLeg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
+            this.leftLeg.yaw = 0f;
+            this.leftLeg.roll = 0f;
+            this.leftLeg.pivotX = -4.5f;
+            this.leftLeg.pivotY = 1.0f;
+            this.leftLeg.pivotZ = 7.5f;
 
             this.body.setPivot(0f, 12f, -8f);
             this.body.pitch = 0f;
@@ -151,14 +154,12 @@ public class ChillooModel extends AnimalModel<ChillooEntity> {
         return timer < 4 ? ((float) timer - partialTicks) + 12f : -((float) (timer - 40) - partialTicks) * 0.5f + 12f;
     }
 
-    private static float getHeadRotationAngleX(int timer, float partialTicks)
-    {
+    private static float getHeadRotationAngleX(int timer, float partialTicks) {
         if (timer >= 3 && timer <= 36) {
-            float f = ((float)(timer - 4) - partialTicks) / 32.0F;
-            return ((float)Math.PI / 5F) + 0.21991149F * MathHelper.sin(f * 28.7F);
+            float f = ((float) (timer - 4) - partialTicks) / 32.0F;
+            return ((float) Math.PI / 5F) + 0.21991149F * MathHelper.sin(f * 28.7F);
         } else {
-            return timer > 0 ? ((float)Math.PI / 5F) : 0;
+            return timer > 0 ? ((float) Math.PI / 5F) : 0;
         }
     }
 }
-
