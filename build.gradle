@@ -23,18 +23,12 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 	//ARRP
 	modImplementation group: 'net.devtech', name: 'arrp', version: '0.3.11'
-	//Cookie Core
-	modImplementation group: 'com.github.evoslab', name: 'cookiecore', version: '0.0.6'
 }
 
 repositories {
 	//ARRP Maven
 	maven {
 		url = 'https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/'
-	}
-	//Cookie Core Maven
-	maven {
-		url = 'https://raw.githubusercontent.com/Evoslab/Evoslab-Maven-Repo/master/'
 	}
 }
 

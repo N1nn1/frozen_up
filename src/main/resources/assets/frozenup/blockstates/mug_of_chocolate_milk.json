@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "frozenup:block/mug_of_chocolate_milk",
+      "y": 90
+    },
+    "facing=north": {
       "model": "frozenup:block/mug_of_chocolate_milk"
+    },
+    "facing=south": {
+      "model": "frozenup:block/mug_of_chocolate_milk",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "frozenup:block/mug_of_chocolate_milk",
+      "y": 270
     }
   }
 }

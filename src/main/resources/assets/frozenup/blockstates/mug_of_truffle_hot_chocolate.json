@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "frozenup:block/mug_of_truffle_hot_chocolate",
+      "y": 90
+    },
+    "facing=north": {
       "model": "frozenup:block/mug_of_truffle_hot_chocolate"
+    },
+    "facing=south": {
+      "model": "frozenup:block/mug_of_truffle_hot_chocolate",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "frozenup:block/mug_of_truffle_hot_chocolate",
+      "y": 270
     }
   }
 }

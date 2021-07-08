@@ -1,28 +1,14 @@
 package teamdraco.frozenup.entity;
 
-import java.util.Objects;
-import java.util.UUID;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.AnimalMateGoal;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.FollowOwnerGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.goal.SitGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -48,10 +34,14 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import teamdraco.frozenup.entity.ai.DiggingGoal;
 import teamdraco.frozenup.init.FrozenUpEntities;
 import teamdraco.frozenup.init.FrozenUpItems;
 import teamdraco.frozenup.init.FrozenUpSounds;
+
+import java.util.Objects;
+import java.util.UUID;
 
 public class ChillooEntity extends TameableEntity {
     public static final int DIG_ANIMATION_ID = 10;
@@ -113,7 +103,7 @@ public class ChillooEntity extends TameableEntity {
     public static DefaultAttributeContainer.Builder createChillooAttributes() {
         return MobEntity.createMobAttributes()
         		.add(EntityAttributes.GENERIC_MAX_HEALTH, 12.0D)
-        		.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2F);
+        		.add(EntityAttributes.GENERIC_MOVEMENT_SPEED);
     }
 
     @Override

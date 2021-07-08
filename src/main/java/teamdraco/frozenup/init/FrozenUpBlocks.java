@@ -1,45 +1,44 @@
 package teamdraco.frozenup.init;
 
-import java.util.function.ToIntFunction;
-
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CakeBlock;
-import net.minecraft.block.Material;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.*;
+import net.minecraft.item.BlockItem;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import teamdraco.frozenup.FrozenUp;
 import teamdraco.frozenup.block.CarpetBlock;
 import teamdraco.frozenup.block.FeatherLampBlock;
 import teamdraco.frozenup.block.MugBlock;
 
+import java.util.function.ToIntFunction;
+
+@SuppressWarnings("unused")
 public class FrozenUpBlocks {
-    public static Block CHILLOO_FEATHER_BLOCK;
-    public static CarpetBlock CHILLOO_FEATHER_BLOCK_CARPET;
-    public static CakeBlock TRUFFLE_CAKE;
-    public static FeatherLampBlock CHILLOO_FEATHER_LAMP;
-    public static MugBlock EMPTY_MUG;
-    public static MugBlock MUG_OF_MILK;
-    public static MugBlock MUG_OF_CHOCOLATE_MILK;
-    public static MugBlock MUG_OF_TRUFFLE_HOT_CHOCOLATE;
 
-    public static void init() {
-        CHILLOO_FEATHER_BLOCK = registerBlock("chilloo_feather_block", new Block(AbstractBlock.Settings.of(Material.SOLID_ORGANIC).sounds(BlockSoundGroup.SNOW).strength(0.1f)));
-        CHILLOO_FEATHER_BLOCK_CARPET = registerBlock("chilloo_feather_block_carpet", new CarpetBlock(AbstractBlock.Settings.of(Material.SOLID_ORGANIC).sounds(BlockSoundGroup.SNOW).strength(0.1f)));
-        TRUFFLE_CAKE = registerBlock("truffle_cake", new CakeBlock(AbstractBlock.Settings.of(Material.CAKE).strength(0.5F).sounds(BlockSoundGroup.WOOL)));
-        CHILLOO_FEATHER_LAMP = registerBlock("chilloo_feather_lamp", new FeatherLampBlock(AbstractBlock.Settings.of(Material.SNOW_BLOCK).luminance(getLightValueLit(10)).sounds(BlockSoundGroup.SNOW).strength(0.3F)));
-        EMPTY_MUG = registerBlock("empty_mug", new MugBlock(AbstractBlock.Settings.of(Material.STONE).sounds(BlockSoundGroup.STONE).strength(0.5f).nonOpaque()));
-        MUG_OF_MILK = registerBlock("mug_of_milk", new MugBlock(AbstractBlock.Settings.of(Material.STONE).sounds(BlockSoundGroup.STONE).strength(0.5f).nonOpaque()));
-        MUG_OF_CHOCOLATE_MILK = registerBlock("mug_of_chocolate_milk", new MugBlock(AbstractBlock.Settings.of(Material.STONE).sounds(BlockSoundGroup.STONE).strength(0.5f).nonOpaque()));
-        MUG_OF_TRUFFLE_HOT_CHOCOLATE = registerBlock("mug_of_truffle_hot_chocolate", new MugBlock(AbstractBlock.Settings.of(Material.STONE).sounds(BlockSoundGroup.STONE).strength(0.5f).nonOpaque()));
+        public static final Block CHILLOO_FEATHER_BLOCK = register("chilloo_feather_block", new Block(FabricBlockSettings.of(Material.SOLID_ORGANIC).strength(0.1f).sounds(BlockSoundGroup.SNOW)), false);
+        public static final Block CHILLOO_FEATHER_BLOCK_CARPET = register("chilloo_feather_block_carpet", new CarpetBlock(FabricBlockSettings.copyOf(CHILLOO_FEATHER_BLOCK)), false);
+        public static final Block TRUFFLE_CAKE = register("truffle_cake", new CakeBlock(AbstractBlock.Settings.of(Material.CAKE).strength(0.5F).sounds(BlockSoundGroup.WOOL)), false);
+        public static final Block CHILLOO_FEATHER_LAMP = register("chilloo_feather_lamp", new FeatherLampBlock(AbstractBlock.Settings.of(Material.SOLID_ORGANIC).strength(0.3F).sounds(BlockSoundGroup.SNOW).luminance(createLightLevelFromLitBlockState(10))), false);
+        public static final Block EMPTY_MUG = register("empty_mug", new MugBlock(AbstractBlock.Settings.of(Material.STONE).sounds(BlockSoundGroup.STONE).strength(0.5f).nonOpaque()), false);
+        public static final Block MUG_OF_MILK = register("mug_of_milk", new MugBlock(AbstractBlock.Settings.of(Material.STONE).sounds(BlockSoundGroup.STONE).strength(0.5f).nonOpaque()), false);
+        public static final Block MUG_OF_CHOCOLATE_MILK = register("mug_of_chocolate_milk", new MugBlock(AbstractBlock.Settings.of(Material.STONE).sounds(BlockSoundGroup.STONE).strength(0.5f).nonOpaque()), false);
+        public static final Block MUG_OF_TRUFFLE_HOT_CHOCOLATE = register("mug_of_truffle_hot_chocolate", new MugBlock(AbstractBlock.Settings.of(Material.STONE).sounds(BlockSoundGroup.STONE).strength(0.5f).nonOpaque()), false);
+
+    private static ToIntFunction<BlockState> createLightLevelFromLitBlockState(int litLevel) {
+        return (state) -> (Boolean)state.get(Properties.LIT) ? litLevel : 0;
     }
 
-    private static ToIntFunction<BlockState> getLightValueLit(int lightValue) {
-        return (state) -> state.get(Properties.LIT) ? lightValue : 0;
+    private static Block register(String id, Block block, boolean registerItem) {
+        Block registered = Registry.register(Registry.BLOCK, new Identifier(FrozenUp.MOD_ID, id), block);
+        if (registerItem) {
+            Registry.register(Registry.ITEM, new Identifier(FrozenUp.MOD_ID, id), new BlockItem(registered, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
+        }
+        return registered;
     }
-
-    public static <T extends Block> T registerBlock(String path, T block) {
-        return FrozenUp.GENERATOR.block.registerOnlyBlankBlock(block, path);
+    private static Block register(String id, Block block) {
+        return register(id, block, true);
     }
 }

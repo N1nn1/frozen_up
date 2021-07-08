@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "frozenup:block/empty_mug",
+      "y": 90
+    },
+    "facing=north": {
       "model": "frozenup:block/empty_mug"
+    },
+    "facing=south": {
+      "model": "frozenup:block/empty_mug",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "frozenup:block/empty_mug",
+      "y": 270
     }
   }
 }
