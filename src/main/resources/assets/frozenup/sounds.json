@@ -1,33 +1,21 @@
 {
-  "chilloo.ambient": {
-    "subtitle": "frozenup.chilloo.ambient",
+  "entity.chilloo.ambient": {
+    "subtitle": "subtitles.frozenup.entity.chilloo.ambient",
     "sounds": [
-      {
-        "name": "frozenup:chilloo/ambient_1",
-        "streaming": true
-      },
-      {
-        "name": "frozenup:chilloo/ambient_2",
-        "streaming": true
-      }
+      "frozenup:chilloo/ambient_1",
+      "frozenup:chilloo/ambient_2"
     ]
   },
-  "chilloo.hurt": {
-    "subtitle": "frozenup.chilloo.hurt",
+  "entity.chilloo.hurt": {
+    "subtitle": "subtitles.frozenup.entity.chilloo.hurt",
     "sounds": [
-      {
-        "name": "frozenup:chilloo/hurt",
-        "streaming": true
-      }
+      "frozenup:chilloo/hurt"
     ]
   },
-  "chilloo.death": {
-    "subtitle": "frozenup.chilloo.death",
+  "entity.chilloo.death": {
+    "subtitle": "subtitles.frozenup.entity.chilloo.death",
     "sounds": [
-      {
-        "name": "frozenup:chilloo/death",
-        "streaming": true
-      }
+      "frozenup:chilloo/death"
     ]
   }
 }

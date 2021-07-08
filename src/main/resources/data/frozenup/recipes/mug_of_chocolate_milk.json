@@ -4,9 +4,9 @@
     {
       "item": "frozenup:mug_of_milk"
     },
-	{
-		"item": "minecraft:cocoa_beans"
-	}
+  {
+    "item": "minecraft:cocoa_beans"
+  }
   ],
   "result": {
     "item": "frozenup:mug_of_chocolate_milk"

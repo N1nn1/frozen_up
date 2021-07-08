@@ -4,9 +4,9 @@
     {
       "item": "frozenup:empty_mug"
     },
-	{
-		"item": "minecraft:milk_bucket"
-	}
+  {
+    "item": "minecraft:milk_bucket"
+  }
   ],
   "result": {
     "item": "frozenup:mug_of_milk"

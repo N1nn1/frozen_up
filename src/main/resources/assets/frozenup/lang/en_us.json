@@ -22,7 +22,7 @@
 
   "entity.frozenup.chilloo": "Chilloo",
 
-  "frozenup.chilloo.ambient": "Chilloo chirps",
-  "frozenup.chilloo.hurt": "Chilloo hurts",
-  "frozenup.chilloo.death": "Chilloo dies"
+  "subtitles.frozenup.entity.chilloo.ambient": "Chilloo chirps",
+  "subtitles.frozenup.entity.chilloo.hurt": "Chilloo hurts",
+  "subtitles.frozenup.entity.chilloo.death": "Chilloo dies"
 }
