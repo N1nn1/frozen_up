@@ -1,21 +1,51 @@
 {
   "entity.chilloo.ambient": {
-    "subtitle": "subtitles.frozenup.entity.chilloo.ambient",
     "sounds": [
-      "frozenup:chilloo/ambient_1",
-      "frozenup:chilloo/ambient_2"
-    ]
+      "frozenup:entity/chilloo/ambient1",
+      "frozenup:entity/chilloo/ambient2"
+    ],
+    "subtitle": "subtitles.frozenup.entity.chilloo.ambient"
   },
   "entity.chilloo.hurt": {
-    "subtitle": "subtitles.frozenup.entity.chilloo.hurt",
     "sounds": [
-      "frozenup:chilloo/hurt"
-    ]
+      "frozenup:entity/chilloo/hurt"
+    ],
+    "subtitle": "subtitles.frozenup.entity.chilloo.hurt"
   },
   "entity.chilloo.death": {
-    "subtitle": "subtitles.frozenup.entity.chilloo.death",
     "sounds": [
-      "frozenup:chilloo/death"
-    ]
+      "frozenup:entity/chilloo/death"
+    ],
+    "subtitle": "subtitles.frozenup.entity.chilloo.death"
+  },
+
+  "block.chilloo_feather_block.break": {
+    "sounds": [
+      "frozenup:block/chilloo_feather_block/soft1",
+      "frozenup:block/chilloo_feather_block/soft2",
+      "frozenup:block/chilloo_feather_block/soft3"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.chilloo_feather_block.place": {
+    "sounds": [
+      "frozenup:block/chilloo_feather_block/soft1",
+      "frozenup:block/chilloo_feather_block/soft2",
+      "frozenup:block/chilloo_feather_block/soft3"
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+
+  "block.chilloo_feather_lamp.toggle_on": {
+    "sounds": [
+      "frozenup:block/chilloo_feather_lamp/toggle_on"
+    ],
+    "subtitle": "subtitles.frozenup.block.chilloo_feather_lamp.toggle_on"
+  },
+  "block.chilloo_feather_lamp.toggle_off": {
+    "sounds": [
+      "frozenup:block/chilloo_feather_lamp/toggle_off"
+    ],
+    "subtitle": "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off"
   }
 }

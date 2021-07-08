@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneTorchBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
@@ -13,6 +13,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.teamdraco.frozenup.init.FrozenUpSoundEvents;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class FeatherLampBlock extends Block {
@@ -20,7 +22,7 @@ public class FeatherLampBlock extends Block {
 
     public FeatherLampBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(LIT, true));
+        this.setDefaultState(this.stateManager.getDefaultState().with(LIT, false));
     }
 
     @Override
@@ -28,22 +30,23 @@ public class FeatherLampBlock extends Block {
         builder.add(LIT);
     }
 
+    @Nullable
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult result) {
-        boolean wasLit = state.get(LIT);
-
-        world.setBlockState(pos, state.with(LIT, !wasLit));
-        playSound(player, !wasLit);
-
-        return ActionResult.SUCCESS;
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockState state = super.getPlacementState(ctx);
+        PlayerEntity player = ctx.getPlayer();
+        return state == null ? null : state.with(LIT, player != null && player.isSneaking());
     }
 
-    private void playSound(PlayerEntity player, boolean isLit) {
-        if (!player.world.isClient) {
-            player.playSound(
-                    isLit ? SoundEvents.ITEM_FLINTANDSTEEL_USE : SoundEvents.BLOCK_STONE_BUTTON_CLICK_OFF,
-                    SoundCategory.BLOCKS, 0.3f, isLit ? 0.6f : 0.5f
-            );
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult result) {
+        boolean newLit = !state.get(LIT);
+
+        world.setBlockState(pos, state.with(LIT, newLit));
+        if (!world.isClient) {
+            world.playSoundFromEntity(null, player, newLit ? FrozenUpSoundEvents.BLOCK_CHILLOO_FEATHER_LAMP_TOGGLE_ON : FrozenUpSoundEvents.BLOCK_CHILLOO_FEATHER_LAMP_TOGGLE_OFF, SoundCategory.PLAYERS, 1.0f, 1.0f);
         }
+
+        return ActionResult.SUCCESS;
     }
 }

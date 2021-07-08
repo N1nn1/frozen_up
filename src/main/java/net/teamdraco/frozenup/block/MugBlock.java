@@ -7,6 +7,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -60,7 +61,7 @@ public class MugBlock extends HorizontalFacingBlock {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         Item item = mugItem == null ? null : mugItem.get();
         if (item instanceof AbstractDrinkableMugItem && !state.isOf(FrozenUpBlocks.EMPTY_MUG)) {
-            item.finishUsing(player.getStackInHand(hand), world, player);
+            item.finishUsing(new ItemStack(item), world, player);
             world.setBlockState(pos, FrozenUpBlocks.EMPTY_MUG.getDefaultState().with(FACING, state.get(FACING)));
             if (!world.isClient) {
                 world.playSoundFromEntity(null, player, SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1.0f, 1.0f);
@@ -74,7 +75,7 @@ public class MugBlock extends HorizontalFacingBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        switch(state.get(FACING)) {
+        switch (state.get(FACING)) {
             case NORTH:
                 return NORTH_SHAPE;
             case SOUTH:
@@ -93,13 +94,15 @@ public class MugBlock extends HorizontalFacingBlock {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockState state = super.getPlacementState(ctx);
         PlayerEntity player = ctx.getPlayer();
+        Arm arm = player != null ? player.getMainArm() : Arm.RIGHT;
+        Arm activeArm = ctx.getHand() == Hand.MAIN_HAND ? Arm.RIGHT : Arm.LEFT;
         Direction facing = ctx.getPlayerFacing();
 
         return state == null
             ? null
             : state.with(
                 FACING,
-                player != null && player.getMainArm() == Arm.RIGHT
+                (arm == Arm.RIGHT && activeArm == Arm.RIGHT) || (arm == Arm.LEFT && activeArm == Arm.LEFT)
                     ? facing.rotateYClockwise()
                     : facing.rotateYCounterclockwise()
             );

@@ -12,7 +12,7 @@
   "item.frozenup.mug_of_milk": "Mug of Milk",
 
   "block.frozenup.chilloo_feather_block": "Chilloo Feather Block",
-  "block.frozenup.chilloo_feather_block_carpet": "Chilloo Feather Block Carpet",
+  "block.frozenup.chilloo_feather_block_carpet": "Chilloo Feather Carpet",
   "block.frozenup.truffle_cake": "Chocolate Truffle Cake",
   "block.frozenup.chilloo_feather_lamp": "Chilloo Feather Lamp",
   "block.frozenup.empty_mug": "Empty Mug",
@@ -24,5 +24,7 @@
 
   "subtitles.frozenup.entity.chilloo.ambient": "Chilloo chirps",
   "subtitles.frozenup.entity.chilloo.hurt": "Chilloo hurts",
-  "subtitles.frozenup.entity.chilloo.death": "Chilloo dies"
+  "subtitles.frozenup.entity.chilloo.death": "Chilloo dies",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_on": "Lamp on",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off": "Lamp off"
 }

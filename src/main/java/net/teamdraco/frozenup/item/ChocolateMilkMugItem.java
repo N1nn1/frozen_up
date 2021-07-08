@@ -13,11 +13,14 @@ public class ChocolateMilkMugItem extends MilkMugItem {
     }
 
     @Override
-    public void applyEffects(ItemStack stack, World world, LivingEntity user) {
-        super.applyEffects(stack, world, user);
-        if (!world.isClient()) {
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        ItemStack rstack = super.finishUsing(stack, world, user);
+
+        if (!world.isClient) {
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0));
             user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 600, 1));
         }
+
+        return rstack;
     }
 }

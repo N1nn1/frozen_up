@@ -11,7 +11,8 @@ public class MilkMugItem extends AbstractDrinkableMugItem {
     }
 
     @Override
-    public void applyEffects(ItemStack stack, World world, LivingEntity user) {
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         user.clearStatusEffects();
+        return super.finishUsing(stack, world, user);
     }
 }
