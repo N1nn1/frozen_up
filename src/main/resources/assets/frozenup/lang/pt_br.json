@@ -1,0 +1,28 @@
+{
+  "itemGroup.frozenup_item_group": "Frozen Up",
+
+  "item.frozenup.frozen_truffle": "Trufa congelada",
+  "item.frozenup.truffle": "Trufa",
+  "item.frozenup.truffle_muffin": "Muffin de trufa",
+  "item.frozenup.chilloo_spawn_egg": "Ovo gerador de chilloo",
+  "item.frozenup.chilloo_feather": "Pena de chilloo",
+  "item.frozenup.empty_mug": "Caneca vazia",
+  "item.frozenup.mug_of_chocolate_milk": "Caneca de leite com chocolate",
+  "item.frozenup.mug_of_truffle_hot_chocolate": "Caneca de chocolate quente com trufa",
+  "item.frozenup.mug_of_milk": "Caneca de leite",
+
+  "block.frozenup.chilloo_feather_block": "Bloco de penas de chilloo",
+  "block.frozenup.chilloo_feather_block_carpet": "Tapete de penas de chilloo",
+  "block.frozenup.truffle_cake": "Bolo de chocolate com trufa",
+  "block.frozenup.chilloo_feather_lamp": "Lâmpada de penas de chilloo",
+  "block.frozenup.empty_mug": "Caneca vazia",
+  "block.frozenup.mug_of_milk": "Caneca de leite",
+  "block.frozenup.mug_of_chocolate_milk": "Caneca de leite com chocolate",
+  "block.frozenup.mug_of_truffle_hot_chocolate": "Caneca de chocolate quente com trufa",
+
+  "entity.frozenup.chilloo": "Chilloo",
+
+  "frozenup.chilloo.ambient": "Chilloo piando",
+  "frozenup.chilloo.hurt": "Chilloo ferido",
+  "frozenup.chilloo.death": "Chilloo morre"
+}
