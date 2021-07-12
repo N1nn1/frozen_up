@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import net.teamdraco.frozenup.client.renderer.ChillooEntityRenderer;
+import net.teamdraco.frozenup.client.renderer.PreservedEntityRenderer;
 import net.teamdraco.frozenup.init.FrozenUpBlocks;
 import net.teamdraco.frozenup.init.FrozenUpEntities;
 
@@ -16,6 +17,7 @@ public class FrozenUpClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         EntityRendererRegistry.INSTANCE.register(FrozenUpEntities.CHILLOO, ChillooEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(FrozenUpEntities.PRESERVED, PreservedEntityRenderer::new);
 
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutout(),

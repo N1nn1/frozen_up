@@ -17,6 +17,7 @@ import net.minecraft.world.biome.Biome;
 import net.teamdraco.frozenup.FrozenUp;
 import net.teamdraco.frozenup.FrozenUpClient;
 import net.teamdraco.frozenup.entity.ChillooEntity;
+import net.teamdraco.frozenup.entity.PreservedEntity;
 
 @SuppressWarnings("deprecation")
 public class FrozenUpEntities {
@@ -30,9 +31,20 @@ public class FrozenUpEntities {
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PathAwareEntity::canMobSpawn),
         new Pair<>(0xc2cbce, 0x32383c)
     );
+    public static final EntityType<PreservedEntity> PRESERVED = register(
+            "preserved",
+            FabricEntityTypeBuilder.createMob()
+                    .entityFactory(PreservedEntity::new)
+                    .defaultAttributes(PreservedEntity::createZombieAttributes)
+                    .dimensions(EntityDimensions.changing(0.6f, 1.95f))
+                    .spawnGroup(SpawnGroup.MONSTER)
+                    .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PreservedEntity::canSpawn),
+            new Pair<>(0x8fae7d, 0x372f42)
+    );
 
     static {
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.CREATURE, FrozenUpEntities.CHILLOO, 1, 2, 3);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.CREATURE, FrozenUpEntities.CHILLOO, 30, 3, 6);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.MONSTER, FrozenUpEntities.PRESERVED, 60, 1, 1);
     }
 
     private static <T extends Entity> EntityType<T> register(String id, FabricEntityTypeBuilder<T> entityType, Pair<Integer, Integer> spawnEggColors) {

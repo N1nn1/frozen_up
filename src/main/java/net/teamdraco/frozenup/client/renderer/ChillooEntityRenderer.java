@@ -17,7 +17,7 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class ChillooEntityRenderer extends MobEntityRenderer<ChillooEntity, ChillooEntityModel> {
-    private static final Identifier TEXTURE = FrozenUpEntities.texture("chilloo");
+    private static final Identifier TEXTURE = FrozenUpEntities.texture("chilloo/chilloo");
     private static final Identifier[] COLOR_TEXTURES = new Identifier[32];
 
     @SuppressWarnings("unused")
@@ -32,9 +32,9 @@ public class ChillooEntityRenderer extends MobEntityRenderer<ChillooEntity, Chil
             DyeColor sweaterColor = entity.getSweaterColor();
             if (sweaterColor == null)
                 return TEXTURE;
-            return getTexture(sweaterColor.ordinal() + 16, color -> new Identifier(FrozenUp.MOD_ID, "textures/entity/sweaters/" + color.getName() + ".png"));
+            return getTexture(sweaterColor.ordinal() + 16, color -> new Identifier(FrozenUp.MOD_ID, "textures/entity/chilloo/sweaters/" + color.getName() + ".png"));
         } else {
-            return getTexture(bandColor.ordinal(), color -> new Identifier(FrozenUp.MOD_ID, "textures/entity/bands/" + color.getName() + ".png"));
+            return getTexture(bandColor.ordinal(), color -> new Identifier(FrozenUp.MOD_ID, "textures/entity/chilloo/bands/" + color.getName() + ".png"));
         }
     }
 
