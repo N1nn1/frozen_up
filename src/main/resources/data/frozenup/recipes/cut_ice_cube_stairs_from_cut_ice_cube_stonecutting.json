@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "frozenup:cut_ice_cubes"
+  },
+  "result": "frozenup:cut_ice_cube_stairs",
+  "count": 1
+}

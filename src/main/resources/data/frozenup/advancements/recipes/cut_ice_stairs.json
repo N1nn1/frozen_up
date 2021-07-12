@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "frozenup:cut_ice_stairs"
+    ]
+  },
+  "criteria": {
+    "has_cut_ice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "frozenup:cut_ice"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "frozenup:cut_ice_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cut_ice",
+      "has_the_recipe"
+    ]
+  ]
+}

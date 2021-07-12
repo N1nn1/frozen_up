@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "frozenup:cut_ice_cubes"
+    }
+  },
+  "result": {
+    "item": "frozenup:cut_ice_cube_stairs",
+    "count": 4
+  }
+}

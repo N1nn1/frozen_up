@@ -13,6 +13,13 @@
   "item.frozenup.mug_of_milk": "Mug of Milk",
   "item.frozenup.winter_berries": "Winter Berries",
 
+  "block.frozenup.cut_ice": "Cut Ice",
+  "block.frozenup.cut_ice_stairs": "Cut Ice Stairs",
+  "block.frozenup.cut_ice_slab": "Cut Ice Slab",
+  "block.frozenup.cut_ice_cubes": "Cut Ice Cubes",
+  "block.frozenup.cut_ice_cube_stairs": "Cut Ice Cube Stairs",
+  "block.frozenup.cut_ice_cube_slab": "Cut Ice Cube Slab",
+  "block.frozenup.cut_ice_cube_wall": "Cut Ice Cube Wall",
   "block.frozenup.truffle_dirt": "Truffle Dirt",
   "block.frozenup.chilloo_feather_block": "Chilloo Feather Block",
   "block.frozenup.chilloo_feather_block_carpet": "Chilloo Feather Carpet",

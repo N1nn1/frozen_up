@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "frozenup:block/cut_ice_cube_slab"
+    },
+    "type=double": {
+      "model": "frozenup:block/cut_ice_cubes"
+    },
+    "type=top": {
+      "model": "frozenup:block/cut_ice_cube_slab_top"
+    }
+  }
+}
