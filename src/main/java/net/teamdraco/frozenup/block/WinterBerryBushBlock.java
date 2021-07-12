@@ -23,6 +23,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.teamdraco.frozenup.init.FrozenUpBlocks;
 import net.teamdraco.frozenup.init.FrozenUpItems;
 
 import java.util.Random;
@@ -32,6 +33,10 @@ public class WinterBerryBushBlock extends PlantBlock implements Fertilizable {
     public static final IntProperty AGE = Properties.AGE_3;
     private static final VoxelShape SMALL_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 8.0D, 13.0D);
     private static final VoxelShape LARGE_SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+
+    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
+        return floor.isOf(FrozenUpBlocks.GELID_DIRT);
+    }
 
     public WinterBerryBushBlock(Settings settings) {
         super(settings);

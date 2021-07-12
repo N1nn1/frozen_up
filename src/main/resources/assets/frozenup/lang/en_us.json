@@ -13,6 +13,9 @@
   "item.frozenup.mug_of_milk": "Mug of Milk",
   "item.frozenup.winter_berries": "Winter Berries",
 
+  "block.frozenup.frozen_grass": "Frozen Grass",
+  "block.frozenup.gelid_dirt": "Gelid Dirt",
+  "block.frozenup.gelid_dirt_path": "Gelid Dirt Path",
   "block.frozenup.cut_ice": "Cut Ice",
   "block.frozenup.cut_ice_stairs": "Cut Ice Stairs",
   "block.frozenup.cut_ice_slab": "Cut Ice Slab",

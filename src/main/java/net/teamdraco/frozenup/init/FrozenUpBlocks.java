@@ -11,12 +11,12 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.teamdraco.frozenup.FrozenUp;
-import net.teamdraco.frozenup.block.FeatherLampBlock;
-import net.teamdraco.frozenup.block.MugBlock;
-import net.teamdraco.frozenup.block.WinterBerryBushBlock;
+import net.teamdraco.frozenup.block.*;
 import net.teamdraco.frozenup.block.vanilla.PublicCakeBlock;
 import net.teamdraco.frozenup.block.vanilla.PublicCarpetBlock;
+import net.teamdraco.frozenup.block.vanilla.PublicPathBlock;
 import net.teamdraco.frozenup.block.vanilla.PublicStairsBlock;
+import net.teamdraco.frozenup.mixin.ShovelItemAccessor;
 import net.teamdraco.frozenup.sound.FrozenUpBlockSoundGroups;
 
 import java.util.function.ToIntFunction;
@@ -30,6 +30,9 @@ public class FrozenUpBlocks {
     public static final Block TRUFFLE_CAKE = register("truffle_cake", new PublicCakeBlock(FabricBlockSettings.of(Material.CAKE).strength(0.5F).sounds(BlockSoundGroup.WOOL)));
 
     public static final Block WINTER_BERRY_BUSH = register("winter_berry_bush", new WinterBerryBushBlock(FabricBlockSettings.copyOf(Blocks.SWEET_BERRY_BUSH)));
+    public static final Block GELID_DIRT = register("gelid_dirt", new GelidDirtBlock(FabricBlockSettings.copyOf(Blocks.PODZOL)));
+    public static final Block GELID_DIRT_PATH = register("gelid_dirt_path", new PublicPathBlock(FabricBlockSettings.copyOf(Blocks.GRASS_PATH)));
+    public static final Block FROZEN_GRASS = register("frozen_grass", new FrozenPlantBlock(FabricBlockSettings.copyOf(Blocks.FERN)));
 
     public static final Block CUT_ICE = register("cut_ice", new Block(FabricBlockSettings.copyOf(Blocks.PACKED_ICE).breakByTool(FabricToolTags.PICKAXES)));
     public static final Block CUT_ICE_STAIRS = register("cut_ice_stairs", new PublicStairsBlock(CUT_ICE.getDefaultState(), FabricBlockSettings.copyOf(CUT_ICE)));
@@ -57,5 +60,9 @@ public class FrozenUpBlocks {
     }
     private static Block register(String id, Block block) {
         return register(id, block, false);
+    }
+
+    static {
+        ShovelItemAccessor.getPathStates().put(GELID_DIRT, GELID_DIRT_PATH.getDefaultState());
     }
 }

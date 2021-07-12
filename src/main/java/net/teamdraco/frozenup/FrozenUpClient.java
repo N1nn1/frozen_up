@@ -22,6 +22,7 @@ public class FrozenUpClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutout(),
 
+            FrozenUpBlocks.FROZEN_GRASS,
             FrozenUpBlocks.WINTER_BERRY_BUSH,
             FrozenUpBlocks.EMPTY_MUG,
             FrozenUpBlocks.MUG_OF_MILK,

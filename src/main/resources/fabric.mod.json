@@ -29,6 +29,9 @@
     ],
     "server": []
   },
+  "mixins": [
+    "frozenup.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
