@@ -5,12 +5,25 @@
   "item.frozenup.truffle": "Trufa",
   "item.frozenup.truffle_muffin": "Muffin de trufa",
   "item.frozenup.chilloo_spawn_egg": "Ovo gerador de chilloo",
+  "item.frozenup.preserved_spawn_egg": "Ovo gerador de preservado",
   "item.frozenup.chilloo_feather": "Pena de chilloo",
   "item.frozenup.empty_mug": "Caneca vazia",
   "item.frozenup.mug_of_chocolate_milk": "Caneca de leite com chocolate",
   "item.frozenup.mug_of_truffle_hot_chocolate": "Caneca de chocolate quente com trufa",
   "item.frozenup.mug_of_milk": "Caneca de leite",
+  "item.frozenup.winter_berries": "Bagas do inverno",
 
+  "block.frozenup.frozen_grass": "Grama congelada",
+  "block.frozenup.gelid_dirt": "Terra gélida",
+  "block.frozenup.gelid_dirt_path": "Caminho de terra gélida",
+  "block.frozenup.cut_ice": "Gelo lapidado",
+  "block.frozenup.cut_ice_stairs": "Escadas de gelo lapidado",
+  "block.frozenup.cut_ice_slab": "Laje de gelo lapidado",
+  "block.frozenup.cut_ice_cubes": "Cubos de gelo lapidado",
+  "block.frozenup.cut_ice_cube_stairs": "Escadas de cubos de gelo lapidado",
+  "block.frozenup.cut_ice_cube_slab": "Laje de cubos de gelo lapidado",
+  "block.frozenup.cut_ice_cube_wall": "Muro de cubos de gelo lapidado",
+  "block.frozenup.truffle_dirt": "Terra com trufas",
   "block.frozenup.chilloo_feather_block": "Bloco de penas de chilloo",
   "block.frozenup.chilloo_feather_block_carpet": "Tapete de penas de chilloo",
   "block.frozenup.truffle_cake": "Bolo de chocolate com trufa",
@@ -24,5 +37,7 @@
 
   "frozenup.chilloo.ambient": "Chilloo piando",
   "frozenup.chilloo.hurt": "Chilloo ferido",
-  "frozenup.chilloo.death": "Chilloo morre"
+  "frozenup.chilloo.death": "Chilloo morre",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_on": "Lampa ligada",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off": "Lampada desligada"  
 }
