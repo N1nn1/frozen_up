@@ -19,10 +19,10 @@
   "block.frozenup.cut_ice": "Gelo lapidado",
   "block.frozenup.cut_ice_stairs": "Escadas de gelo lapidado",
   "block.frozenup.cut_ice_slab": "Laje de gelo lapidado",
-  "block.frozenup.cut_ice_cubes": "Cubos de gelo lapidado",
-  "block.frozenup.cut_ice_cube_stairs": "Escadas de cubos de gelo lapidado",
-  "block.frozenup.cut_ice_cube_slab": "Laje de cubos de gelo lapidado",
-  "block.frozenup.cut_ice_cube_wall": "Muro de cubos de gelo lapidado",
+  "block.frozenup.cut_ice_cubes": "Cubos de gelo lapidados",
+  "block.frozenup.cut_ice_cube_stairs": "Escadas de cubos de gelo lapidados",
+  "block.frozenup.cut_ice_cube_slab": "Laje de cubos de gelo lapidados",
+  "block.frozenup.cut_ice_cube_wall": "Muro de cubos de gelo lapidados",
   "block.frozenup.truffle_dirt": "Terra com trufas",
   "block.frozenup.chilloo_feather_block": "Bloco de penas de chilloo",
   "block.frozenup.chilloo_feather_block_carpet": "Tapete de penas de chilloo",
@@ -38,6 +38,6 @@
   "frozenup.chilloo.ambient": "Chilloo piando",
   "frozenup.chilloo.hurt": "Chilloo ferido",
   "frozenup.chilloo.death": "Chilloo morre",
-  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_on": "Lampa ligada",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_on": "Lampada ligada",
   "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off": "Lampada desligada"  
 }
