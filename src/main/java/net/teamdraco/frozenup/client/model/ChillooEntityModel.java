@@ -147,9 +147,11 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
         float degree = 1.0f;
         if (entity.isInSittingPose()) {
             if (entity.isBaby()) {
+                this.head.roll = 0;
                 this.head.pivotY = 20f;
                 this.head.pivotZ = -2f;
             } else {
+                this.head.roll = 0;
                 this.head.pivotY = 8f;
                 this.head.pivotZ = -2f;
             }
@@ -166,57 +168,65 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
             this.right_leg.setPivot(4.5F, 4.0F, 12.0F);
             this.setRotateAngle(right_leg, -0.47123889803846897F, -0.17453292519943295F, -0.2617993877991494F);
         } else if (entity.isBaby()) {
-            this.head.roll = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.2F * limbDistance;
+            this.head.roll += MathHelper.cos(-2.0F + limbAngle * speed * 0.2F) * degree * 0.2F * limbDistance;
+            this.head.pitch = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.2F * limbDistance;
             this.head.pivotY = 22f;
             this.head.pivotZ = -4f;
 
-            this.tail.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 0.6F * limbDistance;
+            this.tail.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.1F) * degree * 0.8F * limbDistance;
             this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.6F * limbDistance - 0.4F;
             this.tail.pivotZ = 14f;
 
-            this.right_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
+            this.right_leg.pitch = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 1.0F * limbDistance;
             this.right_leg.yaw = 0f;
             this.right_leg.roll = 0f;
             this.right_leg.pivotX = 4.5f;
             this.right_leg.pivotY = 1.0f;
+            this.right_leg.pivotY += MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * -0.075F * limbDistance;
             this.right_leg.pivotZ = 7.5f;
 
-            this.left_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
+            this.left_leg.pitch = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -1.0F * limbDistance;
             this.left_leg.yaw = 0f;
             this.left_leg.roll = 0f;
             this.left_leg.pivotX = -4.5f;
             this.left_leg.pivotY = 1.0f;
+            this.left_leg.pivotY += MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.075F * limbDistance;
             this.left_leg.pivotZ = 7.5f;
 
             this.body.setPivot(0f, 12f, -8f);
             this.body.pitch = 0f;
-            this.body.roll = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.1F * limbDistance;
+            this.body.yaw = MathHelper.cos(limbAngle * speed * 0.1F) * degree * 0.1F * limbDistance;
+            this.body.roll = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.15F * limbDistance;
         } else {
-            this.head.roll = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.2F * limbDistance;
+            this.head.roll += MathHelper.cos(-2.0F + limbAngle * speed * 0.2F) * degree * 0.2F * limbDistance;
+            this.head.pitch = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.2F * limbDistance;
             this.head.pivotY = 14f;
             this.head.pivotZ = -8f;
 
-            this.tail.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 0.6F * limbDistance;
+            this.tail.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.1F) * degree * 0.8F * limbDistance;
             this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.6F * limbDistance - 0.4F;
             this.tail.pivotZ = 14f;
 
-            this.right_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
+            this.right_leg.pitch = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 1.0F * limbDistance;
             this.right_leg.yaw = 0f;
             this.right_leg.roll = 0f;
             this.right_leg.pivotX = 4.5f;
             this.right_leg.pivotY = 1.0f;
+            this.right_leg.pivotY += MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * -0.075F * limbDistance;
             this.right_leg.pivotZ = 7.5f;
 
-            this.left_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
+            this.left_leg.pitch = MathHelper.cos(limbAngle * speed * 0.2F) * degree * -1.0F * limbDistance;
             this.left_leg.yaw = 0f;
             this.left_leg.roll = 0f;
             this.left_leg.pivotX = -4.5f;
             this.left_leg.pivotY = 1.0f;
+            this.left_leg.pivotY += MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.075F * limbDistance;
             this.left_leg.pivotZ = 7.5f;
 
             this.body.setPivot(0f, 12f, -8f);
             this.body.pitch = 0f;
-            this.body.roll = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.1F * limbDistance;
+            this.body.yaw = MathHelper.cos(limbAngle * speed * 0.1F) * degree * 0.1F * limbDistance;
+            this.body.roll = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 0.15F * limbDistance;
         }
 
         int timer = entity.digTimer;
@@ -228,6 +238,11 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
 
     @Override
     public void setAngles(ChillooEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        float speed = 1.0f;
+        float degree = 1.0f;
+        this.left_whiskers.yaw = MathHelper.cos(animationProgress * speed * 0.6F) * degree * 0.2F * 0.5F - 0.8F;
+        this.right_whiskers.yaw = MathHelper.cos(animationProgress * speed * 0.6F) * degree * -0.2F * 0.5F + 0.8F;
+
         if (entity.digTimer <= 0) {
             head.pitch = headPitch * ((float) Math.PI / 180f);
             head.yaw = headYaw * ((float) Math.PI / 180f);
