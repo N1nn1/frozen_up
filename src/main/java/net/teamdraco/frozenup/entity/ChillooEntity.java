@@ -1,7 +1,5 @@
 package net.teamdraco.frozenup.entity;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -30,7 +28,6 @@ import net.minecraft.predicate.block.BlockStatePredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.*;
@@ -45,34 +42,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 public class ChillooEntity extends TameableEntity {
     public static final int DIG_ANIMATION_ID = 10;
     private static final Ingredient TEMPTATION_ITEMS = Ingredient.ofItems(Items.WHEAT_SEEDS, Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.COCOA_BEANS, Items.POTATO, Items.CARROT);
-    private static final BiMap<Block, DyeColor> WOOL_BLOCKS = HashBiMap.create(16);
-    private static final TrackedData<Byte> COLOR = DataTracker.registerData(ChillooEntity.class, TrackedDataHandlerRegistry.BYTE);
     public int timeUntilNextFeather = this.random.nextInt(10000) + 2500;
     public int digTimer = 0;
-
-    static {
-        WOOL_BLOCKS.put(Blocks.WHITE_WOOL, DyeColor.WHITE);
-        WOOL_BLOCKS.put(Blocks.ORANGE_WOOL, DyeColor.ORANGE);
-        WOOL_BLOCKS.put(Blocks.MAGENTA_WOOL, DyeColor.MAGENTA);
-        WOOL_BLOCKS.put(Blocks.LIGHT_BLUE_WOOL, DyeColor.LIGHT_BLUE);
-        WOOL_BLOCKS.put(Blocks.YELLOW_WOOL, DyeColor.YELLOW);
-        WOOL_BLOCKS.put(Blocks.LIME_WOOL, DyeColor.LIME);
-        WOOL_BLOCKS.put(Blocks.PINK_WOOL, DyeColor.PINK);
-        WOOL_BLOCKS.put(Blocks.GRAY_WOOL, DyeColor.GRAY);
-        WOOL_BLOCKS.put(Blocks.LIGHT_GRAY_WOOL, DyeColor.LIGHT_GRAY);
-        WOOL_BLOCKS.put(Blocks.CYAN_WOOL, DyeColor.CYAN);
-        WOOL_BLOCKS.put(Blocks.PURPLE_WOOL, DyeColor.PURPLE);
-        WOOL_BLOCKS.put(Blocks.BLUE_WOOL, DyeColor.BLUE);
-        WOOL_BLOCKS.put(Blocks.BROWN_WOOL, DyeColor.BROWN);
-        WOOL_BLOCKS.put(Blocks.GREEN_WOOL, DyeColor.GREEN);
-        WOOL_BLOCKS.put(Blocks.RED_WOOL, DyeColor.RED);
-        WOOL_BLOCKS.put(Blocks.BLACK_WOOL, DyeColor.BLACK);
-    }
+    private static final TrackedData<Integer> BANDS_COLOR = DataTracker.registerData(ChillooEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
         super(type, world);
@@ -87,7 +65,7 @@ public class ChillooEntity extends TameableEntity {
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.4D));
         this.goalSelector.add(3, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
         this.goalSelector.add(4, new AnimalMateGoal(this, 1.0D));
-        this.goalSelector.add(5, new TemptGoal(this, 1.0D, false, TEMPTATION_ITEMS));
+        this.goalSelector.add(5, new TemptGoal(this, 1.0D, TEMPTATION_ITEMS, false));
         this.goalSelector.add(6, new DiggingGoal(this));
         this.goalSelector.add(7, new FollowParentGoal(this, 1.1D) {
             @Override
@@ -100,8 +78,41 @@ public class ChillooEntity extends TameableEntity {
     }
 
     @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(BANDS_COLOR, DyeColor.RED.getId());
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound tag) {
+        super.writeCustomDataToNbt(tag);
+        tag.putByte("BandsColor", (byte) this.getBandsColor().getId());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound tag) {
+        super.readCustomDataFromNbt(tag);
+        if (tag.contains("BandanaColor", 99)) {
+            this.setBandsColor(DyeColor.byId(tag.getInt("BandsColor")));
+        }
+    }
+
+    public DyeColor getBandsColor () {
+        return DyeColor.byId(this.dataTracker.get(BANDS_COLOR));
+    }
+
+    public void setBandsColor (DyeColor color){
+        this.dataTracker.set(BANDS_COLOR, color.getId());
+    }
+
+    @Override
     protected float getActiveEyeHeight(EntityPose poseIn, EntityDimensions sizeIn) {
         return this.isBaby() ? 0.5F : 0.7F;
+    }
+
+    @Override
+    public boolean canBeLeashedBy (PlayerEntity player){
+        return super.canBeLeashedBy(player);
     }
 
     public static DefaultAttributeContainer.Builder createChillooAttributes() {
@@ -116,30 +127,11 @@ public class ChillooEntity extends TameableEntity {
         return item == Items.WHEAT_SEEDS || item == Items.BEETROOT_SEEDS || item == Items.MELON_SEEDS || item == Items.COCOA_BEANS || item == Items.POTATO || item == Items.CARROT;
     }
 
-    @Nullable
-    public DyeColor getBandColor() {
-        byte color = dataTracker.get(COLOR);
-        return color == -1 || color >= 16 ? null : DyeColor.byId(color);
-    }
-    public void setBandColor(DyeColor color) {
-        dataTracker.set(COLOR, color == null ? -1 : (byte) color.ordinal());
-    }
-
-    @Nullable
-    public DyeColor getSweaterColor() {
-        byte color = dataTracker.get(COLOR);
-        return color < 16 ? null : DyeColor.byId(color - 16);
-    }
-    public void setSweaterColor(DyeColor color) {
-        dataTracker.set(COLOR, color == null ? -1 : (byte) (color.ordinal() + 16));
-    }
-
     @SuppressWarnings("ConstantConditions")
     @Override
     public void setTamed(boolean tamed) {
         super.setTamed(tamed);
         if (tamed) {
-            this.setBandColor(DyeColor.RED);
             this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(20.0D);
             this.setHealth(20.0F);
         } else {
@@ -147,64 +139,75 @@ public class ChillooEntity extends TameableEntity {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-        Item item = stack.getItem();
-        if (item == FrozenUpItems.FROZEN_TRUFFLE && !this.isTamed()) {
-            if (!player.abilities.creativeMode) {
-                stack.decrement(1);
-            }
-            if (this.random.nextInt(3) == 0) {
-                this.setOwner(player);
-                this.navigation.stop();
-                this.setSitting(true);
-                this.world.sendEntityStatus(this, (byte) 7);
-            } else {
-                this.world.sendEntityStatus(this, (byte) 6);
-            }
-            return ActionResult.SUCCESS;
-        }
+        ItemStack itemStack = player.getStackInHand(hand);
+        Item item = itemStack.getItem();
+        if (this.world.isClient) {
+            boolean bl = this.isOwner(player) || this.isTamed() || item == FrozenUpItems.FROZEN_TRUFFLE && !this.isTamed();
+            return bl ? ActionResult.CONSUME : ActionResult.PASS;
+        } else {
+            if (this.isTamed()) {
+                if (this.isBreedingItem(itemStack) && this.getHealth() < this.getMaxHealth()) {
+                    if (!this.isSilent()) {
+                        this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_GENERIC_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    }
+                    if (!player.getAbilities().creativeMode) {
+                        itemStack.decrement(1);
+                    }
 
-        if (this.isOwner(player)) {
-            if (item instanceof DyeItem) {
-                setBandColor(((DyeItem) item).getColor());
-                stack.decrement(1);
-            } else {
-                DyeColor dyeColor = WOOL_BLOCKS.get(Block.getBlockFromItem(item));
-                if (dyeColor == null) {
-                    if (item == Items.SHEARS) {
-                        boolean failed = false;
-                        DyeColor bandColor = getBandColor();
-                        if (bandColor == null) {
-                            DyeColor sweaterColor = getSweaterColor();
-                            if (sweaterColor == null) {
-                                failed = true;
-                            } else {
-                                dropItem(WOOL_BLOCKS.inverse().get(sweaterColor));
-                            }
-                        }
-                        if (!failed) {
-                            setBandColor(DyeColor.RED);
-                            this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                            stack.damage(1, player, playerEntity -> playerEntity.sendToolBreakStatus(hand));
-                        }
-                    } else {
-                        setSitting(!isInSittingPose());
+                    this.heal((float)item.getFoodComponent().getHunger());
+                    return ActionResult.SUCCESS;
+                }
+
+                if (!(item instanceof DyeItem)) {
+                    ActionResult actionResult = super.interactMob(player, hand);
+                    if ((!actionResult.isAccepted() || this.isBaby()) && this.isOwner(player)) {
+                        this.setSitting(!this.isSitting());
                         this.jumping = false;
                         this.navigation.stop();
-                        stack.decrement(1);
+                        this.setTarget(null);
+                        return ActionResult.SUCCESS;
                     }
-                } else {
-                    setSweaterColor(dyeColor);
-                    stack.decrement(1);
-                }
-            }
-            return ActionResult.SUCCESS;
-        }
 
-        return super.interactMob(player, hand);
+                    return actionResult;
+                }
+
+                DyeColor dyeColor = ((DyeItem)item).getColor();
+                if (dyeColor != this.getBandsColor()) {
+                    this.setBandsColor(dyeColor);
+                    if (!player.getAbilities().creativeMode) {
+                        itemStack.decrement(1);
+                    }
+
+                    return ActionResult.SUCCESS;
+                }
+            } else if (item == FrozenUpItems.FROZEN_TRUFFLE) {
+                if (!this.isSilent()) {
+                    this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_GENERIC_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                }
+                if (!player.getAbilities().creativeMode) {
+                    itemStack.decrement(1);
+                }
+
+                if (this.random.nextInt(3) == 0) {
+                    this.setOwner(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.setSitting(true);
+                    this.world.sendEntityStatus(this, (byte)7);
+                } else {
+                    this.world.sendEntityStatus(this, (byte)6);
+                }
+
+                return ActionResult.SUCCESS;
+            }
+
+            return super.interactMob(player, hand);
+        }
     }
+
 
     @Override
     public void tickMovement() {
@@ -220,15 +223,17 @@ public class ChillooEntity extends TameableEntity {
         }
     }
 
+
     @Nullable
     @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity ageable) {
-        ChillooEntity entity = FrozenUpEntities.CHILLOO.create(this.world);
-        if (entity != null) {
-            entity.setOwnerUuid(this.getOwnerUuid());
-            entity.setTamed(true);
+    public PassiveEntity createChild (ServerWorld world, PassiveEntity entity) {
+        ChillooEntity chilloo = FrozenUpEntities.CHILLOO.create(world);
+        UUID uUID = this.getOwnerUuid();
+        if (uUID != null && chilloo != null) {
+            chilloo.setOwnerUuid(uUID);
+            chilloo.setTamed(true);
         }
-        return entity;
+        return chilloo;
     }
 
     @Override
@@ -248,15 +253,9 @@ public class ChillooEntity extends TameableEntity {
         this.playSound(SoundEvents.ENTITY_SHEEP_STEP, 0.15F, 1.0F);
     }
 
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(COLOR, (byte) 0);
-    }
 
     @Override
     public NbtCompound writeNbt(NbtCompound compound) {
-        compound.putByte("Colors", this.dataTracker.get(COLOR));
         compound.putInt("FeatherLayTime", this.timeUntilNextFeather);
 
         return super.writeNbt(compound);
@@ -264,7 +263,6 @@ public class ChillooEntity extends TameableEntity {
     @Override
     public void readNbt(NbtCompound compound) {
         super.readNbt(compound);
-        this.dataTracker.set(COLOR, compound.getByte("Colors"));
         if (compound.contains("FeatherLayTime")) {
             this.timeUntilNextFeather = compound.getInt("FeatherLayTime");
         }

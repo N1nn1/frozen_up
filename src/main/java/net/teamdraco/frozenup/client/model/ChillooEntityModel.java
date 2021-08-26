@@ -1,69 +1,144 @@
 package net.teamdraco.frozenup.client.model;
 
+import com.google.common.collect.ImmutableList;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.util.math.MathHelper;
 import net.teamdraco.frozenup.entity.ChillooEntity;
 
-import java.util.Collections;
-import java.util.List;
-
+@SuppressWarnings("FieldCanBeLocal, unused")
 @Environment(EnvType.CLIENT)
 public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
-    public ModelPart body;
-    public ModelPart tail;
-    public ModelPart head;
-    public ModelPart leftLeg;
-    public ModelPart rightLeg;
-    public ModelPart bodyFeathers;
-    public ModelPart tailFeathers;
-    public ModelPart headFeathers;
+    private final ModelPart root;
 
-    private final List<ModelPart> headParts;
-    private final List<ModelPart> bodyParts;
+    private final ModelPart body;
+    private final ModelPart body_feathers;
+    private final ModelPart tail;
+    private final ModelPart tail_feathers;
+    private final ModelPart right_leg;
+    private final ModelPart left_leg;
+    private final ModelPart head;
+    private final ModelPart head_feathers;
+    private final ModelPart left_whiskers;
+    private final ModelPart right_whiskers;
 
-    public ChillooEntityModel() {
-        super(true, 8f, 3f);
+    public ChillooEntityModel(ModelPart root) {
+        super(true, 0.0F, 0.0F);
+        this.root = root;
 
-        this.textureWidth = 112;
-        this.textureHeight = 64;
-        this.rightLeg = new ModelPart(this, 0, 25);
-        this.rightLeg.setPivot(4.5F, 1.0F, 7.5F);
-        this.rightLeg.addCuboid(-3.0F, 0.0F, -2.5F, 5.0F, 11.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.headFeathers = new ModelPart(this, 0, 55);
-        this.headFeathers.setPivot(0.0F, 6.0F, 0.0F);
-        this.headFeathers.addCuboid(-3.0F, 0.0F, -5.5F, 6.0F, 2.0F, 7.0F, 0.0F, 0.0F, 0.0F);
-        this.head = new ModelPart(this, 36, 0);
-        this.head.setPivot(0.0F, 12.0F, -10.0F);
-        this.head.addCuboid(-4.0F, 0.0F, -7.0F, 8.0F, 6.0F, 9.0F, 0.0F, 0.0F, 0.0F);
-        this.tailFeathers = new ModelPart(this, 60, 42);
-        this.tailFeathers.setPivot(0.0F, 0.0F, 0.0F);
-        this.tailFeathers.addCuboid(-1.5F, 3.0F, 0.0F, 3.0F, 4.0F, 18.0F, 0.0F, 0.0F, 0.0F);
-        this.bodyFeathers = new ModelPart(this, 4, 25);
-        this.bodyFeathers.setPivot(0.0F, 0.0F, 0.0F);
-        this.bodyFeathers.addCuboid(-5.0F, 6.0F, 0.0F, 10.0F, 3.0F, 16.0F, 0.0F, 0.0F, 0.0F);
-        this.body = new ModelPart(this, 0, 0);
-        this.body.setPivot(0.0F, 12.0F, -8.0F);
-        this.body.addCuboid(-5.0F, -3.0F, 0.0F, 10.0F, 9.0F, 16.0F, 0.0F, 0.0F, 0.0F);
-        this.tail = new ModelPart(this, 52, 0);
-        this.tail.setPivot(0.0F, 0.0F, 14.0F);
-        this.tail.addCuboid(-1.5F, 0.0F, 0.0F, 3.0F, 3.0F, 18.0F, 0.0F, 0.0F, 0.0F);
-        this.setRotateAngle(tail, -0.5235987755982988F, 0.0F, 0.0F);
-        this.leftLeg = new ModelPart(this, 0, 25);
-        this.leftLeg.mirror = true;
-        this.leftLeg.setPivot(-4.5F, 1.0F, 7.5F);
-        this.leftLeg.addCuboid(-2.0F, 0.0F, -2.5F, 5.0F, 11.0F, 5.0F, 0.0F, 0.0F, 0.0F);
-        this.body.addChild(this.rightLeg);
-        this.head.addChild(this.headFeathers);
-        this.tail.addChild(this.tailFeathers);
-        this.body.addChild(this.bodyFeathers);
-        this.body.addChild(this.tail);
-        this.body.addChild(this.leftLeg);
+        this.body       = root.getChild("body");
+        this.head       = root.getChild("head");
 
-        this.headParts = Collections.singletonList(head);
-        this.bodyParts = Collections.singletonList(body);
+        this.left_whiskers       = head.getChild("left_whiskers");
+        this.right_whiskers       = head.getChild("right_whiskers");
+        this.head_feathers       = head.getChild("head_feathers");
+
+        this.right_leg       = body.getChild("right_leg");
+        this.left_leg       = body.getChild("left_leg");
+        this.body_feathers       = body.getChild("body_feathers");
+        this.tail       = body.getChild("tail");
+
+        this.tail_feathers       = tail.getChild("tail_feathers");
+    }
+
+    public static TexturedModelData getTexturedModelData() {
+
+        ModelData data = new ModelData();
+        ModelPartData root = data.getRoot();
+
+        ModelPartData body = root.addChild(
+            "body",
+            ModelPartBuilder.create()
+                            .uv(0, 0)
+                            .mirrored(false)
+                            .cuboid(-5.0F, -3.0F, 0.0F, 10.0F, 9.0F, 16.0F, new Dilation(0.0F)),
+            ModelTransform.of(0.0F, 12.0F, -8.0F, 0.0F, 0.0F, 0.0F)
+        );
+
+        ModelPartData body_feathers = body.addChild(
+            "body_feathers",
+            ModelPartBuilder.create()
+                            .uv(3, 25)
+                            .mirrored(false)
+                            .cuboid(-5.0F, 6.0F, 0.0F, 10.0F, 3.0F, 16.0F, new Dilation(0.0F)),
+            ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F)
+        );
+
+        ModelPartData tail = body.addChild(
+            "tail",
+            ModelPartBuilder.create()
+                            .uv(52, 0)
+                            .mirrored(false)
+                            .cuboid(-1.5F, 0.0F, 0.0F, 3.0F, 3.0F, 18.0F, new Dilation(0.0F)),
+            ModelTransform.of(0.0F, 0.0F, 16.0F, -0.3491F, 0.0F, 0.0F)
+        );
+
+        ModelPartData tail_feathers = tail.addChild(
+            "tail_feathers",
+            ModelPartBuilder.create()
+                            .uv(60, 42)
+                            .mirrored(false)
+                            .cuboid(-1.5F, 3.0F, 0.0F, 3.0F, 4.0F, 18.0F, new Dilation(0.0F)),
+            ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F)
+        );
+
+        ModelPartData right_leg = body.addChild(
+            "right_leg",
+            ModelPartBuilder.create()
+                            .uv(0, 25)
+                            .mirrored(false)
+                            .cuboid(-2.0F, 0.0F, -2.5F, 5.0F, 11.0F, 5.0F, new Dilation(0.0F)),
+            ModelTransform.of(-4.5F, 1.0F, 7.5F, 0.0F, 0.0F, 0.0F)
+        );
+
+        ModelPartData left_leg = body.addChild(
+            "left_leg",
+            ModelPartBuilder.create()
+                            .uv(0, 25)
+                            .mirrored(true)
+                            .cuboid(-3.0F, 0.0F, -2.5F, 5.0F, 11.0F, 5.0F, new Dilation(0.0F)),
+            ModelTransform.of(4.5F, 1.0F, 7.5F, 0.0F, 0.0F, 0.0F)
+        );
+
+        ModelPartData head = root.addChild(
+            "head",
+            ModelPartBuilder.create()
+                            .uv(36, 0)
+                            .mirrored(false)
+                            .cuboid(-4.0F, -3.0F, -9.0F, 8.0F, 6.0F, 9.0F, new Dilation(0.0F)),
+            ModelTransform.of(0.0F, 15.0F, -8.0F, 0.0F, 0.0F, 0.0F)
+        );
+
+        ModelPartData head_feathers = head.addChild(
+            "head_feathers",
+            ModelPartBuilder.create()
+                            .uv(0, 55)
+                            .mirrored(false)
+                            .cuboid(-3.0F, 0.0F, -5.5F, 6.0F, 2.0F, 7.0F, new Dilation(0.0F)),
+            ModelTransform.of(0.0F, 3.0F, -2.0F, 0.0F, 0.0F, 0.0F)
+        );
+
+        ModelPartData left_whiskers = head.addChild(
+            "left_whiskers",
+            ModelPartBuilder.create()
+                            .uv(52, 21)
+                            .mirrored(true)
+                            .cuboid(-3.0F, -1.5F, 0.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)),
+            ModelTransform.of(-4.0F, 1.5F, -4.0F, 0.0F, -0.7854F, 0.0F)
+        );
+
+        ModelPartData right_whiskers = head.addChild(
+            "right_whiskers",
+            ModelPartBuilder.create()
+                            .uv(52, 21)
+                            .mirrored(false)
+                            .cuboid(0.0F, -1.5F, 0.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)),
+            ModelTransform.of(4.0F, 1.5F, -4.0F, 0.0F, 0.7854F, 0.0F)
+        );
+
+        return TexturedModelData.of(data, 112, 64);
     }
 
     @Override
@@ -72,11 +147,11 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
         float degree = 1.0f;
         if (entity.isInSittingPose()) {
             if (entity.isBaby()) {
-                this.head.pivotY = 9f;
-                this.head.pivotZ = -5f;
+                this.head.pivotY = 20f;
+                this.head.pivotZ = -2f;
             } else {
-                this.head.pivotY = 5.5f;
-                this.head.pivotZ = -4.5f;
+                this.head.pivotY = 8f;
+                this.head.pivotZ = -2f;
             }
 
             this.body.setPivot(0.0F, 9.0F, -2.0F);
@@ -85,33 +160,59 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
             this.tail.setPivot(0.0F, 0.0F, 14.0F);
             this.setRotateAngle(tail, 1.7453292519943295F, 0.0F, 0.0F);
 
-            this.leftLeg.setPivot(-4.5F, 4.0F, 12.0F);
-            this.setRotateAngle(leftLeg, -0.47123889803846897F, 0.17453292519943295F, 0.2617993877991494F);
+            this.left_leg.setPivot(-4.5F, 4.0F, 12.0F);
+            this.setRotateAngle(left_leg, -0.47123889803846897F, 0.17453292519943295F, 0.2617993877991494F);
 
-            this.rightLeg.setPivot(4.5F, 4.0F, 12.0F);
-            this.setRotateAngle(rightLeg, -0.47123889803846897F, -0.17453292519943295F, -0.2617993877991494F);
-        } else {
+            this.right_leg.setPivot(4.5F, 4.0F, 12.0F);
+            this.setRotateAngle(right_leg, -0.47123889803846897F, -0.17453292519943295F, -0.2617993877991494F);
+        } else if (entity.isBaby()) {
             this.head.roll = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.2F * limbDistance;
-            this.head.pivotY = 12f;
-            this.head.pivotZ = -10f;
+            this.head.pivotY = 22f;
+            this.head.pivotZ = -4f;
 
             this.tail.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 0.6F * limbDistance;
             this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.6F * limbDistance - 0.4F;
             this.tail.pivotZ = 14f;
 
-            this.rightLeg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
-            this.rightLeg.yaw = 0f;
-            this.rightLeg.roll = 0f;
-            this.rightLeg.pivotX = 4.5f;
-            this.rightLeg.pivotY = 1.0f;
-            this.rightLeg.pivotZ = 7.5f;
+            this.right_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
+            this.right_leg.yaw = 0f;
+            this.right_leg.roll = 0f;
+            this.right_leg.pivotX = 4.5f;
+            this.right_leg.pivotY = 1.0f;
+            this.right_leg.pivotZ = 7.5f;
 
-            this.leftLeg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
-            this.leftLeg.yaw = 0f;
-            this.leftLeg.roll = 0f;
-            this.leftLeg.pivotX = -4.5f;
-            this.leftLeg.pivotY = 1.0f;
-            this.leftLeg.pivotZ = 7.5f;
+            this.left_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
+            this.left_leg.yaw = 0f;
+            this.left_leg.roll = 0f;
+            this.left_leg.pivotX = -4.5f;
+            this.left_leg.pivotY = 1.0f;
+            this.left_leg.pivotZ = 7.5f;
+
+            this.body.setPivot(0f, 12f, -8f);
+            this.body.pitch = 0f;
+            this.body.roll = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.1F * limbDistance;
+        } else {
+            this.head.roll = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.2F * limbDistance;
+            this.head.pivotY = 14f;
+            this.head.pivotZ = -8f;
+
+            this.tail.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 0.6F * limbDistance;
+            this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.6F * limbDistance - 0.4F;
+            this.tail.pivotZ = 14f;
+
+            this.right_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * 0.8F * limbDistance;
+            this.right_leg.yaw = 0f;
+            this.right_leg.roll = 0f;
+            this.right_leg.pivotX = 4.5f;
+            this.right_leg.pivotY = 1.0f;
+            this.right_leg.pivotZ = 7.5f;
+
+            this.left_leg.pitch = MathHelper.cos(1.0F + limbAngle * speed * 0.4F) * degree * -0.8F * limbDistance;
+            this.left_leg.yaw = 0f;
+            this.left_leg.roll = 0f;
+            this.left_leg.pivotX = -4.5f;
+            this.left_leg.pivotY = 1.0f;
+            this.left_leg.pivotZ = 7.5f;
 
             this.body.setPivot(0f, 12f, -8f);
             this.body.pitch = 0f;
@@ -135,12 +236,12 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
 
     @Override
     protected Iterable<ModelPart> getHeadParts() {
-        return this.headParts;
+        return ImmutableList.of(this.head);
     }
 
     @Override
     protected Iterable<ModelPart> getBodyParts() {
-        return this.bodyParts;
+        return ImmutableList.of(this.body);
     }
 
     public void setRotateAngle(ModelPart modelRenderer, float x, float y, float z) {

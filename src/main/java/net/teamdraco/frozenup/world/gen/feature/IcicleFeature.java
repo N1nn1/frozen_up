@@ -6,10 +6,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.Random;
 
@@ -31,7 +30,11 @@ public class IcicleFeature extends Feature<DefaultFeatureConfig> {
     }
 
     @Override
-    public boolean generate(StructureWorldAccess reader, ChunkGenerator generator, Random rand, BlockPos pos, DefaultFeatureConfig config) {
+    public boolean generate(FeatureContext<DefaultFeatureConfig> ctx) {
+        StructureWorldAccess reader = ctx.getWorld();
+        BlockPos pos = ctx.getOrigin();
+        Random rand = ctx.getRandom();
+
         if (reader.isAir(pos.down())) {
             return false;
         }
@@ -84,7 +87,7 @@ public class IcicleFeature extends Feature<DefaultFeatureConfig> {
     }
 
     public static boolean canPlace(StructureWorldAccess reader, BlockPos pos) {
-        if (World.isOutOfBuildLimitVertically(pos)) {
+        if (reader.isOutOfHeightLimit(pos)) {
             return false;
         }
         BlockState state = reader.getBlockState(pos);

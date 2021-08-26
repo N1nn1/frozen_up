@@ -42,7 +42,7 @@ public class WorldGenFiller {
         }
 
         public boolean canPlace(StructureWorldAccess reader, BlockPos pos) {
-            if (World.isOutOfBuildLimitVertically(pos)) {
+            if (reader.isOutOfHeightLimit(pos)) {
                 return false;
             }
             BlockState state = reader.getBlockState(pos);
@@ -50,7 +50,7 @@ public class WorldGenFiller {
         }
 
         public boolean canPlace(StructureWorldAccess reader, BlockPos pos, Block block) {
-            if (World.isOutOfBuildLimitVertically(pos)) {
+            if (reader.isOutOfHeightLimit(pos)) {
                 return false;
             }
             BlockState state = reader.getBlockState(pos);

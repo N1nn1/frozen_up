@@ -6,6 +6,10 @@
   "mixins": [
     "ShovelItemAccessor"
   ],
+  "client": [
+    "client.EntityModelLayersInvoker",
+    "client.EntityModelLayersMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

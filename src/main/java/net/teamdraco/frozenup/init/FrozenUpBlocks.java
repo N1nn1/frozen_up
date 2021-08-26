@@ -7,7 +7,6 @@ import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.teamdraco.frozenup.FrozenUp;
@@ -23,7 +22,7 @@ import java.util.function.ToIntFunction;
 
 public class FrozenUpBlocks {
     public static final Block CHILLOO_FEATHER_BLOCK = register("chilloo_feather_block", new Block(FabricBlockSettings.of(Material.SOLID_ORGANIC).strength(0.1f).breakByTool(FabricToolTags.SHEARS).sounds(FrozenUpBlockSoundGroups.CHILLOO_FEATHER_BLOCK)));
-    public static final Block CHILLOO_FEATHER_BLOCK_CARPET = register("chilloo_feather_block_carpet", new PublicCarpetBlock(DyeColor.WHITE, FabricBlockSettings.copyOf(CHILLOO_FEATHER_BLOCK)));
+    public static final Block CHILLOO_FEATHER_BLOCK_CARPET = register("chilloo_feather_block_carpet", new PublicCarpetBlock(FabricBlockSettings.copyOf(CHILLOO_FEATHER_BLOCK)));
     public static final Block CHILLOO_FEATHER_LAMP = register("chilloo_feather_lamp", new FeatherLampBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC).strength(0.3F).sounds(FrozenUpBlockSoundGroups.CHILLOO_FEATHER_BLOCK).breakByTool(FabricToolTags.SHEARS).luminance(createLightLevelFromLitBlockState(10))));
 
     public static final Block TRUFFLE_DIRT = register("truffle_dirt", new Block(FabricBlockSettings.copyOf(Blocks.DIRT).strength(3.5F).breakByTool(FabricToolTags.SHOVELS)));
@@ -31,7 +30,7 @@ public class FrozenUpBlocks {
 
     public static final Block WINTER_BERRY_BUSH = register("winter_berry_bush", new WinterBerryBushBlock(FabricBlockSettings.copyOf(Blocks.SWEET_BERRY_BUSH)));
     public static final Block GELID_DIRT = register("gelid_dirt", new GelidDirtBlock(FabricBlockSettings.copyOf(Blocks.PODZOL)));
-    public static final Block GELID_DIRT_PATH = register("gelid_dirt_path", new PublicPathBlock(FabricBlockSettings.copyOf(Blocks.GRASS_PATH)));
+    public static final Block GELID_DIRT_PATH = register("gelid_dirt_path", new PublicPathBlock(FabricBlockSettings.copyOf(Blocks.DIRT_PATH)));
     public static final Block FROZEN_GRASS = register("frozen_grass", new FrozenPlantBlock(FabricBlockSettings.copyOf(Blocks.FERN)));
 
     public static final Block CUT_ICE = register("cut_ice", new Block(FabricBlockSettings.copyOf(Blocks.PACKED_ICE).breakByTool(FabricToolTags.PICKAXES)));
