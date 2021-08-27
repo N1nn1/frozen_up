@@ -1,0 +1,62 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "frozenup:block/chilloo_feather_covering",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "frozenup:block/chilloo_feather_covering",
+        "x": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "frozenup:block/chilloo_feather_covering",
+        "x": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "frozenup:block/chilloo_feather_covering"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "frozenup:block/chilloo_feather_covering",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "frozenup:block/chilloo_feather_covering",
+        "y": 270,
+        "uvlock": true
+      }
+    }
+  ]
+}

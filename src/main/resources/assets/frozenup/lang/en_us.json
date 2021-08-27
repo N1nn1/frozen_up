@@ -6,16 +6,12 @@
   "item.frozenup.truffle_muffin": "Truffle Muffin",
   "item.frozenup.chilloo_spawn_egg": "Chilloo Spawn Egg",
   "item.frozenup.preserved_spawn_egg": "Preserved Spawn Egg",
-  "item.frozenup.chilloo_feather": "Chilloo Feather",
+  "item.frozenup.chilloo_feather": "Chilloo Fiber",
   "item.frozenup.empty_mug": "Empty Mug",
   "item.frozenup.mug_of_chocolate_milk": "Mug of Chocolate Milk",
   "item.frozenup.mug_of_truffle_hot_chocolate": "Mug of Truffle Hot Chocolate",
   "item.frozenup.mug_of_milk": "Mug of Milk",
-  "item.frozenup.winter_berries": "Winter Berries",
 
-  "block.frozenup.frozen_grass": "Frozen Grass",
-  "block.frozenup.gelid_dirt": "Gelid Dirt",
-  "block.frozenup.gelid_dirt_path": "Gelid Dirt Path",
   "block.frozenup.cut_ice": "Cut Ice",
   "block.frozenup.cut_ice_stairs": "Cut Ice Stairs",
   "block.frozenup.cut_ice_slab": "Cut Ice Slab",
@@ -24,10 +20,10 @@
   "block.frozenup.cut_ice_cube_slab": "Cut Ice Cube Slab",
   "block.frozenup.cut_ice_cube_wall": "Cut Ice Cube Wall",
   "block.frozenup.truffle_dirt": "Truffle Dirt",
-  "block.frozenup.chilloo_feather_block": "Chilloo Feather Block",
-  "block.frozenup.chilloo_feather_block_carpet": "Chilloo Feather Carpet",
+  "block.frozenup.chilloo_feather_block": "Chilloo Fiber Block",
+  "block.frozenup.chilloo_feather_covering": "Chilloo Fiber Covering",
   "block.frozenup.truffle_cake": "Chocolate Truffle Cake",
-  "block.frozenup.chilloo_feather_lamp": "Chilloo Feather Lamp",
+  "block.frozenup.chilloo_feather_lamp": "Chilloo Fiber Lamp",
   "block.frozenup.empty_mug": "Empty Mug",
   "block.frozenup.mug_of_milk": "Mug of Milk",
   "block.frozenup.mug_of_chocolate_milk": "Mug of Chocolate Milk",
@@ -35,9 +31,10 @@
 
   "entity.frozenup.chilloo": "Chilloo",
 
-  "subtitles.frozenup.entity.chilloo.ambient": "Chilloo chirps",
+  "subtitles.frozenup.entity.chilloo.ambient": "Chilloo chirps happily",
   "subtitles.frozenup.entity.chilloo.hurt": "Chilloo hurts",
   "subtitles.frozenup.entity.chilloo.death": "Chilloo dies",
-  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_on": "Lamp on",
-  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off": "Lamp off"
+  "subtitles.frozenup.entity.chilloo.eat": "Chilloo bites",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_on": "Chilloo Fiber Lamp on",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off": "Chilloo Fiber Lamp off"
 }

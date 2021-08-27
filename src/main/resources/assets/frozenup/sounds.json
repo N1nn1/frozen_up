@@ -18,7 +18,14 @@
     ],
     "subtitle": "subtitles.frozenup.entity.chilloo.death"
   },
-
+  "entity.chilloo.eat": {
+    "sounds": [
+      "minecraft:mob/fox/bite1",
+      "minecraft:mob/fox/bite2",
+      "minecraft:mob/fox/bite3"
+    ],
+    "subtitle": "subtitles.frozenup.entity.chilloo.eat"
+  },
   "block.chilloo_feather_block.break": {
     "sounds": [
       "frozenup:block/chilloo_feather_block/soft1",

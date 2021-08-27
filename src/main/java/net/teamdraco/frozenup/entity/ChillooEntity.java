@@ -47,7 +47,7 @@ import java.util.function.Predicate;
 
 public class ChillooEntity extends TameableEntity {
     public static final int DIG_ANIMATION_ID = 10;
-    private static final Ingredient TEMPTATION_ITEMS = Ingredient.ofItems(Items.WHEAT_SEEDS, Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.COCOA_BEANS, Items.POTATO, Items.CARROT);
+    private static final Ingredient TEMPTATION_ITEMS = Ingredient.ofItems(Items.WHEAT_SEEDS, Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.COCOA_BEANS, Items.POTATO, Items.CARROT, Items.BEETROOT, Items.PUMPKIN_SEEDS);
     public int timeUntilNextFeather = this.random.nextInt(10000) + 2500;
     public int digTimer = 0;
     private static final TrackedData<Integer> BANDS_COLOR = DataTracker.registerData(ChillooEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -62,8 +62,8 @@ public class ChillooEntity extends TameableEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new SitGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 1.4D));
-        this.goalSelector.add(3, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
+        this.goalSelector.add(2, new FollowOwnerGoal(this, 1.8D, 10.0F, 2.0F, false));
+        this.goalSelector.add(3, new EscapeDangerGoal(this, 1.4D));
         this.goalSelector.add(4, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(5, new TemptGoal(this, 1.0D, TEMPTATION_ITEMS, false));
         this.goalSelector.add(6, new DiggingGoal(this));
@@ -124,7 +124,7 @@ public class ChillooEntity extends TameableEntity {
     @Override
     public boolean isBreedingItem(ItemStack stack) {
         Item item = stack.getItem();
-        return item == Items.WHEAT_SEEDS || item == Items.BEETROOT_SEEDS || item == Items.MELON_SEEDS || item == Items.COCOA_BEANS || item == Items.POTATO || item == Items.CARROT;
+        return item == Items.WHEAT_SEEDS || item == Items.BEETROOT_SEEDS || item == Items.MELON_SEEDS || item == Items.COCOA_BEANS || item == Items.POTATO || item == Items.CARROT|| item == Items.BEETROOT || item == Items.PUMPKIN_SEEDS;
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -133,13 +133,12 @@ public class ChillooEntity extends TameableEntity {
         super.setTamed(tamed);
         if (tamed) {
             this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(20.0D);
-            this.setHealth(20.0F);
+            this.setHealth(this.getMaxHealth());
         } else {
             this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(12.0D);
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
@@ -151,13 +150,13 @@ public class ChillooEntity extends TameableEntity {
             if (this.isTamed()) {
                 if (this.isBreedingItem(itemStack) && this.getHealth() < this.getMaxHealth()) {
                     if (!this.isSilent()) {
-                        this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_GENERIC_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                        this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
                     }
                     if (!player.getAbilities().creativeMode) {
                         itemStack.decrement(1);
                     }
 
-                    this.heal((float)item.getFoodComponent().getHunger());
+                    this.heal(1.0F);
                     return ActionResult.SUCCESS;
                 }
 
@@ -185,7 +184,7 @@ public class ChillooEntity extends TameableEntity {
                 }
             } else if (item == FrozenUpItems.FROZEN_TRUFFLE) {
                 if (!this.isSilent()) {
-                    this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_GENERIC_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
                 }
                 if (!player.getAbilities().creativeMode) {
                     itemStack.decrement(1);

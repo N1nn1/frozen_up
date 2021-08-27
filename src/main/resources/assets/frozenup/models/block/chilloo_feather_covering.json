@@ -1,0 +1,22 @@
+{
+	"credit": "Made by Ninni",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "frozenup:block/chilloo_feather_block",
+		"chilloo_feather_block": "frozenup:block/chilloo_feather_block"
+	},
+	"elements": [
+		{
+			"from": [0, 0, -0.15],
+			"to": [16, 16, 0.85],
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#chilloo_feather_block"},
+				"east": {"uv": [0, 0, 1, 16], "texture": "#chilloo_feather_block"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#chilloo_feather_block"},
+				"west": {"uv": [0, 0, 1, 16], "texture": "#chilloo_feather_block"},
+				"up": {"uv": [0, 0, 16, 1], "texture": "#chilloo_feather_block"},
+				"down": {"uv": [0, 0, 16, 1], "texture": "#chilloo_feather_block"}
+			}
+		}
+	]
+}

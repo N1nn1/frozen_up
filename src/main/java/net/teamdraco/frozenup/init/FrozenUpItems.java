@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
@@ -28,11 +27,6 @@ public class FrozenUpItems {
     public static final Item MUG_OF_MILK = register("mug_of_milk", new MilkMugItem(FrozenUpBlocks.MUG_OF_MILK, new FabricItemSettings().group(FrozenUp.ITEM_GROUP).maxCount(1)));
     public static final Item MUG_OF_CHOCOLATE_MILK = register("mug_of_chocolate_milk", new ChocolateMilkMugItem(FrozenUpBlocks.MUG_OF_CHOCOLATE_MILK, new FabricItemSettings().food(new FoodComponent.Builder().hunger(3).saturationModifier(3.0f).build()).group(FrozenUp.ITEM_GROUP).maxCount(1)));
     public static final Item MUG_OF_TRUFFLE_HOT_CHOCOLATE = register("mug_of_truffle_hot_chocolate", new TruffleHotChocolateMugItem(FrozenUpBlocks.MUG_OF_TRUFFLE_HOT_CHOCOLATE, new FabricItemSettings().group(FrozenUp.ITEM_GROUP).food(new FoodComponent.Builder().hunger(8).saturationModifier(8.0f).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 500, 0), 1.0f).build()).maxCount(1)));
-    //biomes items
-    public static final Item WINTER_BERRIES = register("winter_berries", new AliasedBlockItem(FrozenUpBlocks.WINTER_BERRY_BUSH, (new FabricItemSettings().group(FrozenUp.ITEM_GROUP).food(new FoodComponent.Builder().statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 6 * 20), 0.5f).hunger(4).saturationModifier(1F).build()))));
-    public static final Item GELID_DIRT = register("gelid_dirt", new BlockItem(FrozenUpBlocks.GELID_DIRT, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
-    public static final Item GELID_DIRT_PATH = register("gelid_dirt_path", new BlockItem(FrozenUpBlocks.GELID_DIRT_PATH, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
-    public static final Item FROZEN_GRASS = register("frozen_grass", new BlockItem(FrozenUpBlocks.FROZEN_GRASS, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
     //ice blocks
     public static final Item CUT_ICE = register("cut_ice", new BlockItem(FrozenUpBlocks.CUT_ICE, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
     public static final Item CUT_ICE_STAIRS = register("cut_ice_stairs", new BlockItem(FrozenUpBlocks.CUT_ICE_STAIRS, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
@@ -45,7 +39,7 @@ public class FrozenUpItems {
     //chilloo related items
     public static final Item CHILLOO_FEATHER = register("chilloo_feather", new Item(new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
     public static final Item CHILLOO_FEATHER_BLOCK = register("chilloo_feather_block", new BlockItem(FrozenUpBlocks.CHILLOO_FEATHER_BLOCK, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
-    public static final Item CHILLOO_FEATHER_BLOCK_CARPET = register("chilloo_feather_block_carpet", new BlockItem(FrozenUpBlocks.CHILLOO_FEATHER_BLOCK_CARPET, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
+    public static final Item CHILLOO_FEATHER_COVERING = register("chilloo_feather_covering", new BlockItem(FrozenUpBlocks.CHILLOO_FEATHER_COVERING, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
     public static final Item CHILLOO_FEATHER_LAMP = register("chilloo_feather_lamp", new BlockItem(FrozenUpBlocks.CHILLOO_FEATHER_LAMP, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
 
 

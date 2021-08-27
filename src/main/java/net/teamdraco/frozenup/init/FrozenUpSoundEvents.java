@@ -9,6 +9,7 @@ public class FrozenUpSoundEvents {
     public static final SoundEvent ENTITY_CHILLOO_AMBIENT = bouncer("ambient");
     public static final SoundEvent ENTITY_CHILLOO_DEATH = bouncer("death");
     public static final SoundEvent ENTITY_CHILLOO_HURT = bouncer("hurt");
+    public static final SoundEvent ENTITY_CHILLOO_EAT = bouncer("eat");
     private static SoundEvent bouncer(String type) {
         return entity("chilloo", type);
     }

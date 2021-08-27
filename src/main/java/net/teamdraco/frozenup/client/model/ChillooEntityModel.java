@@ -173,7 +173,7 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
             this.head.pivotZ = -4f;
 
             this.tail.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.1F) * degree * 0.8F * limbDistance;
-            this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.6F * limbDistance - 0.4F;
+            this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.0F) * degree * 0.6F * limbDistance - 0.4F;
             this.tail.pivotZ = 14f;
 
             this.right_leg.pitch = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 1.0F * limbDistance;
@@ -199,8 +199,8 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
             this.head.pivotY = 14f;
             this.head.pivotZ = -8f;
 
-            this.tail.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.1F) * degree * 0.8F * limbDistance;
-            this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.4F) * degree * 0.6F * limbDistance - 0.4F;
+            this.tail.yaw = MathHelper.cos(-1.0F + limbAngle * speed * 0.2F) * degree * 1.2F * limbDistance;
+            this.tail.pitch = MathHelper.cos(limbAngle * speed * 0.0F) * degree * 0.6F * limbDistance - 0.4F;
             this.tail.pivotZ = 14f;
 
             this.right_leg.pitch = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 1.0F * limbDistance;
