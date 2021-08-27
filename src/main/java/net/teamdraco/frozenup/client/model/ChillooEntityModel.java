@@ -60,7 +60,7 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
         ModelPartData body_feathers = body.addChild(
             "body_feathers",
             ModelPartBuilder.create()
-                            .uv(3, 25)
+                            .uv(4, 25)
                             .mirrored(false)
                             .cuboid(-5.0F, 6.0F, 0.0F, 10.0F, 3.0F, 16.0F, new Dilation(0.0F)),
             ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F)

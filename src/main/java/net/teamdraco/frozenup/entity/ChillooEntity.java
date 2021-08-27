@@ -62,8 +62,7 @@ public class ChillooEntity extends TameableEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new SitGoal(this));
-        this.goalSelector.add(2, new FollowOwnerGoal(this, 1.8D, 10.0F, 2.0F, false));
-        this.goalSelector.add(3, new EscapeDangerGoal(this, 1.4D));
+        this.goalSelector.add(2, new FollowOwnerGoal(this, 1.2D, 10.0F, 2.0F, false));
         this.goalSelector.add(4, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(5, new TemptGoal(this, 1.0D, TEMPTATION_ITEMS, false));
         this.goalSelector.add(6, new DiggingGoal(this));
@@ -73,8 +72,10 @@ public class ChillooEntity extends TameableEntity {
                 return !isTamed() && super.canStart();
             }
         });
-        this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0D));
-        this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
+        this.goalSelector.add(8, new EscapeDangerGoal(this, 1.4D));
+        this.goalSelector.add(9, new WanderAroundFarGoal(this, 1.0D));
+        this.goalSelector.add(10, new WanderAroundGoal(this, 1.0D));
+        this.goalSelector.add(11, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
     }
 
     @Override
