@@ -222,7 +222,6 @@ public class ChillooEntity extends TameableEntity {
         }
     }
 
-
     @Nullable
     @Override
     public PassiveEntity createChild (ServerWorld world, PassiveEntity entity) {
