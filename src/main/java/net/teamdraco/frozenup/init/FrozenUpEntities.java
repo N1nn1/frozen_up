@@ -45,7 +45,7 @@ public class FrozenUpEntities {
 
     static {
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.CREATURE, FrozenUpEntities.CHILLOO, 30, 3, 6);
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.MONSTER, FrozenUpEntities.PRESERVED, 60, 1, 1);
+        //BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.MONSTER, FrozenUpEntities.PRESERVED, 60, 1, 1);
     }
 
     @SuppressWarnings("unchecked")
