@@ -3,7 +3,13 @@ package net.teamdraco.frozenup.client.model;
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.Dilation;
+import net.minecraft.client.model.ModelData;
+import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.ModelPartBuilder;
+import net.minecraft.client.model.ModelPartData;
+import net.minecraft.client.model.ModelTransform;
+import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.util.math.MathHelper;
 import net.teamdraco.frozenup.entity.ChillooEntity;
@@ -11,18 +17,20 @@ import net.teamdraco.frozenup.entity.ChillooEntity;
 @SuppressWarnings("FieldCanBeLocal, unused")
 @Environment(EnvType.CLIENT)
 public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
+    private float headPitchModifier;
+
     private final ModelPart root;
 
     private final ModelPart body;
     private final ModelPart tail;
     private final ModelPart rightLeg;
     private final ModelPart leftLeg;
-    private final ModelPart head;
+    public final ModelPart head;
     private final ModelPart leftWhiskers;
     private final ModelPart rightWhiskers;
 
     public ChillooEntityModel(ModelPart root) {
-        super(true, 0.0F, 0.0F);
+        super(true, 8F, 3.35F);
         this.root = root;
 
         this.body       = root.getChild("body");
@@ -129,15 +137,57 @@ public class ChillooEntityModel extends AnimalModel<ChillooEntity> {
     }
 
     @Override
+    public void animateModel(ChillooEntity entity, float limbAngle, float limbDistance, float tickDelta) {
+        super.animateModel(entity, limbAngle, limbDistance, tickDelta);
+        this.head.pivotY = 15.0F + entity.getNeckAngle(tickDelta) * 4.0F;
+        this.headPitchModifier = entity.getHeadAngle(tickDelta);
+    }
+
+    @Override
     public void setAngles(ChillooEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        limbDistance = MathHelper.clamp(limbDistance, -0.45F, 0.45F);
         float speed = 1.0f;
         float degree = 1.0f;
-        this.leftWhiskers.yaw = MathHelper.cos(animationProgress * speed * 0.6F) * degree * 0.2F * 0.5F + 0.8F;
-        this.rightWhiskers.yaw = MathHelper.cos(animationProgress * speed * 0.6F) * degree * -0.2F * 0.5F - 0.8F;
+        head.pitch = this.headPitchModifier;
+        head.yaw = headYaw * ((float) Math.PI / 180f);
+        leftWhiskers.yaw = MathHelper.cos(animationProgress * speed * 0.6F) * degree * 0.2F * 0.5F + 0.8F;
+        rightWhiskers.yaw = MathHelper.cos(animationProgress * speed * 0.6F + (float)Math.PI) * degree * 0.2F * 0.5F - 0.8F;
+        rightLeg.pitch = MathHelper.cos(limbAngle * speed * 0.6F) * 1.4F * limbDistance;
+        leftLeg.pitch = MathHelper.cos(limbAngle * speed * 0.6F + (float)Math.PI) * 1.4F * limbDistance;
+        body.roll = MathHelper.cos(limbAngle * speed * 0.4F) * 0.3F * limbDistance;
+        tail.yaw = MathHelper.cos(limbAngle * speed * 0.2F) * degree * 1F * limbDistance;
+        tail.pitch = MathHelper.cos(limbAngle * speed * 0.4F+ (float)Math.PI/2) * degree * 0.2F * limbDistance - 0.2F;
+        body.pitch = 0.0F;
+        tail.pivotY = 0.0F;
+        rightLeg.pivotZ = 0.0F;
+        leftLeg.pivotZ = 0.0F;
+        body.pivotY = 13.5F;
+        leftLeg.roll = 0.0F;
+        rightLeg.roll = 0.0F;
+        head.pivotY = 15.0F;
+        head.pivotZ = -8.0F;
+        if (entity.isTamed()) {
+            tail.yaw = MathHelper.cos(animationProgress * speed * 0.2F) * degree * 1F * 0.5F;
+            tail.pitch = MathHelper.cos(animationProgress * speed * 0.4F+ (float)Math.PI/2) * degree * 0.2F * 0.5F - 0.2F;
+        }
 
-        if (entity.digTimer <= 0) {
-            head.pitch = headPitch * ((float) Math.PI / 180f);
-            head.yaw = headYaw * ((float) Math.PI / 180f);
+        if (entity.isInSittingPose()){
+            body.pitch = -20.0F;
+            body.pivotY = 13.5F + 3.5F;
+            tail.pivotY = 0.4F;
+            tail.pitch += 2.2F;
+            rightLeg.pitch = -0.5F;
+            rightLeg.roll = 0.5F;
+            rightLeg.pivotZ = 5.5F;
+            leftLeg.pitch = -0.5F;
+            leftLeg.roll = -0.5F;
+            leftLeg.pivotZ = 5.5F;
+            head.pivotY = 8.5F;
+            head.pivotZ = -2.5F;
+            if (entity.isBaby()){
+                head.pivotY = 12.5F;
+                head.pivotZ = -4.5F;
+            }
         }
     }
 

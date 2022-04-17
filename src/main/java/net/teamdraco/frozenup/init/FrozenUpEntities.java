@@ -6,7 +6,11 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.item.SpawnEggItem;
@@ -25,7 +29,7 @@ public class FrozenUpEntities {
         FabricEntityTypeBuilder.createMob()
                                .entityFactory(ChillooEntity::new)
                                .defaultAttributes(ChillooEntity::createChillooAttributes)
-                               .dimensions(EntityDimensions.changing(1.0f, 1.0f))
+                               .dimensions(EntityDimensions.changing(1.0f, 1.2f))
                                .spawnGroup(SpawnGroup.CREATURE)
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PathAwareEntity::canMobSpawn),
         new Pair<>(0xc2cbce, 0x32383c)

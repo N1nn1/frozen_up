@@ -9,6 +9,7 @@ import net.teamdraco.frozenup.FrozenUp;
 import net.teamdraco.frozenup.client.client.init.FrozenUpEntityModelLayers;
 import net.teamdraco.frozenup.client.model.ChillooEntityModel;
 import net.teamdraco.frozenup.client.renderer.entity.feature.ChillooBandsFeatureRenderer;
+import net.teamdraco.frozenup.client.renderer.entity.feature.ChillooHeldItemFeatureRenderer;
 import net.teamdraco.frozenup.entity.ChillooEntity;
 
 @Environment(EnvType.CLIENT)
@@ -19,6 +20,7 @@ public class ChillooEntityRenderer extends MobEntityRenderer<ChillooEntity, Chil
     public ChillooEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new ChillooEntityModel(ctx.getPart(FrozenUpEntityModelLayers.CHILLOO)), 0.6F);
         this.addFeature(new ChillooBandsFeatureRenderer(this));
+        this.addFeature(new ChillooHeldItemFeatureRenderer(this));
     }
 
     @Override
