@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "frozenup:cut_ice",
+    "frozenup:cut_ice_stairs",
+    "frozenup:cut_ice_slab",
+    "frozenup:cut_ice_cubes",
+    "frozenup:cut_ice_cube_stairs",
+    "frozenup:cut_ice_cube_slab",
+    "frozenup:cut_ice_cube_wall"
+  ]
+}

@@ -18,7 +18,6 @@ import net.teamdraco.frozenup.item.TruffleHotChocolateMugItem;
 public class FrozenUpItems {
     //truffle related items
     public static final Item FROZEN_TRUFFLE = register("frozen_truffle", new Item(new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
-    public static final Item TRUFFLE_DIRT = register("truffle_dirt", new BlockItem(FrozenUpBlocks.TRUFFLE_DIRT, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
     public static final Item TRUFFLE = register("truffle", new Item(new FabricItemSettings().group(FrozenUp.ITEM_GROUP).food(new FoodComponent.Builder().hunger(6).saturationModifier(0.5F).build())));
     public static final Item TRUFFLE_MUFFIN = register("truffle_muffin", new Item(new FabricItemSettings().group(FrozenUp.ITEM_GROUP).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.4F).snack().build())));
     public static final Item TRUFFLE_CAKE = register("truffle_cake", new BlockItem(FrozenUpBlocks.TRUFFLE_CAKE, new FabricItemSettings().group(FrozenUp.ITEM_GROUP).maxCount(1)));

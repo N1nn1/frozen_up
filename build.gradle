@@ -1,127 +1,31 @@
 plugins {
-    id 'fabric-loom' version '0.8-SNAPSHOT'
+    id 'fabric-loom' version '0.11-SNAPSHOT'
     id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
-archivesBaseName = project.mod_id
+archivesBaseName = project.archives_base_name
+version = project.mod_version
 group = project.maven_group
 
-if (System.env.CI == "true") {
-    version = "${project.mod_version}+a${System.env.GITHUB_RUN_NUMBER}.${System.env.GITHUB_REF.replaceAll("refs/heads/", "").replaceAll("/", "-")}"
-}
-else {
-    version = "${project.mod_version}+${project.minecraft_version}-fabric"
-}
-
-minecraft {}
-
 repositories {
-    maven {
-        name = "Dodo Gang Maven Repo"
-        url = "http://maven.dodogang.net/releases/"
-        allowInsecureProtocol = true
-    }
-
-    maven { url "https://jitpack.io/" }
-    maven { url "https://maven.dblsaiko.net/" }
-    maven { url "https://server.bbkr.space/artifactory/libs-release/" }
-    maven { url 'https://maven.blamejared.com/' }
-    maven { url "https://maven.fabricmc.net/" }
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.shadew.net/" }
-    maven { url "https://maven.enginehub.org/repo/" }
-    maven { url "https://aperlambda.github.io/maven/" }
-    maven { url "https://maven.gegy.dev/" }
-
-    maven { url = "https://maven.terraformersmc.com/releases/" }
-    // maven { url 'https://raw.githubusercontent.com/TerraformersMC/Archive/main/releases/' }
+    // Add repositories to retrieve artifacts from in here.
+    // You should only use this when depending on other mods because
+    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
 }
 
 dependencies {
+    // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_build}:v2"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    /*
-     * COMPATIBILITY
-     */
-
-    String canvas = "grondag:canvas-mc117-1.17:${project.canvas_version}"
-    if (!Boolean.parseBoolean("${project.ip_enabled}") && Boolean.parseBoolean("${project.canvas_enabled}")) { // Immersive Portals is incompatible with Canvas
-        modImplementation(canvas) {
-            exclude group: "net.fabricmc.fabric-api"
-            exclude group: "me.shedaniel.cloth"
-        }
-    } else {
-        modCompileOnly(canvas) {
-            exclude group: "net.fabricmc.fabric-api"
-            exclude group: "me.shedaniel.cloth"
-        }
-    }
-
-    String ip = "com.github.qouteall.ImmersivePortalsMod:build:${project.ip_version}"
-    if (Boolean.parseBoolean("${project.ip_enabled}")) {
-        modImplementation(ip) {
-            exclude group: "net.fabricmc.fabric-api"
-            exclude group: "me.shedaniel.cloth"
-            exclude group: "com.github.Virtuoel"
-        }
-    } else {
-        modCompileOnly(ip) {
-            exclude group: "net.fabricmc.fabric-api"
-            exclude group: "me.shedaniel.cloth"
-            exclude group: "com.github.Virtuoel"
-        }
-    }
-
-    modImplementation("com.github.teamhollow:fallingblocktweaks:${project.fbt_version}")
-
-    /*
-     * LIBRARIES
-     */
-    include("com.github.andantedevs:chord:${project.chord_version}") { exclude group: "com.terraformersmc" }
-    modImplementation("com.github.andantedevs:chord:${project.chord_version}") { exclude group: "com.terraformersmc" }
-
-    modImplementation ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
-    include ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
-
-    modImplementation("com.terraformersmc:modmenu:${project.mod_menu_version}") { exclude group: "net.fabricmc.fabric-api" }
-
-    modImplementation("net.shadew:debug:${project.jedt_version}") { exclude group: "net.fabricmc.fabric-api" }
-
-    include("net.shadew:shwutil:${project.shwutil_version}")
-    implementation("net.shadew:shwutil:${project.shwutil_version}") // not a mod, no need for modImplementation
-
-    include("net.shadew:ptg:${project.ptg_version}")
-    implementation("net.shadew:ptg:${project.ptg_version}") // neither a mod
-
-    /*
-     * RUNTIME UTILITIES
-     */
-
-    modRuntime("com.github.joaoh1:OkZoomer:${project.okzoomer_version}") {
-        exclude group: "net.fabricmc.fabric-api"
-        exclude group: "me.shedaniel.cloth"
-        exclude group: "com.terraformersmc"
-    }
-
-    /*String sodium = "com.github.CaffeineMC:sodium-fabric:${project.sodium_version}"
-    if (!Boolean.parseBoolean("${project.ip_enabled}") && !Boolean.parseBoolean("${project.canvas_enabled}")) {
-        modRuntime(sodium) { exclude group: "net.fabricmc.fabric-api" }
-    } else {
-        modCompileOnly(sodium) { exclude group: "net.fabricmc.fabric-api" }
-    }*/
-    // modRuntime("com.github.CaffeineMC:lithium-fabric:${project.lithium_version}") { exclude group: "net.fabricmc.fabric-api" }
-    // modRuntime("com.github.CaffeineMC:phosphor-fabric:${project.phosphor_version}") { exclude group: "net.fabricmc.fabric-api" }
-    // modRuntime("com.github.CaffeineMC:hydrogen-fabric:${project.hydrogen_version}") { exclude group: "net.fabricmc.fabric-api" }
-}
-
-loom {
-    // accessWidener "src/main/resources/${project.mod_id}.accesswidener"
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
 
 processResources {
@@ -133,10 +37,15 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
+    // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
+    it.options.release = 17
+}
 
-    // Minecraft 1.17 (21w19a) upwards uses Java 16.
-    it.options.release = 16
+java {
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
 }
 
 jar {
@@ -145,12 +54,19 @@ jar {
     }
 }
 
+// configure the maven publication
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact(remapJar) {
-                builtBy remapJar
-            }
+            from components.java
         }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+        // Notice: This block does NOT have the same function as the block in the top level.
+        // The repositories here will be used for publishing your artifact, not for
+        // retrieving dependencies.
     }
 }

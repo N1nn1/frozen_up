@@ -268,5 +268,3 @@ public class ChillooEntity extends TameableEntity {
         }
     }
 }
-
-

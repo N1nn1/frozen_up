@@ -16,7 +16,6 @@ import net.minecraft.util.Identifier;
 import net.teamdraco.frozenup.client.client.init.FrozenUpEntityModelLayers;
 import net.teamdraco.frozenup.client.model.ChillooEntityModel;
 import net.teamdraco.frozenup.client.renderer.ChillooEntityRenderer;
-import net.teamdraco.frozenup.client.renderer.PreservedEntityRenderer;
 import net.teamdraco.frozenup.init.FrozenUpBlocks;
 import net.teamdraco.frozenup.init.FrozenUpEntities;
 
@@ -26,13 +25,9 @@ public class FrozenUpClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         EntityRendererRegistry errInstance = EntityRendererRegistry.INSTANCE;
-        errInstance.register(FrozenUpEntities.PRESERVED, PreservedEntityRenderer::new);
         errInstance.register(FrozenUpEntities.CHILLOO, ChillooEntityRenderer::new);
 
         ImmutableMap.<EntityModelLayer, EntityModelLayerRegistry.TexturedModelDataProvider>of(
-            FrozenUpEntityModelLayers.PRESERVED, () -> TexturedModelData.of(BipedEntityModel.getModelData(Dilation.NONE, 0.0F), 64, 64),
-            FrozenUpEntityModelLayers.PRESERVED_INNER_ARMOR, () -> TexturedModelData.of(BipedEntityModel.getModelData(new Dilation(0.5F), 0.0F), 64, 32),
-            FrozenUpEntityModelLayers.PRESERVED_OUTER_ARMOR, () -> TexturedModelData.of(BipedEntityModel.getModelData(new Dilation(1.0F), 0.0F), 64, 32),
             FrozenUpEntityModelLayers.CHILLOO, ChillooEntityModel::getTexturedModelData
         ).forEach(EntityModelLayerRegistry::registerModelLayer);
 
