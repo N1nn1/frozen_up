@@ -2,13 +2,21 @@
   "entity.chilloo.ambient": {
     "sounds": [
       "frozenup:entity/chilloo/ambient1",
-      "frozenup:entity/chilloo/ambient2"
+      "frozenup:entity/chilloo/ambient2",
+      "frozenup:entity/chilloo/ambient3",
+      "frozenup:entity/chilloo/ambient4",
+      "frozenup:entity/chilloo/ambient5",
+      "frozenup:entity/chilloo/ambient6"
     ],
     "subtitle": "subtitles.frozenup.entity.chilloo.ambient"
   },
   "entity.chilloo.hurt": {
     "sounds": [
-      "frozenup:entity/chilloo/hurt"
+      "frozenup:entity/chilloo/hurt1",
+      "frozenup:entity/chilloo/hurt2",
+      "frozenup:entity/chilloo/hurt3",
+      "frozenup:entity/chilloo/hurt4",
+      "frozenup:entity/chilloo/hurt5"
     ],
     "subtitle": "subtitles.frozenup.entity.chilloo.hurt"
   },
@@ -17,6 +25,12 @@
       "frozenup:entity/chilloo/death"
     ],
     "subtitle": "subtitles.frozenup.entity.chilloo.death"
+  },
+  "entity.chilloo.spit": {
+    "sounds": [
+      "frozenup:entity/chilloo/spit"
+    ],
+    "subtitle": "subtitles.frozenup.entity.chilloo.spit"
   },
   "entity.chilloo.eat": {
     "sounds": [

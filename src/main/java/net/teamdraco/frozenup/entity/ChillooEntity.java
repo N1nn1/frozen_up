@@ -60,7 +60,12 @@ public class ChillooEntity extends TameableEntity {
     private int eatingTime;
     private int digInGrassTimer;
     private DigInGrassGoal digInGrassGoal;
-    //TODO: shedding/shearing feathers and custom sounds for so many things, also maybe comment some of the code since I dont have a clear understanding of what stuff does on top of my head
+    //TODO:
+    // shedding/shearing feathers
+    // custom sounds for eating
+    // maybe comment some of the code since I dont have a clear understanding of what stuff does at the top of my head
+    // breeding and tempting item tags
+    // make them afraid of foxes and make only artic foxes attack them
 
     public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
         super(type, world);
@@ -271,7 +276,7 @@ public class ChillooEntity extends TameableEntity {
             ItemEntity itemEntity = new ItemEntity(this.world, this.getX() + this.getRotationVector().x, this.getY() + 1.0, this.getZ() + this.getRotationVector().z, stack);
             itemEntity.setPickupDelay(40);
             itemEntity.setThrower(this.getUuid());
-            this.playSound(SoundEvents.ENTITY_FOX_SPIT, 1.0F, 1.0F);
+            this.playSound(FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT, 1.0F, 1.0F);
             this.world.spawnEntity(itemEntity);
         }
     }
