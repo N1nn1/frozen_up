@@ -22,10 +22,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.teamdraco.frozenup.FrozenUp"
+      "com.ninni.frozenup.FrozenUp"
     ],
     "client": [
-      "net.teamdraco.frozenup.FrozenUpClient"
+      "com.ninni.frozenup.FrozenUpClient"
     ],
     "server": []
   },
