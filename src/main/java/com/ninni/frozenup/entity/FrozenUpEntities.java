@@ -4,8 +4,6 @@ import com.ninni.frozenup.FrozenUp;
 import com.ninni.frozenup.FrozenUpClient;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
@@ -20,7 +18,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.Biome;
 
 public class FrozenUpEntities {
     public static final EntityType<ChillooEntity> CHILLOO = register(
@@ -34,8 +31,6 @@ public class FrozenUpEntities {
                                .trackRangeBlocks(10),
         new Pair<>(0xc2cbce, 0x32383c)
     );
-
-    static { BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.CREATURE, FrozenUpEntities.CHILLOO, 30, 3, 6); }
 
     @SuppressWarnings("unchecked")
     private static <T extends Entity> EntityType<T> register(String id, FabricEntityTypeBuilder<T> entityType, Pair<Integer, Integer> spawnEggColors) {

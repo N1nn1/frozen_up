@@ -21,7 +21,7 @@ public class ChillooEntityRenderer extends MobEntityRenderer<ChillooEntity, Chil
     public ChillooEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new ChillooEntityModel(ctx.getPart(FrozenUpEntityModelLayers.CHILLOO)), 0.6F);
         this.addFeature(new ChillooBandsFeatureRenderer(this));
-        this.addFeature(new ChillooHeldItemFeatureRenderer(this));
+        this.addFeature(new ChillooHeldItemFeatureRenderer(this, ctx.getHeldItemRenderer()));
     }
 
     @Override public Identifier getTexture(ChillooEntity entity) { return entity.isTamed() ? TAMED_TEXTURE : TEXTURE; }

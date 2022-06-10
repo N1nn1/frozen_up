@@ -3,9 +3,9 @@ package com.ninni.frozenup.client.renderer.entity.feature;
 import com.ninni.frozenup.client.model.ChillooEntityModel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
@@ -17,9 +17,11 @@ import com.ninni.frozenup.entity.ChillooEntity;
 
 @Environment(EnvType.CLIENT)
 public class ChillooHeldItemFeatureRenderer extends FeatureRenderer<ChillooEntity, ChillooEntityModel> {
+    private final HeldItemRenderer heldItemRenderer;
 
-    public <T extends LivingEntity> ChillooHeldItemFeatureRenderer(ChillooEntityRenderer featureRendererContext) {
-        super(featureRendererContext);
+    public <T extends LivingEntity> ChillooHeldItemFeatureRenderer(ChillooEntityRenderer context, HeldItemRenderer heldItemRenderer) {
+        super(context);
+        this.heldItemRenderer = heldItemRenderer;
     }
 
     @Override
@@ -42,7 +44,7 @@ public class ChillooHeldItemFeatureRenderer extends FeatureRenderer<ChillooEntit
 
 
         ItemStack itemStack = chilloo.getEquippedStack(EquipmentSlot.MAINHAND);
-        MinecraftClient.getInstance().getHeldItemRenderer().renderItem(chilloo, itemStack, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light);
+        this.heldItemRenderer.renderItem(chilloo, itemStack, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light);
         matrices.pop();
     }
 }

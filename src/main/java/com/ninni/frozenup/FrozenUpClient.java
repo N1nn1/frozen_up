@@ -7,8 +7,8 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
@@ -18,11 +18,9 @@ import com.ninni.frozenup.entity.FrozenUpEntities;
 
 @Environment(EnvType.CLIENT)
 public class FrozenUpClient implements ClientModInitializer {
-    @SuppressWarnings("deprecation")
     @Override
     public void onInitializeClient() {
-        EntityRendererRegistry errInstance = EntityRendererRegistry.INSTANCE;
-        errInstance.register(FrozenUpEntities.CHILLOO, ChillooEntityRenderer::new);
+        EntityRendererRegistry.register(FrozenUpEntities.CHILLOO, ChillooEntityRenderer::new);
 
         ImmutableMap.<EntityModelLayer, EntityModelLayerRegistry.TexturedModelDataProvider>of(
             FrozenUpEntityModelLayers.CHILLOO, ChillooEntityModel::getTexturedModelData
