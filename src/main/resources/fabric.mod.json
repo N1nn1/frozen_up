@@ -22,10 +22,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.teamdraco.frozenup.FrozenUp"
+      "com.ninni.frozenup.FrozenUp"
     ],
     "client": [
-      "net.teamdraco.frozenup.FrozenUpClient"
+      "com.ninni.frozenup.FrozenUpClient"
     ],
     "server": []
   },
@@ -33,8 +33,9 @@
     "frozenup.mixins.json"
   ],
   "depends": {
-    "fabricloader": "0.13.3",
+    "fabricloader": ">=0.13.3",
     "fabric": "*",
-    "minecraft": ">=1.16.4"
+    "minecraft": "1.18.x",
+    "java": ">=17"
   }
 }

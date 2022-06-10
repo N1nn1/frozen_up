@@ -1,10 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.teamdraco.frozenup.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-  ],
+  "package": "com.ninni.frozenup.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [],
   "client": [
     "client.EntityModelLayersInvoker",
     "client.EntityModelLayersMixin"
