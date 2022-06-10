@@ -1,4 +1,4 @@
-package net.teamdraco.frozenup.init;
+package net.teamdraco.frozenup.entity;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -21,7 +21,6 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.teamdraco.frozenup.FrozenUp;
 import net.teamdraco.frozenup.FrozenUpClient;
-import net.teamdraco.frozenup.entity.ChillooEntity;
 
 public class FrozenUpEntities {
     public static final EntityType<ChillooEntity> CHILLOO = register(

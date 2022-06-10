@@ -13,7 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.teamdraco.frozenup.init.FrozenUpSoundEvents;
+import net.teamdraco.frozenup.sound.FrozenUpSoundEvents;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")

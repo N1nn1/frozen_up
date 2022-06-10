@@ -22,7 +22,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.teamdraco.frozenup.init.FrozenUpBlocks;
 import net.teamdraco.frozenup.item.AbstractDrinkableMugItem;
 import org.jetbrains.annotations.Nullable;
 
@@ -75,18 +74,13 @@ public class MugBlock extends HorizontalFacingBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        switch (state.get(FACING)) {
-            case NORTH:
-                return NORTH_SHAPE;
-            case SOUTH:
-                return SOUTH_SHAPE;
-            case EAST:
-                return EAST_SHAPE;
-            case WEST:
-                return WEST_SHAPE;
-            default:
-                return SHAPE;
-        }
+        return switch (state.get(FACING)) {
+            case NORTH -> NORTH_SHAPE;
+            case SOUTH -> SOUTH_SHAPE;
+            case EAST -> EAST_SHAPE;
+            case WEST -> WEST_SHAPE;
+            default -> SHAPE;
+        };
     }
 
     @Nullable

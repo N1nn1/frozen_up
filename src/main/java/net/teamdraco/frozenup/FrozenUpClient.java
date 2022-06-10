@@ -13,8 +13,8 @@ import net.minecraft.util.Identifier;
 import net.teamdraco.frozenup.client.client.init.FrozenUpEntityModelLayers;
 import net.teamdraco.frozenup.client.model.ChillooEntityModel;
 import net.teamdraco.frozenup.client.renderer.ChillooEntityRenderer;
-import net.teamdraco.frozenup.init.FrozenUpBlocks;
-import net.teamdraco.frozenup.init.FrozenUpEntities;
+import net.teamdraco.frozenup.block.FrozenUpBlocks;
+import net.teamdraco.frozenup.entity.FrozenUpEntities;
 
 @Environment(EnvType.CLIENT)
 public class FrozenUpClient implements ClientModInitializer {

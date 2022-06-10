@@ -3,7 +3,7 @@ package net.teamdraco.frozenup.block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.item.ItemPlacementContext;
-import net.teamdraco.frozenup.init.FrozenUpItems;
+import net.teamdraco.frozenup.item.FrozenUpItems;
 
 public class FiberCoveringBlock extends GlowLichenBlock {
     public FiberCoveringBlock(Settings settings) {

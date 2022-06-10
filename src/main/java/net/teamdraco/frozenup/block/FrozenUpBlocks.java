@@ -1,4 +1,4 @@
-package net.teamdraco.frozenup.init;
+package net.teamdraco.frozenup.block;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -14,11 +14,9 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.teamdraco.frozenup.FrozenUp;
-import net.teamdraco.frozenup.block.FeatherLampBlock;
-import net.teamdraco.frozenup.block.FiberCoveringBlock;
-import net.teamdraco.frozenup.block.MugBlock;
 import net.teamdraco.frozenup.block.vanilla.PublicCakeBlock;
 import net.teamdraco.frozenup.block.vanilla.PublicStairsBlock;
+import net.teamdraco.frozenup.item.FrozenUpItems;
 import net.teamdraco.frozenup.sound.FrozenUpBlockSoundGroups;
 
 import java.util.function.ToIntFunction;

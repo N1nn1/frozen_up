@@ -1,4 +1,4 @@
-package net.teamdraco.frozenup.init;
+package net.teamdraco.frozenup.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.teamdraco.frozenup.FrozenUp;
+import net.teamdraco.frozenup.block.FrozenUpBlocks;
 import net.teamdraco.frozenup.item.ChocolateMilkMugItem;
 import net.teamdraco.frozenup.item.MilkMugItem;
 import net.teamdraco.frozenup.item.TruffleHotChocolateMugItem;

@@ -42,9 +42,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.teamdraco.frozenup.entity.ai.goal.DigInGrassGoal;
-import net.teamdraco.frozenup.init.FrozenUpEntities;
-import net.teamdraco.frozenup.init.FrozenUpItems;
-import net.teamdraco.frozenup.init.FrozenUpSoundEvents;
+import net.teamdraco.frozenup.item.FrozenUpItems;
+import net.teamdraco.frozenup.sound.FrozenUpSoundEvents;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;

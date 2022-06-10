@@ -1,4 +1,4 @@
-package net.teamdraco.frozenup.init;
+package net.teamdraco.frozenup.sound;
 
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;

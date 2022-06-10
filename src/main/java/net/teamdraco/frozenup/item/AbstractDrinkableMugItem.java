@@ -10,7 +10,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import net.teamdraco.frozenup.init.FrozenUpItems;
 
 public abstract class AbstractDrinkableMugItem extends BlockItem {
     public AbstractDrinkableMugItem(Block block, Settings settings) {
