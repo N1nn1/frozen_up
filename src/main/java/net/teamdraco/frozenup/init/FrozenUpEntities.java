@@ -29,15 +29,14 @@ public class FrozenUpEntities {
         FabricEntityTypeBuilder.createMob()
                                .entityFactory(ChillooEntity::new)
                                .defaultAttributes(ChillooEntity::createChillooAttributes)
-                               .dimensions(EntityDimensions.changing(1.0f, 1.2f))
                                .spawnGroup(SpawnGroup.CREATURE)
-                               .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PathAwareEntity::canMobSpawn),
+                               .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PathAwareEntity::canMobSpawn)
+                               .dimensions(EntityDimensions.changing(1.0f, 1.2f))
+                               .trackRangeBlocks(10),
         new Pair<>(0xc2cbce, 0x32383c)
     );
 
-    static {
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.CREATURE, FrozenUpEntities.CHILLOO, 30, 3, 6);
-    }
+    static { BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.ICY).and(ctx -> ctx.getBiome().getTemperature() <= 0.0f), SpawnGroup.CREATURE, FrozenUpEntities.CHILLOO, 30, 3, 6); }
 
     @SuppressWarnings("unchecked")
     private static <T extends Entity> EntityType<T> register(String id, FabricEntityTypeBuilder<T> entityType, Pair<Integer, Integer> spawnEggColors) {
