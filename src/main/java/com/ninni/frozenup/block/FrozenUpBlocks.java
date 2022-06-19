@@ -14,7 +14,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import com.ninni.frozenup.FrozenUp;
-import com.ninni.frozenup.block.vanilla.PublicCakeBlock;
+import com.ninni.frozenup.block.vanilla.TruffleCakeBlock;
 import com.ninni.frozenup.block.vanilla.PublicStairsBlock;
 import com.ninni.frozenup.item.FrozenUpItems;
 import com.ninni.frozenup.sound.FrozenUpBlockSoundGroups;
@@ -26,7 +26,7 @@ public class FrozenUpBlocks {
     public static final Block CHILLOO_FEATHER_COVERING = register("chilloo_feather_covering", new FiberCoveringBlock(FabricBlockSettings.copyOf(CHILLOO_FEATHER_BLOCK)));
     public static final Block CHILLOO_FEATHER_LAMP = register("chilloo_feather_lamp", new FeatherLampBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC).strength(0.3F).sounds(FrozenUpBlockSoundGroups.CHILLOO_FEATHER_BLOCK).luminance(createLightLevelFromLitBlockState(10))));
 
-    public static final Block TRUFFLE_CAKE = register("truffle_cake", new PublicCakeBlock(FabricBlockSettings.of(Material.CAKE).strength(0.5F).sounds(BlockSoundGroup.WOOL)));
+    public static final Block TRUFFLE_CAKE = register("truffle_cake", new TruffleCakeBlock(FabricBlockSettings.of(Material.CAKE).strength(0.5F).sounds(BlockSoundGroup.WOOL)));
 
     public static final Block CUT_ICE = register("cut_ice", new Block(FabricBlockSettings.copyOf(Blocks.PACKED_ICE)));
     public static final Block CUT_ICE_STAIRS = register("cut_ice_stairs", new PublicStairsBlock(CUT_ICE.getDefaultState(), FabricBlockSettings.copyOf(CUT_ICE)));

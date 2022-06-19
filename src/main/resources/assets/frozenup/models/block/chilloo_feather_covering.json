@@ -1,5 +1,5 @@
 {
-	"ambientocclusion": false,
+	"ambientocclusion": true,
 	"textures": {
 		"particle": "frozenup:block/chilloo_feather_block",
 		"chilloo_feather_block": "frozenup:block/chilloo_feather_block"

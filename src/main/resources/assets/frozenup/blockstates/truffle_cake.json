@@ -4,22 +4,13 @@
       "model": "frozenup:block/truffle_cake"
     },
     "bites=1": {
-      "model": "frozenup:block/truffle_cake_slice1"
+      "model": "frozenup:block/truffle_cake3"
     },
     "bites=2": {
-      "model": "frozenup:block/truffle_cake_slice2"
+      "model": "frozenup:block/truffle_cake2"
     },
     "bites=3": {
-      "model": "frozenup:block/truffle_cake_slice3"
-    },
-    "bites=4": {
-      "model": "frozenup:block/truffle_cake_slice4"
-    },
-    "bites=5": {
-      "model": "frozenup:block/truffle_cake_slice5"
-    },
-    "bites=6": {
-      "model": "frozenup:block/truffle_cake_slice6"
+      "model": "frozenup:block/truffle_cake1"
     }
   }
 }

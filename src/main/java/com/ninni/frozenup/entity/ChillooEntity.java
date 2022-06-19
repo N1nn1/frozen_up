@@ -63,10 +63,8 @@ public class ChillooEntity extends TameableEntity {
     //TODO:
     // shedding/shearing feathers
     // custom sounds for eating
-    // maybe comment some of the code since I dont have a clear understanding of what stuff does at the top of my head
     // breeding and tempting item tags
     // make them afraid of foxes and make only artic foxes attack them
-    // Candles on truffle cake break them
 
     public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
         super(type, world);

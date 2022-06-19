@@ -1,21 +1,22 @@
 {
-    "textures": {
-        "particle": "frozenup:block/truffle_cake_side",
-        "bottom": "frozenup:block/truffle_cake_bottom",
-        "top": "frozenup:block/truffle_cake_top",
-        "side": "frozenup:block/truffle_cake_side"
-    },
-    "elements": [
-        {   "from": [ 1, 0, 1 ],
-            "to": [ 15, 8, 15 ],
-            "faces": {
-                "down":  { "texture": "#bottom", "cullface": "down" },
-                "up":    { "texture": "#top" },
-                "north": { "texture": "#side" },
-                "south": { "texture": "#side" },
-                "west":  { "texture": "#side" },
-                "east":  { "texture": "#side" }
-            }
-        }
-    ]
+	"textures": {
+		"0": "frozenup:block/truffle_cake_bottom",
+		"2": "frozenup:block/truffle_cake_side",
+		"3": "frozenup:block/truffle_cake_top",
+		"particle": "frozenup:block/truffle_cake_bottom"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [14, 9, 14],
+			"faces": {
+				"north": {"uv": [2, 7, 14, 16], "texture": "#2"},
+				"east": {"uv": [2, 7, 14, 16], "texture": "#2"},
+				"south": {"uv": [2, 7, 14, 16], "texture": "#2"},
+				"west": {"uv": [2, 7, 14, 16], "texture": "#2"},
+				"up": {"uv": [14, 14, 2, 2], "texture": "#3"},
+				"down": {"uv": [14, 2, 2, 14], "texture": "#0"}
+			}
+		}
+	]
 }
