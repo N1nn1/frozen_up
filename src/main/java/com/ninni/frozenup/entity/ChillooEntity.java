@@ -68,7 +68,6 @@ public class ChillooEntity extends TameableEntity {
 
     public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
         super(type, world);
-        this.stepHeight = 1;
         this.setCanPickUpLoot(true);
     }
 
@@ -76,27 +75,25 @@ public class ChillooEntity extends TameableEntity {
     protected void initGoals() {
         this.digInGrassGoal = new DigInGrassGoal(this);
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new EscapeDangerGoal(this, 1.1F));
+        this.goalSelector.add(1, new EscapeDangerGoal(this, 1));
         this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(3, new AnimalMateGoal(this, 1.0));
-        this.goalSelector.add(4, new FollowOwnerGoal(this, 1.1F, 10.0F, 2.0F, false));
+        this.goalSelector.add(3, new AnimalMateGoal(this, 1));
+        this.goalSelector.add(4, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
         this.goalSelector.add(5, new ChillooEntity.PickupItemGoal());
         this.goalSelector.add(6, this.digInGrassGoal);
-        this.goalSelector.add(7, new WanderAroundFarGoal(this, 0.85));
+        this.goalSelector.add(7, new WanderAroundFarGoal(this, 0.6));
         this.goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.add(9, new LookAroundGoal(this));
     }
 
     public static DefaultAttributeContainer.Builder createChillooAttributes() {
         return MobEntity.createMobAttributes()
-                        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.175)
+                        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
                         .add(EntityAttributes.GENERIC_MAX_HEALTH, 12.0);
     }
 
-    @Override
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) { return dimensions.height * 0.5F; }
-
-    public float getHeadRoll(float tickDelta) { return MathHelper.lerp(tickDelta, this.lastHeadRollProgress, this.headRollProgress) * 0.11F * 3.1415927F; }
+    @Override protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) { return dimensions.height * 0.5F; }
+    public float getHeadRoll(float tickDelta) { return MathHelper.lerp(tickDelta, this.lastHeadRollProgress, this.headRollProgress) * 0.11F * (float)Math.PI; }
 
     @Override
     public void tickMovement() {
@@ -325,7 +322,7 @@ public class ChillooEntity extends TameableEntity {
         @Override
         public void tick() {
             List<ItemEntity> list = ChillooEntity.this.world.getEntitiesByClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().expand(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
-            if (ChillooEntity.this.getEquippedStack(EquipmentSlot.MAINHAND).isEmpty() && !list.isEmpty()) ChillooEntity.this.getNavigation().startMovingTo(list.get(0), 1.15);
+            if (ChillooEntity.this.getEquippedStack(EquipmentSlot.MAINHAND).isEmpty() && !list.isEmpty()) ChillooEntity.this.getNavigation().startMovingTo(list.get(0), 1);
         }
 
         @Override

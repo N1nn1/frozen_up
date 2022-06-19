@@ -28,8 +28,8 @@ public class FrozenUpEntities {
                                .spawnGroup(SpawnGroup.CREATURE)
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PathAwareEntity::canMobSpawn)
                                .dimensions(EntityDimensions.changing(1.0f, 1.2f))
-                               .trackRangeBlocks(10),
-        new Pair<>(0xc2cbce, 0x32383c)
+                               .trackRangeBlocks(8),
+        new Pair<>(0xffffff, 0x32383c)
     );
 
     @SuppressWarnings("unchecked")
