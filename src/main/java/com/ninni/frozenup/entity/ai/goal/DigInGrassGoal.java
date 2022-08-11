@@ -37,7 +37,7 @@ public class DigInGrassGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        if (this.chilloo.getRandom().nextInt(this.chilloo.isBaby() ? 50 : 1000) != 0 || !this.chilloo.getEquippedStack(EquipmentSlot.MAINHAND).isEmpty()) return false;
+        if (this.chilloo.getRandom().nextInt(1000) != 0 || !this.chilloo.getEquippedStack(EquipmentSlot.MAINHAND).isEmpty()) return false;
         else {
             BlockPos blockPos = this.chilloo.getBlockPos();
             if (GRASS_PREDICATE.test(this.world.getBlockState(blockPos))) return true;
