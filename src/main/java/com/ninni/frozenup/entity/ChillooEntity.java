@@ -11,6 +11,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
+import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -25,6 +26,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -64,7 +66,6 @@ public class ChillooEntity extends TameableEntity {
     // shedding/shearing feathers
     // custom sounds for eating
     // breeding and tempting item tags
-    // make them afraid of foxes and make only artic foxes attack them
 
     public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
         super(type, world);
@@ -77,13 +78,14 @@ public class ChillooEntity extends TameableEntity {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new EscapeDangerGoal(this, 1));
         this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(3, new AnimalMateGoal(this, 1));
-        this.goalSelector.add(4, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
-        this.goalSelector.add(5, new ChillooEntity.PickupItemGoal());
-        this.goalSelector.add(6, this.digInGrassGoal);
-        this.goalSelector.add(7, new WanderAroundFarGoal(this, 0.6));
-        this.goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.add(9, new LookAroundGoal(this));
+        this.goalSelector.add(3, new FleeEntityGoal<>(this, FoxEntity.class, 6.0F, 1, 1.2));
+        this.goalSelector.add(4, new AnimalMateGoal(this, 1));
+        this.goalSelector.add(5, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
+        this.goalSelector.add(6, new ChillooEntity.PickupItemGoal());
+        this.goalSelector.add(7, this.digInGrassGoal);
+        this.goalSelector.add(8, new WanderAroundFarGoal(this, 0.6));
+        this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
+        this.goalSelector.add(10, new LookAroundGoal(this));
     }
 
     public static DefaultAttributeContainer.Builder createChillooAttributes() {
