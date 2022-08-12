@@ -14,8 +14,8 @@ public class ChocolateMilkMugItem extends AbstractDrinkableMugItem {
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         user.clearStatusEffects();
         if (!world.isClient) {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 600, 1));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 10 * 20, 0));
+            user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10 * 20, 1));
         }
         return super.finishUsing(stack, world, user);
     }

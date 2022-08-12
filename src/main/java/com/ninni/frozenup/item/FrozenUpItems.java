@@ -23,7 +23,7 @@ public class FrozenUpItems {
     public static final Item EMPTY_MUG = register("empty_mug", new BlockItem(FrozenUpBlocks.EMPTY_MUG, new FabricItemSettings().group(FrozenUp.ITEM_GROUP).maxCount(16)));
     public static final Item MUG_OF_MILK = register("mug_of_milk", new MilkMugItem(FrozenUpBlocks.MUG_OF_MILK, new FabricItemSettings().group(FrozenUp.ITEM_GROUP).maxCount(1)));
     public static final Item MUG_OF_CHOCOLATE_MILK = register("mug_of_chocolate_milk", new ChocolateMilkMugItem(FrozenUpBlocks.MUG_OF_CHOCOLATE_MILK, new FabricItemSettings().food(new FoodComponent.Builder().hunger(3).saturationModifier(3.0f).build()).group(FrozenUp.ITEM_GROUP).maxCount(1)));
-    public static final Item MUG_OF_TRUFFLE_HOT_CHOCOLATE = register("mug_of_truffle_hot_chocolate", new TruffleHotChocolateMugItem(FrozenUpBlocks.MUG_OF_TRUFFLE_HOT_CHOCOLATE, new FabricItemSettings().group(FrozenUp.ITEM_GROUP).food(new FoodComponent.Builder().hunger(8).saturationModifier(8.0f).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 500, 0), 1.0f).build()).maxCount(1)));
+    public static final Item MUG_OF_TRUFFLE_HOT_CHOCOLATE = register("mug_of_truffle_hot_chocolate", new TruffleHotChocolateMugItem(FrozenUpBlocks.MUG_OF_TRUFFLE_HOT_CHOCOLATE, new FabricItemSettings().group(FrozenUp.ITEM_GROUP).food(new FoodComponent.Builder().hunger(8).saturationModifier(8.0f).build()).maxCount(1)));
     //ice blocks
     public static final Item CUT_ICE = register("cut_ice", new BlockItem(FrozenUpBlocks.CUT_ICE, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
     public static final Item CUT_ICE_STAIRS = register("cut_ice_stairs", new BlockItem(FrozenUpBlocks.CUT_ICE_STAIRS, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
