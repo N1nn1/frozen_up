@@ -77,6 +77,7 @@ public class ChillooEntity extends TameableEntity implements Shearable {
     public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
         super(type, world);
         this.setCanPickUpLoot(true);
+        this.stepHeight = 1;
     }
 
     @Override
