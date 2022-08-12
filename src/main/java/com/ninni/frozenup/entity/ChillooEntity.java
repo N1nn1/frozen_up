@@ -206,13 +206,11 @@ public class ChillooEntity extends TameableEntity implements Shearable {
                     return ActionResult.SUCCESS;
                 }
             } else if (item == FrozenUpItems.TRUFFLE) {
-                if (this.random.nextInt(3) == 0) {
-                    this.setOwner(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.setSitting(true);
-                    this.world.sendEntityStatus(this, (byte)7);
-                } else this.world.sendEntityStatus(this, (byte)6);
+                this.setOwner(player);
+                this.navigation.stop();
+                this.setTarget(null);
+                this.setSitting(true);
+                this.world.sendEntityStatus(this, (byte)7);
                 return ActionResult.SUCCESS;
             }
 

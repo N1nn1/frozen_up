@@ -40,7 +40,8 @@ public class ChillooHeldItemFeatureRenderer extends FeatureRenderer<ChillooEntit
         matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(headYaw));
         matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(headPitch));
         matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
-        matrices.translate(0F, 0.55F, 0.1408F);
+        matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180));
+        matrices.translate(0F, -0.75F, 0.1408F);
 
 
         ItemStack itemStack = chilloo.getEquippedStack(EquipmentSlot.MAINHAND);
