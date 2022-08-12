@@ -235,6 +235,7 @@ public class ChillooEntity extends TameableEntity implements Shearable {
     @Override
     public boolean canPickupItem(ItemStack stack) {
         ItemStack itemStack = this.getEquippedStack(EquipmentSlot.MAINHAND);
+        if (stack.isOf(FrozenUpItems.CHILLOO_FEATHER)) return false;
         return itemStack.isEmpty() || this.eatingTime > 0 && stack.getItem().isFood() && !itemStack.getItem().isFood();
     }
 
