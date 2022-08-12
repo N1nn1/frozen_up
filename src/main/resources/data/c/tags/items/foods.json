@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "frozenup:truffle",
+    "frozenup:truffle_muffin",
+    "frozenup:truffle_cake"
+  ]
+}
