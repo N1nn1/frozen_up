@@ -3,12 +3,15 @@ package com.ninni.frozenup.entity;
 import com.ninni.frozenup.entity.ai.goal.DigInGrassGoal;
 import com.ninni.frozenup.item.FrozenUpItems;
 import com.ninni.frozenup.sound.FrozenUpSoundEvents;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.Shearable;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
@@ -37,6 +40,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -46,6 +50,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -54,16 +59,18 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unused")
-public class ChillooEntity extends TameableEntity {
+public class ChillooEntity extends TameableEntity implements Shearable {
     private static final TrackedData<Integer> BANDS_COLOR = DataTracker.registerData(ChillooEntity.class, TrackedDataHandlerRegistry.INTEGER);
     static final Predicate<ItemEntity> PICKABLE_DROP_FILTER = (item) -> !item.cannotPickup() && item.isAlive();
+    private static final TrackedData<Boolean> SHEARED = DataTracker.registerData(ChillooEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final String TIME_SINCE_SHEARED_KEY = "TimeSinceSheared";
     private float headRollProgress;
     private float lastHeadRollProgress;
     private int eatingTime;
     private int digInGrassTimer;
+    private long timeSinceSheared;
     private DigInGrassGoal digInGrassGoal;
     //TODO:
-    // shedding/shearing feathers
     // custom sounds for eating
     // breeding and tempting item tags
 
@@ -121,12 +128,47 @@ public class ChillooEntity extends TameableEntity {
     protected void mobTick() {
         this.digInGrassTimer = this.digInGrassGoal.getTimer();
         super.mobTick();
+
+        long time = this.world.getTime();
+        if (this.isSheared()) {
+            if (this.random.nextInt((int) (time - this.timeSinceSheared)) > 20 * 210) {
+                this.timeSinceSheared = time;
+                this.setSheared(false);
+            }
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (!this.isSheared()) {
+            if (this.getWorld().getBiome(this.getBlockPos()).isIn(ConventionalBiomeTags.CLIMATE_HOT)) {
+                for (int i = 0; i < 0.25; ++i) {
+                    double vecX = this.random.nextGaussian() * -5;
+                    double vecY = this.random.nextGaussian() * -5;
+                    double vecZ = this.random.nextGaussian() * -5;
+                    this.world.addParticle(ParticleTypes.FALLING_WATER, this.getParticleX(0.4), this.getBodyY(1) - 0.5, this.getParticleZ(0.4), vecX, vecY, vecZ);
+                }
+            }
+        }
     }
 
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
         Item item = itemStack.getItem();
+
+        if (itemStack.isIn(ConventionalItemTags.SHEARS)) {
+            if (!this.world.isClient && this.isShearable()) {
+                this.sheared(SoundCategory.PLAYERS);
+                this.emitGameEvent(GameEvent.SHEAR, player);
+                itemStack.damage(1, player, p -> p.sendToolBreakStatus(hand));
+                return ActionResult.SUCCESS;
+            }
+            return ActionResult.CONSUME;
+        }
+
         if (this.world.isClient) return this.isOwner(player) || this.isTamed() || item == FrozenUpItems.TRUFFLE && !this.isTamed() ? ActionResult.CONSUME : ActionResult.PASS;
          else {
             if (this.isTamed()) {
@@ -137,7 +179,7 @@ public class ChillooEntity extends TameableEntity {
                     return ActionResult.SUCCESS;
                 }
 
-                if (!(item instanceof DyeItem)) {
+                if (!itemStack.isIn(ConventionalItemTags.DYES) && !itemStack.isIn(ConventionalItemTags.SHEARS)) {
                     ActionResult actionResult = super.interactMob(player, hand);
                     if ((!actionResult.isAccepted() || this.isBaby()) && this.isOwner(player)) {
                         this.setSitting(!this.isSitting());
@@ -259,19 +301,30 @@ public class ChillooEntity extends TameableEntity {
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(BANDS_COLOR, DyeColor.RED.getId());
+        this.dataTracker.startTracking(SHEARED, false);
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound tag) {
         super.writeCustomDataToNbt(tag);
+        tag.putBoolean("Sheared", this.isSheared());
+        tag.putLong(TIME_SINCE_SHEARED_KEY, this.timeSinceSheared);
         tag.putByte("BandsColor", (byte) this.getBandsColor().getId());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound tag) {
         super.readCustomDataFromNbt(tag);
+        this.setSheared(tag.getBoolean("Sheared"));
+        this.timeSinceSheared = tag.getLong(TIME_SINCE_SHEARED_KEY);
         if (tag.contains("BandsColor", 99)) this.setBandsColor(DyeColor.byId(tag.getInt("BandsColor")));
     }
+
+    public boolean isSheared() { return this.dataTracker.get(SHEARED).equals(true); }
+
+    public void setSheared(boolean sheared) { this.dataTracker.set(SHEARED, sheared); }
+
+    @Override public boolean isShearable() { return this.isAlive() && !this.isSheared() && !this.isBaby(); }
 
     public DyeColor getBandsColor() { return DyeColor.byId(this.dataTracker.get(BANDS_COLOR)); }
 
@@ -307,6 +360,19 @@ public class ChillooEntity extends TameableEntity {
     @Override protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return FrozenUpSoundEvents.ENTITY_CHILLOO_HURT; }
     @Override protected SoundEvent getDeathSound() { return FrozenUpSoundEvents.ENTITY_CHILLOO_DEATH; }
     @Override protected void playStepSound(BlockPos pos, BlockState blockIn) { this.playSound(SoundEvents.ENTITY_SHEEP_STEP, 0.15F, 1.0F); }
+
+    @Override
+    public void sheared(SoundCategory category) {
+        this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, category, 1.0f, 1.0f);
+        this.setSheared(true);
+        if (this.isSheared()) this.timeSinceSheared = this.world.getTime();
+        for (int i = 0, l = 2 + this.random.nextInt(5); i < l; i++) {
+            ItemEntity itemEntity = this.dropItem(FrozenUpItems.CHILLOO_FEATHER, 1);
+            if (itemEntity == null) continue;
+            itemEntity.setVelocity(itemEntity.getVelocity().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1f, this.random.nextFloat() * 0.05f, (this.random.nextFloat() - this.random.nextFloat()) * 0.1f));
+        }
+    }
+
 
     class PickupItemGoal extends Goal {
         public PickupItemGoal() { this.setControls(EnumSet.of(Control.MOVE)); }
