@@ -1,5 +1,6 @@
 package com.ninni.frozenup.entity;
 
+import com.ninni.frozenup.FrozenUpTags;
 import com.ninni.frozenup.entity.ai.goal.DigInGrassGoal;
 import com.ninni.frozenup.item.FrozenUpItems;
 import com.ninni.frozenup.sound.FrozenUpSoundEvents;
@@ -21,6 +22,7 @@ import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.SitGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -39,6 +41,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -49,12 +52,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -72,7 +77,6 @@ public class ChillooEntity extends TameableEntity implements Shearable {
     private DigInGrassGoal digInGrassGoal;
     //TODO:
     // custom sounds for eating
-    // breeding and tempting item tags
 
     public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
         super(type, world);
@@ -88,12 +92,13 @@ public class ChillooEntity extends TameableEntity implements Shearable {
         this.goalSelector.add(2, new SitGoal(this));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, FoxEntity.class, 6.0F, 1, 1.2));
         this.goalSelector.add(4, new AnimalMateGoal(this, 1));
-        this.goalSelector.add(5, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
-        this.goalSelector.add(6, new ChillooEntity.PickupItemGoal());
-        this.goalSelector.add(7, this.digInGrassGoal);
-        this.goalSelector.add(8, new WanderAroundFarGoal(this, 0.6));
-        this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.add(10, new LookAroundGoal(this));
+        this.goalSelector.add(4, new TemptGoal(this, 1.2, Ingredient.fromTag(FrozenUpTags.CHILLOO_BREED_ITEMS), false));
+        this.goalSelector.add(6, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
+        this.goalSelector.add(7, new ChillooEntity.PickupItemGoal());
+        this.goalSelector.add(8, this.digInGrassGoal);
+        this.goalSelector.add(9, new WanderAroundFarGoal(this, 0.6));
+        this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
+        this.goalSelector.add(11, new LookAroundGoal(this));
     }
 
     public static DefaultAttributeContainer.Builder createChillooAttributes() {
@@ -146,10 +151,10 @@ public class ChillooEntity extends TameableEntity implements Shearable {
         if (!this.isSheared()) {
             if (this.getWorld().getBiome(this.getBlockPos()).isIn(ConventionalBiomeTags.CLIMATE_HOT)) {
                 for (int i = 0; i < 0.25; ++i) {
-                    double vecX = this.random.nextGaussian() * -5;
-                    double vecY = this.random.nextGaussian() * -5;
-                    double vecZ = this.random.nextGaussian() * -5;
-                    this.world.addParticle(ParticleTypes.FALLING_WATER, this.getParticleX(0.4), this.getBodyY(1) - 0.5, this.getParticleZ(0.4), vecX, vecY, vecZ);
+                    double velX = this.random.nextGaussian() * -5;
+                    double velY = this.random.nextGaussian() * -5;
+                    double velZ = this.random.nextGaussian() * -5;
+                    this.world.addParticle(ParticleTypes.FALLING_WATER, this.getParticleX(0.4), this.getBodyY(1) - 0.5, this.getParticleZ(0.4), velX, velY, velZ);
                 }
             }
         }
@@ -170,13 +175,15 @@ public class ChillooEntity extends TameableEntity implements Shearable {
             return ActionResult.CONSUME;
         }
 
+        if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth() && this.isTamed()) feedTruffleToChilloo(player);
+        if (item == FrozenUpItems.TRUFFLE && !this.isTamed()) feedTruffleToChilloo(player);
+
+
         if (this.world.isClient) return this.isOwner(player) || this.isTamed() || item == FrozenUpItems.TRUFFLE && !this.isTamed() ? ActionResult.CONSUME : ActionResult.PASS;
-         else {
+        else {
             if (this.isTamed()) {
-                if (this.isBreedingItem(itemStack) && this.getHealth() < this.getMaxHealth()) {
-                    if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
-                    if (!player.getAbilities().creativeMode) itemStack.decrement(1);
-                    this.heal(1.0F);
+                if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth()) {
+                    this.heal(Objects.requireNonNull(item.getFoodComponent()).getHunger());
                     return ActionResult.SUCCESS;
                 }
 
@@ -199,9 +206,6 @@ public class ChillooEntity extends TameableEntity implements Shearable {
                     return ActionResult.SUCCESS;
                 }
             } else if (item == FrozenUpItems.TRUFFLE) {
-                if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
-                if (!player.getAbilities().creativeMode) itemStack.decrement(1);
-
                 if (this.random.nextInt(3) == 0) {
                     this.setOwner(player);
                     this.navigation.stop();
@@ -214,6 +218,25 @@ public class ChillooEntity extends TameableEntity implements Shearable {
 
             return super.interactMob(player, hand);
         }
+    }
+
+    public void feedTruffleToChilloo(PlayerEntity player) {
+        Vec3d vec3d = this.getBoundingBox().getCenter();
+        Random random = this.world.getRandom();
+        ItemStack stack = FrozenUpItems.TRUFFLE.getDefaultStack();
+        if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+        if (!player.getAbilities().creativeMode) player.getStackInHand(player.getActiveHand()).decrement(1);
+        for (int i = 0; i < 10; ++i) {
+            double velX = random.nextGaussian() * 0.075D;
+            double velY = random.nextGaussian() * 0.075D;
+            double velZ = random.nextGaussian() * 0.075D;
+            this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), vec3d.x, vec3d.y, vec3d.z, velX, velY, velZ);
+        }
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.isIn(FrozenUpTags.CHILLOO_BREED_ITEMS);
     }
 
     @Override
