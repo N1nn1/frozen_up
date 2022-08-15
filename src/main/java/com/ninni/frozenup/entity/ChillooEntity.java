@@ -75,8 +75,6 @@ public class ChillooEntity extends TameableEntity implements Shearable {
     private int digInGrassTimer;
     private long timeSinceSheared;
     private DigInGrassGoal digInGrassGoal;
-    //TODO:
-    // custom sounds for eating
 
     public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
         super(type, world);
@@ -186,6 +184,7 @@ public class ChillooEntity extends TameableEntity implements Shearable {
                 if (!stackInHand.isEmpty() && itemStack.isEmpty()) {
                     player.giveItemStack(stackInHand);
                     stackInHand.decrement(1);
+                    if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
                 }
 
                 if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth()) {
