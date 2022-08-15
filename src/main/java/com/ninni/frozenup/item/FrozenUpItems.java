@@ -9,11 +9,15 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 import com.ninni.frozenup.FrozenUp;
 
 @SuppressWarnings("unused")
 public class FrozenUpItems {
+
+    //logo
+    public static final Item FROZENUP = register("frozenup", new Item(new FabricItemSettings().fireproof().rarity(Rarity.EPIC).maxCount(1)));
     //truffle related items
     public static final Item FROZEN_TRUFFLE = register("frozen_truffle", new Item(new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
     public static final Item TRUFFLE = register("truffle", new Item(new FabricItemSettings().group(FrozenUp.ITEM_GROUP).food(new FoodComponent.Builder().hunger(6).saturationModifier(0.5F).build())));

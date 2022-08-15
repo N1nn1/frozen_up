@@ -14,7 +14,7 @@ public class FrozenUp implements ModInitializer {
     public static final String MOD_ID = "frozenup";
     public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(
         new Identifier(FrozenUp.MOD_ID, "item_group"),
-        () -> new ItemStack(FrozenUpItems.CHILLOO_FEATHER)
+        () -> new ItemStack(FrozenUpItems.FROZENUP)
     );
 
     @SuppressWarnings("UnstableApiUsage")
