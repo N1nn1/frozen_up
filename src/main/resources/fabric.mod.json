@@ -8,11 +8,19 @@
     "Ninni"
   ],
   "contributors": [
-    "andante."
+    "andante.",
+    "Orcinus"
   ],
   "contact": {
-    "sources": "ttps://github.com/N1nn1/frozen-up-fabric",
-    "issues": "https://github.com/N1nn1/frozen-up-fabric/issues"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/frozen-up",
+    "sources": "https://github.com/N1nn1/frozen_up",
+    "issues": "https://github.com/N1nn1/frozen_up/issues"
+  },
+  "custom": {
+    "modmenu": { "links": {
+      "mod.frozenup.contact.discord": "https://discord.moddingplayground.net",
+      "mod.frozenup.wiki": "https://github.com/N1nn1/frozen_up/wiki"
+    } }
   },
   "license": "MIT",
   "icon": "assets/frozenup/textures/icon.png",
