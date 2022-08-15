@@ -178,10 +178,16 @@ public class ChillooEntity extends TameableEntity implements Shearable {
         if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth() && this.isTamed()) feedTruffleToChilloo(player);
         if (item == FrozenUpItems.TRUFFLE && !this.isTamed()) feedTruffleToChilloo(player);
 
-
         if (this.world.isClient) return this.isOwner(player) || this.isTamed() || item == FrozenUpItems.TRUFFLE && !this.isTamed() ? ActionResult.CONSUME : ActionResult.PASS;
         else {
+
             if (this.isTamed()) {
+                ItemStack stackInHand = this.getEquippedStack(EquipmentSlot.MAINHAND);
+                if (!stackInHand.isEmpty() && itemStack.isEmpty()) {
+                    player.giveItemStack(stackInHand);
+                    stackInHand.decrement(1);
+                }
+
                 if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth()) {
                     this.heal(Objects.requireNonNull(item.getFoodComponent()).getHunger());
                     return ActionResult.SUCCESS;
