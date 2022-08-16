@@ -181,10 +181,11 @@ public class ChillooEntity extends TameableEntity implements Shearable {
 
             if (this.isTamed()) {
                 ItemStack stackInHand = this.getEquippedStack(EquipmentSlot.MAINHAND);
-                if (!stackInHand.isEmpty() && itemStack.isEmpty()) {
+                if (!stackInHand.isEmpty() && itemStack.isEmpty() && !player.shouldCancelInteraction()) {
                     player.giveItemStack(stackInHand);
                     stackInHand.decrement(1);
                     if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    return ActionResult.SUCCESS;
                 }
 
                 if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth()) {
@@ -192,17 +193,14 @@ public class ChillooEntity extends TameableEntity implements Shearable {
                     return ActionResult.SUCCESS;
                 }
 
-                if (!itemStack.isIn(ConventionalItemTags.DYES) && !itemStack.isIn(ConventionalItemTags.SHEARS)) {
-                    ActionResult actionResult = super.interactMob(player, hand);
-                    if ((!actionResult.isAccepted() || this.isBaby()) && this.isOwner(player)) {
-                        this.setSitting(!this.isSitting());
-                        this.jumping = false;
-                        this.navigation.stop();
-                        this.setTarget(null);
-                        return ActionResult.SUCCESS;
-                    }
-                    return actionResult;
+                if (!itemStack.isIn(ConventionalItemTags.DYES) &&this.isOwner(player)) {
+                    this.setSitting(!this.isSitting());
+                    this.jumping = false;
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    return ActionResult.SUCCESS;
                 }
+
 
                 DyeColor dyeColor = ((DyeItem)item).getColor();
                 if (dyeColor != this.getBandsColor()) {
