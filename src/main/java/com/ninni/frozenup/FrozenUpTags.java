@@ -1,14 +1,14 @@
 package com.ninni.frozenup;
 
-import net.minecraft.item.Item;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
-import static com.ninni.frozenup.FrozenUp.*;
+import static com.ninni.frozenup.FrozenUp.MOD_ID;
 
 @SuppressWarnings("unused")
 public interface FrozenUpTags {
     //itemTags
-    TagKey<Item> CHILLOO_BREED_ITEMS = TagKey.of(Registry.ITEM_KEY, new Identifier(MOD_ID, "chilloo_breed_items"));
+    TagKey<Item> CHILLOO_BREED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(MOD_ID, "chilloo_breed_items"));
 }

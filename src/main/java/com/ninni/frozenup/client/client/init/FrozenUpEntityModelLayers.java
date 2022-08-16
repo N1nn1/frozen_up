@@ -1,15 +1,11 @@
 package com.ninni.frozenup.client.client.init;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.util.Identifier;
 import com.ninni.frozenup.FrozenUp;
-import com.ninni.frozenup.mixin.client.EntityModelLayersInvoker;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.resources.ResourceLocation;
 
-@Environment(EnvType.CLIENT)
 public class FrozenUpEntityModelLayers {
-    public static final EntityModelLayer CHILLOO = registerMain("chilloo");
 
-    private static EntityModelLayer registerMain(String id) { return EntityModelLayersInvoker.register(new Identifier(FrozenUp.MOD_ID, id).toString(), "main"); }
+    public static final ModelLayerLocation CHILLOO = new ModelLayerLocation(new ResourceLocation(FrozenUp.MOD_ID, "chilloo"), "main");
+
 }

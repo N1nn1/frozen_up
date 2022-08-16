@@ -1,17 +1,20 @@
 package com.ninni.frozenup.block;
 
-import com.ninni.frozenup.item.FrozenUpItems;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.GlowLichenBlock;
-import net.minecraft.item.ItemPlacementContext;
+import com.ninni.frozenup.init.FrozenUpItems;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.GlowLichenBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class FiberCoveringBlock extends GlowLichenBlock {
-    public FiberCoveringBlock(Settings settings) {
+
+    public FiberCoveringBlock(BlockBehaviour.Properties settings) {
         super(settings);
     }
 
     @Override
-    public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        return !context.getStack().isOf(FrozenUpItems.CHILLOO_FEATHER_COVERING) || super.canReplace(state, context);
+    public boolean canBeReplaced(BlockState p_153299_, BlockPlaceContext context) {
+        return !context.getItemInHand().is(FrozenUpItems.CHILLOO_FEATHER_COVERING.get()) || super.canBeReplaced(p_153299_, context);
     }
+
 }

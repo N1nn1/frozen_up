@@ -1,15 +1,17 @@
 package com.ninni.frozenup.sound;
 
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundEvents;
+import com.ninni.frozenup.init.FrozenUpSoundEvents;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraftforge.common.util.ForgeSoundType;
 
 public class FrozenUpBlockSoundGroups {
-    public static final BlockSoundGroup CHILLOO_FEATHER_BLOCK = new BlockSoundGroup(
+    public static final SoundType CHILLOO_FEATHER_BLOCK = new ForgeSoundType(
         1, 1,
         FrozenUpSoundEvents.BLOCK_CHILLOO_FEATHER_BLOCK_BREAK,
-        SoundEvents.BLOCK_WOOL_STEP,
+        () -> SoundEvents.WOOL_STEP,
         FrozenUpSoundEvents.BLOCK_CHILLOO_FEATHER_BLOCK_PLACE,
-        SoundEvents.BLOCK_WOOL_HIT,
-        SoundEvents.BLOCK_WOOL_FALL
+        () -> SoundEvents.WOOL_HIT,
+        () -> SoundEvents.WOOL_FALL
     );
 }

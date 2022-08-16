@@ -1,32 +1,43 @@
 package com.ninni.frozenup.item;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
-import net.minecraft.world.World;
+import com.ninni.frozenup.init.FrozenUpItems;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public abstract class AbstractDrinkableMugItem extends BlockItem {
 
-    public AbstractDrinkableMugItem(Block block, Settings settings) { super(block, settings); }
+    public AbstractDrinkableMugItem(Block block, Properties settings) { super(block, settings); }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        super.finishUsing(stack, world, user);
-        if (!stack.isFood() && user instanceof PlayerEntity) {
-            if (!((PlayerEntity) user).isCreative()) stack.decrement(1);
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
+        super.finishUsingItem(stack, world, user);
+        if (!stack.isEdible() && user instanceof Player player) {
+            if (!player.isCreative()) stack.shrink(1);
         }
-        return stack.isEmpty() ? new ItemStack(FrozenUpItems.EMPTY_MUG) : stack;
+        return stack.isEmpty() ? new ItemStack(FrozenUpItems.EMPTY_MUG.get()) : stack;
     }
 
-    @Override public int getMaxUseTime(ItemStack stack) { return 32; }
+    @Override
+    public int getUseDuration(ItemStack p_41454_) {
+        return 32;
+    }
 
-    @Override public UseAction getUseAction(ItemStack stack) { return UseAction.DRINK; }
+    @Override
+    public UseAnim getUseAnimation(ItemStack p_41452_) {
+        return UseAnim.DRINK;
+    }
 
-    @Override public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) { return ItemUsage.consumeHeldItem(world, user, hand); }
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        return ItemUtils.startUsingInstantly(world, player, hand);
+    }
+
 }

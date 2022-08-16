@@ -1,23 +1,25 @@
 package com.ninni.frozenup.item;
 
 import com.ninni.frozenup.util.Util;
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class TruffleHotChocolateMugItem extends AbstractDrinkableMugItem {
-    public TruffleHotChocolateMugItem(Block block, Settings settings) { super(block, settings); }
+
+    public TruffleHotChocolateMugItem(Block block, Properties settings) { super(block, settings); }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        Util.removeEntityEffects(user, instance -> instance.getEffectType().getCategory() == StatusEffectCategory.HARMFUL);
-        if (!world.isClient) {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 25 * 20, 1));
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
+        Util.removeEntityEffects(user, instance -> instance.getEffect().getCategory() == MobEffectCategory.HARMFUL);
+        if (!world.isClientSide) {
+            user.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 25 * 20, 1));
         }
-        return super.finishUsing(stack, world, user);
+        return super.finishUsingItem(stack, world, user);
     }
+
 }

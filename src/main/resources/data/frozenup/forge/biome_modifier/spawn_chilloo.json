@@ -1,0 +1,13 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:snowy_plains",
+    "minecraft:snowy_taiga"
+  ],
+  "spawners": {
+    "type": "frozenup:chilloo",
+    "weight": 20,
+    "minCount": 2,
+    "maxCount": 6
+  }
+}

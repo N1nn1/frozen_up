@@ -2,59 +2,59 @@ package com.ninni.frozenup.entity;
 
 import com.ninni.frozenup.FrozenUpTags;
 import com.ninni.frozenup.entity.ai.goal.DigInGrassGoal;
-import com.ninni.frozenup.item.FrozenUpItems;
-import com.ninni.frozenup.sound.FrozenUpSoundEvents;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.Shearable;
-import net.minecraft.entity.ai.goal.AnimalMateGoal;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.FleeEntityGoal;
-import net.minecraft.entity.ai.goal.FollowOwnerGoal;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.LookAroundGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.goal.SitGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.FoxEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import com.ninni.frozenup.init.FrozenUpEntities;
+import com.ninni.frozenup.init.FrozenUpItems;
+import com.ninni.frozenup.init.FrozenUpSoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.Shearable;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -64,10 +64,10 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 @SuppressWarnings("unused")
-public class ChillooEntity extends TameableEntity implements Shearable {
-    private static final TrackedData<Integer> BANDS_COLOR = DataTracker.registerData(ChillooEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    static final Predicate<ItemEntity> PICKABLE_DROP_FILTER = (item) -> !item.cannotPickup() && item.isAlive();
-    private static final TrackedData<Boolean> SHEARED = DataTracker.registerData(ChillooEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+public class ChillooEntity extends TamableAnimal implements Shearable {
+    private static final EntityDataAccessor<Integer> BANDS_COLOR = SynchedEntityData.defineId(ChillooEntity.class, EntityDataSerializers.INT);
+    static final Predicate<ItemEntity> PICKABLE_DROP_FILTER = (item) -> !item.hasPickUpDelay() && item.isAlive();
+    private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(ChillooEntity.class, EntityDataSerializers.BOOLEAN);
     public static final String TIME_SINCE_SHEARED_KEY = "TimeSinceSheared";
     private float headRollProgress;
     private float lastHeadRollProgress;
@@ -76,64 +76,72 @@ public class ChillooEntity extends TameableEntity implements Shearable {
     private long timeSinceSheared;
     private DigInGrassGoal digInGrassGoal;
 
-    public ChillooEntity(EntityType<? extends ChillooEntity> type, World world) {
+    public ChillooEntity(EntityType<? extends ChillooEntity> type, Level world) {
         super(type, world);
         this.setCanPickUpLoot(true);
-        this.stepHeight = 1;
     }
 
     @Override
-    protected void initGoals() {
+    public float getStepHeight() {
+        return 1;
+    }
+
+    @Override
+    protected void registerGoals() {
         this.digInGrassGoal = new DigInGrassGoal(this);
-        this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new EscapeDangerGoal(this, 1));
-        this.goalSelector.add(2, new SitGoal(this));
-        this.goalSelector.add(3, new FleeEntityGoal<>(this, FoxEntity.class, 6.0F, 1, 1.2));
-        this.goalSelector.add(4, new AnimalMateGoal(this, 1));
-        this.goalSelector.add(4, new TemptGoal(this, 1.2, Ingredient.fromTag(FrozenUpTags.CHILLOO_BREED_ITEMS), false));
-        this.goalSelector.add(6, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
-        this.goalSelector.add(7, new ChillooEntity.PickupItemGoal());
-        this.goalSelector.add(8, this.digInGrassGoal);
-        this.goalSelector.add(9, new WanderAroundFarGoal(this, 0.6));
-        this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.add(11, new LookAroundGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1));
+        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Fox.class, 6.0F, 1, 1.2));
+        this.goalSelector.addGoal(4, new BreedGoal(this, 1));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(FrozenUpTags.CHILLOO_BREED_ITEMS), false));
+        this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
+        this.goalSelector.addGoal(7, new ChillooEntity.PickupItemGoal());
+        this.goalSelector.addGoal(8, this.digInGrassGoal);
+        this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this, 0.6));
+        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(11, new RandomLookAroundGoal(this));
     }
 
-    public static DefaultAttributeContainer.Builder createChillooAttributes() {
-        return MobEntity.createMobAttributes()
-                        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
-                        .add(EntityAttributes.GENERIC_MAX_HEALTH, 12.0);
+    public static AttributeSupplier.Builder createChillooAttributes() {
+        return Mob.createMobAttributes()
+                        .add(Attributes.MOVEMENT_SPEED, 0.25)
+                        .add(Attributes.MAX_HEALTH, 12.0);
     }
-
-    @Override protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) { return dimensions.height * 0.5F; }
-    public float getHeadRoll(float tickDelta) { return MathHelper.lerp(tickDelta, this.lastHeadRollProgress, this.headRollProgress) * 0.11F * (float)Math.PI; }
 
     @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.world.isClient && this.isAlive() && this.canMoveVoluntarily()) {
+    public float getEyeHeightAccess(Pose pose, EntityDimensions size) {
+        return size.height * 0.5F;
+    }
+
+    public float getHeadRoll(float tickDelta) { return Mth.lerp(tickDelta, this.lastHeadRollProgress, this.headRollProgress) * 0.11F * (float)Math.PI; }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!this.level.isClientSide && this.isAlive() && this.isEffectiveAi()) {
             ++this.eatingTime;
-            ItemStack itemStack = this.getEquippedStack(EquipmentSlot.MAINHAND);
+            ItemStack itemStack = this.getItemBySlot(EquipmentSlot.MAINHAND);
             if (this.canEat(itemStack)) {
                 if (this.eatingTime > 600) {
-                    ItemStack itemStack2 = itemStack.finishUsing(this.world, this);
-                    if (!itemStack2.isEmpty()) this.equipStack(EquipmentSlot.MAINHAND, itemStack2);
+                    ItemStack itemStack2 = itemStack.finishUsingItem(this.level, this);
+                    if (!itemStack2.isEmpty()) this.setItemSlot(EquipmentSlot.MAINHAND, itemStack2);
                     this.eatingTime = 0;
                 } else if (this.eatingTime > 560 && this.random.nextFloat() < 0.1F) {
-                    this.playSound(this.getEatSound(itemStack), 1.0F, 1.0F);
-                    this.world.sendEntityStatus(this, (byte) 45);
+                    this.playSound(this.getEatingSound(itemStack), 1.0F, 1.0F);
+                    this.level.broadcastEntityEvent(this, (byte) 45);
                 }
             }
         }
-        if (this.world.isClient) this.digInGrassTimer = Math.max(0, this.digInGrassTimer - 1);
+        if (this.level.isClientSide) this.digInGrassTimer = Math.max(0, this.digInGrassTimer - 1);
     }
 
     @Override
-    protected void mobTick() {
+    protected void customServerAiStep() {
         this.digInGrassTimer = this.digInGrassGoal.getTimer();
-        super.mobTick();
+        super.customServerAiStep();
 
-        long time = this.world.getTime();
+        long time = this.level.getGameTime();
         if (this.isSheared()) {
             if (this.random.nextInt((int) (time - this.timeSinceSheared)) > 20 * 210) {
                 this.timeSinceSheared = time;
@@ -147,138 +155,138 @@ public class ChillooEntity extends TameableEntity implements Shearable {
         super.tick();
 
         if (!this.isSheared()) {
-            if (this.getWorld().getBiome(this.getBlockPos()).isIn(ConventionalBiomeTags.CLIMATE_HOT)) {
+            if (this.getLevel().getBiome(this.blockPosition()).is(Tags.Biomes.IS_HOT_OVERWORLD)) {
                 for (int i = 0; i < 0.25; ++i) {
                     double velX = this.random.nextGaussian() * -5;
                     double velY = this.random.nextGaussian() * -5;
                     double velZ = this.random.nextGaussian() * -5;
-                    this.world.addParticle(ParticleTypes.FALLING_WATER, this.getParticleX(0.4), this.getBodyY(1) - 0.5, this.getParticleZ(0.4), velX, velY, velZ);
+                    this.level.addParticle(ParticleTypes.FALLING_WATER, this.getRandomX(0.4), this.getY(1) - 0.5, this.getRandomZ(0.4), velX, velY, velZ);
                 }
             }
         }
     }
 
     @Override
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
         Item item = itemStack.getItem();
 
-        if (itemStack.isIn(ConventionalItemTags.SHEARS)) {
-            if (!this.world.isClient && this.isShearable()) {
-                this.sheared(SoundCategory.PLAYERS);
-                this.emitGameEvent(GameEvent.SHEAR, player);
-                itemStack.damage(1, player, p -> p.sendToolBreakStatus(hand));
-                return ActionResult.SUCCESS;
+        if (itemStack.is(Tags.Items.SHEARS)) {
+            if (!this.level.isClientSide && this.readyForShearing()) {
+                this.shear(SoundSource.PLAYERS);
+                this.gameEvent(GameEvent.SHEAR, player);
+                itemStack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+                return InteractionResult.SUCCESS;
             }
-            return ActionResult.CONSUME;
+            return InteractionResult.CONSUME;
         }
 
-        if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth() && this.isTamed()) feedTruffleToChilloo(player);
-        if (item == FrozenUpItems.TRUFFLE && !this.isTamed()) feedTruffleToChilloo(player);
+        if (item == FrozenUpItems.TRUFFLE.get() && this.getHealth() < this.getMaxHealth() && this.isTame()) feedTruffleToChilloo(player);
+        if (item == FrozenUpItems.TRUFFLE.get() && !this.isTame()) feedTruffleToChilloo(player);
 
-        if (this.world.isClient) return this.isOwner(player) || this.isTamed() || item == FrozenUpItems.TRUFFLE && !this.isTamed() ? ActionResult.CONSUME : ActionResult.PASS;
+        if (this.level.isClientSide) return this.isOwnedBy(player) || this.isTame() || item == FrozenUpItems.TRUFFLE.get() && !this.isTame() ? InteractionResult.CONSUME : InteractionResult.PASS;
         else {
 
-            if (this.isTamed()) {
-                ItemStack stackInHand = this.getEquippedStack(EquipmentSlot.MAINHAND);
+            if (this.isTame()) {
+                ItemStack stackInHand = this.getItemBySlot(EquipmentSlot.MAINHAND);
                 if (!stackInHand.isEmpty() && itemStack.isEmpty()) {
-                    player.giveItemStack(stackInHand);
-                    stackInHand.decrement(1);
-                    if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    player.addItem(stackInHand);
+                    stackInHand.shrink(1);
+                    if (!this.isSilent()) this.level.playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT.get(), this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
                 }
 
-                if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth()) {
-                    this.heal(Objects.requireNonNull(item.getFoodComponent()).getHunger());
-                    return ActionResult.SUCCESS;
+                if (item == FrozenUpItems.TRUFFLE.get() && this.getHealth() < this.getMaxHealth()) {
+                    this.heal(Objects.requireNonNull(item.getFoodProperties()).getNutrition());
+                    return InteractionResult.SUCCESS;
                 }
 
-                if (!itemStack.isIn(ConventionalItemTags.DYES) && !itemStack.isIn(ConventionalItemTags.SHEARS)) {
-                    ActionResult actionResult = super.interactMob(player, hand);
-                    if ((!actionResult.isAccepted() || this.isBaby()) && this.isOwner(player)) {
-                        this.setSitting(!this.isSitting());
+                if (!itemStack.is(Tags.Items.DYES) && !itemStack.is(Tags.Items.SHEARS)) {
+                    InteractionResult actionResult = super.interact(player, hand);
+                    if ((!actionResult.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
+                        this.setOrderedToSit(!this.isOrderedToSit());
                         this.jumping = false;
                         this.navigation.stop();
                         this.setTarget(null);
-                        return ActionResult.SUCCESS;
+                        return InteractionResult.SUCCESS;
                     }
                     return actionResult;
                 }
 
-                DyeColor dyeColor = ((DyeItem)item).getColor();
+                DyeColor dyeColor = ((DyeItem)item).getDyeColor();
                 if (dyeColor != this.getBandsColor()) {
                     this.setBandsColor(dyeColor);
-                    if (!player.getAbilities().creativeMode) itemStack.decrement(1);
-                    return ActionResult.SUCCESS;
+                    if (!player.getAbilities().instabuild) itemStack.shrink(1);
+                    return InteractionResult.SUCCESS;
                 }
-            } else if (item == FrozenUpItems.TRUFFLE) {
-                this.setOwner(player);
+            } else if (item == FrozenUpItems.TRUFFLE.get()) {
+                this.tame(player);
                 this.navigation.stop();
                 this.setTarget(null);
-                this.setSitting(true);
-                this.world.sendEntityStatus(this, (byte)7);
-                return ActionResult.SUCCESS;
+                this.setOrderedToSit(true);
+                this.level.broadcastEntityEvent(this, (byte)7);
+                return InteractionResult.SUCCESS;
             }
 
-            return super.interactMob(player, hand);
+            return super.interact(player, hand);
         }
     }
 
-    public void feedTruffleToChilloo(PlayerEntity player) {
-        Vec3d vec3d = this.getBoundingBox().getCenter();
-        Random random = this.world.getRandom();
-        ItemStack stack = FrozenUpItems.TRUFFLE.getDefaultStack();
-        if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
-        if (!player.getAbilities().creativeMode) player.getStackInHand(player.getActiveHand()).decrement(1);
+    public void feedTruffleToChilloo(Player player) {
+        Vec3 vec3d = this.getBoundingBox().getCenter();
+        RandomSource random = this.level.getRandom();
+        ItemStack stack = FrozenUpItems.TRUFFLE.get().getDefaultInstance();
+        if (!this.isSilent()) this.level.playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT.get(), this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+        if (!player.getAbilities().instabuild) player.getItemInHand(player.getUsedItemHand()).shrink(1);
         for (int i = 0; i < 10; ++i) {
             double velX = random.nextGaussian() * 0.075D;
             double velY = random.nextGaussian() * 0.075D;
             double velZ = random.nextGaussian() * 0.075D;
-            this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), vec3d.x, vec3d.y, vec3d.z, velX, velY, velZ);
+            this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, stack), vec3d.x, vec3d.y, vec3d.z, velX, velY, velZ);
         }
     }
 
     @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return stack.isIn(FrozenUpTags.CHILLOO_BREED_ITEMS);
+    public boolean isFood(ItemStack stack) {
+        return stack.is(FrozenUpTags.CHILLOO_BREED_ITEMS);
     }
 
     @Override
-    protected void drop(DamageSource source) {
-        ItemStack itemStack = this.getEquippedStack(EquipmentSlot.MAINHAND);
+    protected void dropAllDeathLoot(DamageSource source) {
+        ItemStack itemStack = this.getItemBySlot(EquipmentSlot.MAINHAND);
         if (!itemStack.isEmpty()) {
-            this.dropStack(itemStack);
-            this.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+            this.spawnAtLocation(itemStack);
+            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         }
 
-        super.drop(source);
+        super.dropAllDeathLoot(source);
     }
 
     @Override
-    public boolean canEquip(ItemStack stack) {
-        if (!this.getEquippedStack(EquipmentSlot.MAINHAND).isEmpty()) return false;
-        else return super.canEquip(stack);
+    public boolean canTakeItem(ItemStack stack) {
+        if (!this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) return false;
+        else return super.canTakeItem(stack);
     }
 
     @Override
-    public boolean canPickupItem(ItemStack stack) {
-        ItemStack itemStack = this.getEquippedStack(EquipmentSlot.MAINHAND);
-        if (stack.isOf(FrozenUpItems.CHILLOO_FEATHER)) return false;
-        return itemStack.isEmpty() || this.eatingTime > 0 && stack.getItem().isFood() && !itemStack.getItem().isFood();
+    public boolean canHoldItem(ItemStack stack) {
+        ItemStack itemStack = this.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (stack.is(FrozenUpItems.CHILLOO_FEATHER.get())) return false;
+        return itemStack.isEmpty() || this.eatingTime > 0 && stack.getItem().isEdible() && !itemStack.getItem().isEdible();
     }
 
     @Override
-    public void handleStatus(byte status) {
+    public void handleEntityEvent(byte status) {
         if (status == 10) this.digInGrassTimer = 40;
-        else super.handleStatus(status);
+        else super.handleEntityEvent(status);
         if (status == 45) {
-            ItemStack itemStack = this.getEquippedStack(EquipmentSlot.MAINHAND);
+            ItemStack itemStack = this.getItemBySlot(EquipmentSlot.MAINHAND);
             if (!itemStack.isEmpty()) {
                 for(int i = 0; i < 8; ++i) {
-                    Vec3d vec3d = (new Vec3d(((double)this.random.nextFloat() - 0.5) * 0.1, Math.random() * 0.1 + 0.1, 0.0)).rotateX(-this.getPitch() * 0.0175F).rotateY(-this.getYaw() * 0.0175F);
-                    this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack), this.getX() + this.getRotationVector().x / 2.0, this.getY(), this.getZ() + this.getRotationVector().z / 2.0, vec3d.x, vec3d.y + 0.05, vec3d.z);
+                    Vec3 vec3d = (new Vec3(((double)this.random.nextFloat() - 0.5) * 0.1, Math.random() * 0.1 + 0.1, 0.0)).xRot(-this.getXRot() * 0.0175F).yRot(-this.getYRot() * 0.0175F);
+                    this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemStack), this.getX() + this.getLookAngle().x / 2.0, this.getY(), this.getZ() + this.getLookAngle().z / 2.0, vec3d.x, vec3d.y + 0.05, vec3d.z);
                 }
             }
-        } else super.handleStatus(status);
+        } else super.handleEntityEvent(status);
     }
 
     public float getNeckAngle(float delta) {
@@ -290,35 +298,35 @@ public class ChillooEntity extends TameableEntity implements Shearable {
     public float getHeadAngle(float delta) {
         if (this.digInGrassTimer > 4 && this.digInGrassTimer <= 36) {
             float f = ((float)(this.digInGrassTimer - 4) - delta) / 32.0F;
-            return 0.62831855F + 0.21991149F * MathHelper.sin(f * 28.7F);
-        } else return this.digInGrassTimer > 0 ? 0.62831855F : this.getPitch() * 0.017453292F;
+            return 0.62831855F + 0.21991149F * Mth.sin(f * 28.7F);
+        } else return this.digInGrassTimer > 0 ? 0.62831855F : this.getXRot() * 0.017453292F;
     }
 
-    private boolean canEat(ItemStack stack) { return stack.getItem().isFood() && this.onGround; }
+    private boolean canEat(ItemStack stack) { return stack.getItem().isEdible() && this.onGround; }
 
     private void spit(ItemStack stack) {
-        if (!stack.isEmpty() && !this.world.isClient) {
-            ItemEntity itemEntity = new ItemEntity(this.world, this.getX() + this.getRotationVector().x, this.getY() + 1.0, this.getZ() + this.getRotationVector().z, stack);
-            itemEntity.setPickupDelay(40);
-            itemEntity.setThrower(this.getUuid());
-            this.playSound(FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT, 1.0F, 1.0F);
-            this.world.spawnEntity(itemEntity);
+        if (!stack.isEmpty() && !this.level.isClientSide) {
+            ItemEntity itemEntity = new ItemEntity(this.level, this.getX() + this.getLookAngle().x, this.getY() + 1.0, this.getZ() + this.getLookAngle().z, stack);
+            itemEntity.setPickUpDelay(40);
+            itemEntity.setThrower(this.getUUID());
+            this.playSound(FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT.get(), 1.0F, 1.0F);
+            this.level.addFreshEntity(itemEntity);
         }
     }
 
-    private void dropItem(ItemStack stack) { this.world.spawnEntity(new ItemEntity(this.world, this.getX(), this.getY(), this.getZ(), stack)); }
+    private void dropItem(ItemStack stack) { this.level.addFreshEntity(new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), stack)); }
 
     @Override
-    protected void loot(ItemEntity item) {
-        ItemStack itemStack = item.getStack();
-        if (this.canPickupItem(itemStack)) {
+    protected void pickUpItem(ItemEntity item) {
+        ItemStack itemStack = item.getItem();
+        if (this.canHoldItem(itemStack)) {
             int i = itemStack.getCount();
             if (i > 1) this.dropItem(itemStack.split(i - 1));
-            this.spit(this.getEquippedStack(EquipmentSlot.MAINHAND));
-            this.triggerItemPickedUpByEntityCriteria(item);
-            this.equipStack(EquipmentSlot.MAINHAND, itemStack.split(1));
-            this.handDropChances[EquipmentSlot.MAINHAND.getEntitySlotId()] = 2.0F;
-            this.sendPickup(item, itemStack.getCount());
+            this.spit(this.getItemBySlot(EquipmentSlot.MAINHAND));
+            this.onItemPickup(item);
+            this.setItemSlot(EquipmentSlot.MAINHAND, itemStack.split(1));
+            this.handDropChances[EquipmentSlot.MAINHAND.getIndex()] = 2.0F;
+            this.take(item, itemStack.getCount());
             item.discard();
             this.eatingTime = 0;
         }
@@ -326,105 +334,107 @@ public class ChillooEntity extends TameableEntity implements Shearable {
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(BANDS_COLOR, DyeColor.RED.getId());
-        this.dataTracker.startTracking(SHEARED, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(BANDS_COLOR, DyeColor.RED.getId());
+        this.entityData.define(SHEARED, false);
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound tag) {
-        super.writeCustomDataToNbt(tag);
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
         tag.putBoolean("Sheared", this.isSheared());
         tag.putLong(TIME_SINCE_SHEARED_KEY, this.timeSinceSheared);
         tag.putByte("BandsColor", (byte) this.getBandsColor().getId());
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound tag) {
-        super.readCustomDataFromNbt(tag);
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
         this.setSheared(tag.getBoolean("Sheared"));
         this.timeSinceSheared = tag.getLong(TIME_SINCE_SHEARED_KEY);
         if (tag.contains("BandsColor", 99)) this.setBandsColor(DyeColor.byId(tag.getInt("BandsColor")));
     }
 
-    public boolean isSheared() { return this.dataTracker.get(SHEARED).equals(true); }
+    public boolean isSheared() { return this.entityData.get(SHEARED).equals(true); }
 
-    public void setSheared(boolean sheared) { this.dataTracker.set(SHEARED, sheared); }
+    public void setSheared(boolean sheared) { this.entityData.set(SHEARED, sheared); }
 
-    @Override public boolean isShearable() { return this.isAlive() && !this.isSheared() && !this.isBaby(); }
+    public DyeColor getBandsColor() { return DyeColor.byId(this.entityData.get(BANDS_COLOR)); }
 
-    public DyeColor getBandsColor() { return DyeColor.byId(this.dataTracker.get(BANDS_COLOR)); }
+    public void setBandsColor (DyeColor color) { this.entityData.set(BANDS_COLOR, color.getId()); }
 
-    public void setBandsColor (DyeColor color) { this.dataTracker.set(BANDS_COLOR, color.getId()); }
+    @Override public boolean canBeLeashed(Player player) { return super.canBeLeashed(player); }
 
-    @Override public boolean canBeLeashedBy (PlayerEntity player) { return super.canBeLeashedBy(player); }
-
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void setTamed(boolean tamed) {
-        super.setTamed(tamed);
+    public void setTame(boolean tamed) {
+        super.setTame(tamed);
         if (tamed) {
-            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(20.0D);
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
             this.setHealth(this.getMaxHealth());
-        } else this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(12.0D);
+        } else this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(12.0D);
     }
 
     @Nullable
     @Override
-    public PassiveEntity createChild (ServerWorld world, PassiveEntity entity) {
-        ChillooEntity chilloo = FrozenUpEntities.CHILLOO.create(world);
-        UUID uUID = this.getOwnerUuid();
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob p_146744_) {
+        ChillooEntity chilloo = FrozenUpEntities.CHILLOO.get().create(world);
+        UUID uUID = this.getOwnerUUID();
         if (uUID != null && chilloo != null) {
-            chilloo.setOwnerUuid(uUID);
-            chilloo.setTamed(true);
+            chilloo.setOwnerUUID(uUID);
+            chilloo.setTame(true);
         }
         return chilloo;
     }
 
     public void onDiggingInGrass() {}
 
-    @Override protected SoundEvent getAmbientSound() { return FrozenUpSoundEvents.ENTITY_CHILLOO_AMBIENT; }
-    @Override protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return FrozenUpSoundEvents.ENTITY_CHILLOO_HURT; }
-    @Override protected SoundEvent getDeathSound() { return FrozenUpSoundEvents.ENTITY_CHILLOO_DEATH; }
-    @Override protected void playStepSound(BlockPos pos, BlockState blockIn) { this.playSound(SoundEvents.ENTITY_SHEEP_STEP, 0.15F, 1.0F); }
+    @Override protected SoundEvent getAmbientSound() { return FrozenUpSoundEvents.ENTITY_CHILLOO_AMBIENT.get(); }
+    @Override protected SoundEvent getHurtSound(DamageSource damageSourceIn) { return FrozenUpSoundEvents.ENTITY_CHILLOO_HURT.get(); }
+    @Override protected SoundEvent getDeathSound() { return FrozenUpSoundEvents.ENTITY_CHILLOO_DEATH.get(); }
+    @Override protected void playStepSound(BlockPos pos, BlockState blockIn) { this.playSound(SoundEvents.SHEEP_STEP, 0.15F, 1.0F); }
 
     @Override
-    public void sheared(SoundCategory category) {
-        this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, category, 1.0f, 1.0f);
+    public void shear(SoundSource category) {
+        this.level.playSound(null, this, SoundEvents.SHEEP_SHEAR, category, 1.0f, 1.0f);
         this.setSheared(true);
-        if (this.isSheared()) this.timeSinceSheared = this.world.getTime();
+        if (this.isSheared()) this.timeSinceSheared = this.level.getGameTime();
         for (int i = 0, l = 2 + this.random.nextInt(5); i < l; i++) {
-            ItemEntity itemEntity = this.dropItem(FrozenUpItems.CHILLOO_FEATHER, 1);
+            ItemEntity itemEntity = this.spawnAtLocation(FrozenUpItems.CHILLOO_FEATHER.get(), 1);
             if (itemEntity == null) continue;
-            itemEntity.setVelocity(itemEntity.getVelocity().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1f, this.random.nextFloat() * 0.05f, (this.random.nextFloat() - this.random.nextFloat()) * 0.1f));
+            itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1f, this.random.nextFloat() * 0.05f, (this.random.nextFloat() - this.random.nextFloat()) * 0.1f));
         }
+    }
+
+    @Override
+    public boolean readyForShearing() {
+        return this.isAlive() && !this.isSheared() && !this.isBaby();
     }
 
 
     class PickupItemGoal extends Goal {
-        public PickupItemGoal() { this.setControls(EnumSet.of(Control.MOVE)); }
+        public PickupItemGoal() { this.setFlags(EnumSet.of(Flag.MOVE)); }
 
         @Override
-        public boolean canStart() {
-            if (!ChillooEntity.this.getEquippedStack(EquipmentSlot.MAINHAND).isEmpty()) return false;
-            else if (ChillooEntity.this.getTarget() == null && ChillooEntity.this.getAttacker() == null) {
-                if (!ChillooEntity.this.isNavigating()) return false;
-                else if (ChillooEntity.this.getRandom().nextInt(toGoalTicks(10)) != 0) return false;
-                else return !ChillooEntity.this.world.getEntitiesByClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().expand(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER).isEmpty() && ChillooEntity.this.getEquippedStack(EquipmentSlot.MAINHAND).isEmpty();
+        public boolean canUse() {
+            if (!ChillooEntity.this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) return false;
+            else if (ChillooEntity.this.getTarget() == null && ChillooEntity.this.getLastHurtByMob() == null) {
+                if (!ChillooEntity.this.isPathFinding()) return false;
+                else if (ChillooEntity.this.getRandom().nextInt(reducedTickDelay(10)) != 0) return false;
+                else return !ChillooEntity.this.level.getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER).isEmpty() && ChillooEntity.this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
             } else return false;
         }
 
         @Override
         public void tick() {
-            List<ItemEntity> list = ChillooEntity.this.world.getEntitiesByClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().expand(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
-            if (ChillooEntity.this.getEquippedStack(EquipmentSlot.MAINHAND).isEmpty() && !list.isEmpty()) ChillooEntity.this.getNavigation().startMovingTo(list.get(0), 1);
+            List<ItemEntity> list = ChillooEntity.this.level.getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
+            if (ChillooEntity.this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && !list.isEmpty()) ChillooEntity.this.getNavigation().createPath(list.get(0), 1);
         }
 
         @Override
         public void start() {
-            List<ItemEntity> list = ChillooEntity.this.world.getEntitiesByClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().expand(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
-            if (!list.isEmpty()) ChillooEntity.this.getNavigation().startMovingTo(list.get(0), 1);
+            List<ItemEntity> list = ChillooEntity.this.level.getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
+            if (!list.isEmpty()) ChillooEntity.this.getNavigation().createPath(list.get(0), 1);
         }
     }
 }

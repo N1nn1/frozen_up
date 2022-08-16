@@ -1,12 +1,11 @@
 {
   "required": true,
-  "minVersion": "0.8",
   "package": "com.ninni.frozenup.mixin",
   "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "refmap": "frozenup.refmap.json",
   "mixins": ["FoxEntityMixin"],
   "client": [
-    "client.EntityModelLayersInvoker",
-    "client.EntityModelLayersMixin"
   ],
   "injectors": {
     "defaultRequire": 1

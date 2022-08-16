@@ -1,16 +1,19 @@
 package com.ninni.frozenup.item;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class MilkMugItem extends AbstractDrinkableMugItem {
-    public MilkMugItem(Block block, Settings settings) { super(block, settings); }
+
+    public MilkMugItem(Block block, Item.Properties settings) { super(block, settings); }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        user.clearStatusEffects();
-        return super.finishUsing(stack, world, user);
+    public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
+        user.removeAllEffects();
+        return super.finishUsingItem(stack, world, user);
     }
+
 }

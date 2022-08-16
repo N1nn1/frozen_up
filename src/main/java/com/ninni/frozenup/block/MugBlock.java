@@ -1,83 +1,84 @@
 package com.ninni.frozenup.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
+import com.ninni.frozenup.init.FrozenUpBlocks;
 import com.ninni.frozenup.item.AbstractDrinkableMugItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
 @SuppressWarnings("deprecation")
-public class MugBlock extends HorizontalFacingBlock {
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+public class MugBlock extends HorizontalDirectionalBlock {
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    protected static final VoxelShape MUG = createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 9.0D, 12.0D);
-    protected static final VoxelShape HANDLE = createCuboidShape(7.0D, 2.5D, 2.0D, 9.0D, 7.5D, 4.0D);
-    protected static final VoxelShape SHAPE = VoxelShapes.union(MUG, HANDLE);
-    protected static final VoxelShape NORTH_SHAPE = VoxelShapes.union(MUG, HANDLE);
-    protected static final VoxelShape SOUTH_SHAPE = VoxelShapes.union(Block.createCuboidShape(7, 2.5, 12, 9, 7.5, 14), Block.createCuboidShape(4, 0, 4, 12, 9, 12));
-    protected static final VoxelShape EAST_SHAPE = VoxelShapes.union(Block.createCuboidShape(12, 2.5, 7, 14, 7.5, 9), Block.createCuboidShape(4, 0, 4, 12, 9, 12));
-    protected static final VoxelShape WEST_SHAPE = VoxelShapes.union(Block.createCuboidShape(2, 2.5, 7, 4, 7.5, 9), Block.createCuboidShape(4, 0, 4, 12, 9, 12));
+    protected static final VoxelShape MUG = box(4.0D, 0.0D, 4.0D, 12.0D, 9.0D, 12.0D);
+    protected static final VoxelShape HANDLE = box(7.0D, 2.5D, 2.0D, 9.0D, 7.5D, 4.0D);
+    protected static final VoxelShape SHAPE = Shapes.or(MUG, HANDLE);
+    protected static final VoxelShape NORTH_SHAPE = Shapes.or(MUG, HANDLE);
+    protected static final VoxelShape SOUTH_SHAPE = Shapes.or(Block.box(7, 2.5, 12, 9, 7.5, 14), Block.box(4, 0, 4, 12, 9, 12));
+    protected static final VoxelShape EAST_SHAPE = Shapes.or(Block.box(12, 2.5, 7, 14, 7.5, 9), Block.box(4, 0, 4, 12, 9, 12));
+    protected static final VoxelShape WEST_SHAPE = Shapes.or(Block.box(2, 2.5, 7, 4, 7.5, 9), Block.box(4, 0, 4, 12, 9, 12));
 
     @Nullable private final Supplier<Item> mugItem;
 
-    public MugBlock(@Nullable Supplier<Item> mugItem, Settings settings) {
+    public MugBlock(@Nullable Supplier<Item> mugItem, Properties settings) {
         super(settings);
-        this.setDefaultState((this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
+        this.registerDefaultState((this.stateDefinition.any()).setValue(FACING, Direction.NORTH));
 
         this.mugItem = mugItem;
     }
-    public MugBlock(Settings settings) {
+    public MugBlock(Properties settings) {
         this(null, settings);
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         Item item = mugItem == null ? null : mugItem.get();
-        if (item instanceof AbstractDrinkableMugItem && !state.isOf(FrozenUpBlocks.EMPTY_MUG)) {
-            item.finishUsing(new ItemStack(item), world, player);
-            world.setBlockState(pos, FrozenUpBlocks.EMPTY_MUG.getDefaultState().with(FACING, state.get(FACING)));
-            if (!world.isClient) {
-                world.playSoundFromEntity(null, player, SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        if (item instanceof AbstractDrinkableMugItem && !state.is(FrozenUpBlocks.EMPTY_MUG.get())) {
+            item.finishUsingItem(new ItemStack(item), world, player);
+            world.setBlockAndUpdate(pos, FrozenUpBlocks.EMPTY_MUG.get().defaultBlockState().setValue(FACING, state.getValue(FACING)));
+            if (!world.isClientSide) {
+                world.playSound(null, player, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 1.0f, 1.0f);
             }
 
-            return ActionResult.success(world.isClient);
+            return InteractionResult.sidedSuccess(world.isClientSide);
         }
 
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.use(state, world, pos, player, hand, hit);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return switch (state.get(FACING)) {
+    public VoxelShape getShape(BlockState state, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+        return switch (state.getValue(FACING)) {
             case NORTH -> NORTH_SHAPE;
             case SOUTH -> SOUTH_SHAPE;
-            case EAST -> EAST_SHAPE;
+            case EAST ->  EAST_SHAPE;
             case WEST -> WEST_SHAPE;
             default -> SHAPE;
         };
@@ -85,20 +86,12 @@ public class MugBlock extends HorizontalFacingBlock {
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState state = super.getPlacementState(ctx);
-        PlayerEntity player = ctx.getPlayer();
-        Arm arm = player != null ? player.getMainArm() : Arm.RIGHT;
-        Arm activeArm = ctx.getHand() == Hand.MAIN_HAND ? Arm.RIGHT : Arm.LEFT;
-        Direction facing = ctx.getPlayerFacing();
-
-        return state == null
-            ? null
-            : state.with(
-                FACING,
-                (arm == Arm.RIGHT && activeArm == Arm.RIGHT) || (arm == Arm.LEFT && activeArm == Arm.LEFT)
-                    ? facing.rotateYClockwise()
-                    : facing.rotateYCounterclockwise()
-            );
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState state = super.getStateForPlacement(ctx);
+        Player player = ctx.getPlayer();
+        HumanoidArm arm = player != null ? player.getMainArm() : HumanoidArm.RIGHT;
+        HumanoidArm activeArm = ctx.getHand() == InteractionHand.MAIN_HAND ? HumanoidArm.RIGHT : HumanoidArm.LEFT;
+        Direction facing = ctx.getHorizontalDirection();
+        return state == null ? null : state.setValue(FACING, (arm == HumanoidArm.RIGHT && activeArm == HumanoidArm.RIGHT) || (arm == HumanoidArm.LEFT && activeArm == HumanoidArm.LEFT) ? facing.getClockWise() : facing.getCounterClockWise());
     }
 }
