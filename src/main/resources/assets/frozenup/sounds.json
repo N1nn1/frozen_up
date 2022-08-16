@@ -34,9 +34,9 @@
   },
   "entity.chilloo.eat": {
     "sounds": [
-      "minecraft:mob/fox/bite1",
-      "minecraft:mob/fox/bite2",
-      "minecraft:mob/fox/bite3"
+      "frozenup:entity/chilloo/eat1",
+      "frozenup:entity/chilloo/eat2",
+      "frozenup:entity/chilloo/eat3"
     ],
     "subtitle": "subtitles.frozenup.entity.chilloo.eat"
   },

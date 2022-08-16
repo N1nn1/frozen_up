@@ -120,7 +120,7 @@ public class ChillooEntity extends TameableEntity implements Shearable {
                     if (!itemStack2.isEmpty()) this.equipStack(EquipmentSlot.MAINHAND, itemStack2);
                     this.eatingTime = 0;
                 } else if (this.eatingTime > 560 && this.random.nextFloat() < 0.1F) {
-                    this.playSound(this.getEatSound(itemStack), 1.0F, 1.0F);
+                    this.playSound(this.getEatSound(itemStack), 1.0F, 2.0F);
                     this.world.sendEntityStatus(this, (byte) 45);
                 }
             }
