@@ -1,0 +1,8 @@
+{
+  "parent": "frozenup:block/vertical_slab",
+  "textures": {
+    "bottom": "frozenup:block/cut_ice",
+    "top": "frozenup:block/cut_ice",
+    "side": "frozenup:block/cut_ice"
+  }
+}

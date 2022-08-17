@@ -1,0 +1,28 @@
+{
+  "parent": "frozenup:husbandry/tame_a_chilloo",
+  "display": {
+    "icon": {
+      "item": "minecraft:potato"
+    },
+    "title": {
+      "translate": "advancements.frozenup.retrieve_item_from_tamed_chilloo.title"
+    },
+    "description": {
+      "translate": "advancements.frozenup.retrieve_item_from_tamed_chilloo.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "retrieve_item_from_tamed_chilloo": {
+      "trigger": "frozenup:retrieve_item_from_tamed_chilloo"
+    }
+  },
+  "requirements": [
+    [
+      "retrieve_item_from_tamed_chilloo"
+    ]
+  ]
+}

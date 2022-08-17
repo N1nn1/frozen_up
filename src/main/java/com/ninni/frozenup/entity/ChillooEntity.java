@@ -2,6 +2,7 @@ package com.ninni.frozenup.entity;
 
 import com.ninni.frozenup.FrozenUpTags;
 import com.ninni.frozenup.entity.ai.goal.DigInGrassGoal;
+import com.ninni.frozenup.init.FrozenUpCriteriaTriggers;
 import com.ninni.frozenup.init.FrozenUpEntities;
 import com.ninni.frozenup.init.FrozenUpItems;
 import com.ninni.frozenup.init.FrozenUpSoundEvents;
@@ -13,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -191,6 +193,9 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
                 if (!stackInHand.isEmpty() && itemStack.isEmpty() && !player.isSecondaryUseActive()) {
                     player.addItem(stackInHand);
                     stackInHand.shrink(1);
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        FrozenUpCriteriaTriggers.RETRIEVE_ITEM_FROM_TAMED_CHILLOO.trigger(serverPlayer);
+                    }
                     if (!this.isSilent()) this.level.playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT.get(), this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
                     return InteractionResult.SUCCESS;
                 }
@@ -220,6 +225,9 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
                 this.setTarget(null);
                 this.setOrderedToSit(true);
                 this.level.broadcastEntityEvent(this, (byte)7);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    FrozenUpCriteriaTriggers.TAME_A_CHILLOO.trigger(serverPlayer);
+                }
                 return InteractionResult.SUCCESS;
             }
 

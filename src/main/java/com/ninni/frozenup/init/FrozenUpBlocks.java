@@ -4,6 +4,7 @@ import com.ninni.frozenup.FrozenUp;
 import com.ninni.frozenup.block.FeatherLampBlock;
 import com.ninni.frozenup.block.FiberCoveringBlock;
 import com.ninni.frozenup.block.MugBlock;
+import com.ninni.frozenup.block.VerticalSlabBlock;
 import com.ninni.frozenup.block.vanilla.TruffleCakeBlock;
 import com.ninni.frozenup.sound.FrozenUpBlockSoundGroups;
 import net.minecraft.world.item.BlockItem;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -50,8 +52,23 @@ public class FrozenUpBlocks {
     public static final RegistryObject<Block> MUG_OF_CHOCOLATE_MILK = register("mug_of_chocolate_milk", () -> new MugBlock(FrozenUpItems.MUG_OF_CHOCOLATE_MILK, BlockBehaviour.Properties.copy(EMPTY_MUG.get())));
     public static final RegistryObject<Block> MUG_OF_TRUFFLE_HOT_CHOCOLATE = register("mug_of_truffle_hot_chocolate", () -> new MugBlock(FrozenUpItems.MUG_OF_TRUFFLE_HOT_CHOCOLATE, BlockBehaviour.Properties.copy(EMPTY_MUG.get())));
 
+    public static final RegistryObject<Block> CUT_ICE_VERTICAL_SLAB = compatRegister("quark", "cut_ice_vertical_slab", () -> new VerticalSlabBlock(BlockBehaviour.Properties.copy(CUT_ICE.get())));
+    public static final RegistryObject<Block> CUT_ICE_CUBE_VERTICAL_SLAB = compatRegister("quark", "cut_ice_cube_vertical_slab", () -> new VerticalSlabBlock(BlockBehaviour.Properties.copy(CUT_ICE_CUBES.get())));
+
     private static ToIntFunction<BlockState> createLightLevelFromLitBlockState(int litLevel) {
         return (state) -> (Boolean)state.getValue(BlockStateProperties.LIT) ? litLevel : 0;
+    }
+
+    private static <B extends Block> RegistryObject<B> compatRegister(String modid, String id, Supplier<B> supplier) {
+        return compatRegister(modid, id, supplier, true);
+    }
+
+    private static <B extends Block> RegistryObject<B> compatRegister(String modid, String id, Supplier<B> supplier, boolean registerItem) {
+        RegistryObject<B> block = BLOCKS.register(id, supplier);
+        if (registerItem) {
+            FrozenUpItems.ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties().tab(ModList.get().isLoaded(modid) ? FrozenUp.ITEM_GROUP : null)));
+        }
+        return block;
     }
 
     private static <B extends Block> RegistryObject<B> register(String id, Supplier<B> supplier, boolean registerItem) {
@@ -61,6 +78,7 @@ public class FrozenUpBlocks {
         }
         return block;
     }
+
     private static <B extends Block> RegistryObject<B> register(String id, Supplier<B> block) {
         return register(id, block, false);
     }

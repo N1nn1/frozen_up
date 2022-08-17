@@ -3,6 +3,11 @@
   "mod.frozenup.contact.discord": "Discord",
   "mod.frozenup.wiki": "Wiki",
 
+  "advancements.frozenup.tame_a_chilloo.title" : "It's so Fluffy, I'm gonna Die!",
+  "advancements.frozenup.tame_a_chilloo.description" : "Befriend a chilloo",
+  "advancements.frozenup.retrieve_item_from_tamed_chilloo.title" : "Mine Now",
+  "advancements.frozenup.retrieve_item_from_tamed_chilloo.description" : "Retrieve an item from a tamed chilloo",
+
   "item.frozenup.frozenup": "Frozen Up",
   "item.frozenup.frozen_truffle": "Frozen Truffle",
   "item.frozenup.truffle": "Truffle",
@@ -29,6 +34,8 @@
   "block.frozenup.mug_of_milk": "Mug of Milk",
   "block.frozenup.mug_of_chocolate_milk": "Mug of Chocolate Milk",
   "block.frozenup.mug_of_truffle_hot_chocolate": "Mug of Truffle Hot Chocolate",
+  "block.frozenup.cut_ice_vertical_slab": "Cut Ice Vertical Slab",
+  "block.frozenup.cut_ice_cube_vertical_slab": "Cut Ice Cube Vertical Slab",
 
   "entity.frozenup.chilloo": "Chilloo",
 
