@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "frozenup:cut_ice_slab_from_cut_ice_stonecutting"
+      "frozenup:mug_of_milk"
     ]
   },
   "criteria": {
-    "has_item": {
+    "has_empty_mug": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "frozenup:cut_ice"
+              "frozenup:empty_mug"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "frozenup:cut_ice_slab_from_cut_ice_stonecutting"
+        "recipe": "frozenup:mug_of_milk_from_empty_mug"
       }
     }
   },
   "requirements": [
     [
-      "has_item",
+      "has_empty_mug",
       "has_the_recipe"
     ]
   ]

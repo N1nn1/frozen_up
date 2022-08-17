@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "frozenup:cut_ice_slab_from_cut_ice_stonecutting"
+      "frozenup:mug_of_chocolate_milk"
     ]
   },
   "criteria": {
-    "has_item": {
+    "has_cocoa_beans": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "frozenup:cut_ice"
+              "minecraft:cocoa_beans"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "frozenup:cut_ice_slab_from_cut_ice_stonecutting"
+        "recipe": "frozenup:mug_of_chocolate_milk_from_cocoa_beans"
       }
     }
   },
   "requirements": [
     [
-      "has_item",
+      "has_cocoa_beans",
       "has_the_recipe"
     ]
   ]

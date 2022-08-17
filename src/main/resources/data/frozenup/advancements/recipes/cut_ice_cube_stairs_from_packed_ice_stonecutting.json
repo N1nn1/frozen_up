@@ -2,16 +2,18 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "frozenup:cut_ice_cube_wall_from_cut_ice_cube_stonecutting"
+      "frozenup:cut_ice_cube_stairs_from_packed_ice_stonecutting"
     ]
   },
   "criteria": {
-    "has_cut_ice_cubes": {
+    "has_item": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "frozenup:cut_ice_cubes"
+            "items": [
+              "minecraft:packed_ice"
+            ]
           }
         ]
       }
@@ -19,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "frozenup:cut_ice_cube_wall_from_cut_ice_cube_stonecutting"
+        "recipe": "frozenup:cut_ice_cube_stairs_from_packed_ice_stonecutting"
       }
     }
   },
   "requirements": [
     [
-      "has_cut_ice_cubes",
+      "has_item",
       "has_the_recipe"
     ]
   ]

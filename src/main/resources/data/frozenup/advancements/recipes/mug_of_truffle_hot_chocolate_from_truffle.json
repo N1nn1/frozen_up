@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "frozenup:cut_ice_slab_from_cut_ice_stonecutting"
+      "frozenup:mug_of_truffle_hot_chocolate"
     ]
   },
   "criteria": {
-    "has_item": {
+    "has_truffle": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "frozenup:cut_ice"
+              "frozenup:truffle"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "frozenup:cut_ice_slab_from_cut_ice_stonecutting"
+        "recipe": "frozenup:mug_of_truffle_hot_chocolate_from_truffle"
       }
     }
   },
   "requirements": [
     [
-      "has_item",
+      "has_truffle",
       "has_the_recipe"
     ]
   ]
