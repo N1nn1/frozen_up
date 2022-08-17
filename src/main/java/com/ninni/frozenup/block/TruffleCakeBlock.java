@@ -1,4 +1,4 @@
-package com.ninni.frozenup.block.vanilla;
+package com.ninni.frozenup.block;
 
 
 import com.ninni.frozenup.util.Util;
@@ -64,7 +64,7 @@ public class TruffleCakeBlock extends Block {
         if (!player.canConsume(false)) return ActionResult.PASS;
         else {
             player.incrementStat(Stats.EAT_CAKE_SLICE);
-            player.getHungerManager().add(3, 0.3F);
+            player.getHungerManager().add(5, 0.4F);
             Util.removeEntityEffects(player, instance -> instance.getEffectType().getCategory() == StatusEffectCategory.HARMFUL);
             player.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1, 1);
             world.emitGameEvent(player, GameEvent.EAT, pos);

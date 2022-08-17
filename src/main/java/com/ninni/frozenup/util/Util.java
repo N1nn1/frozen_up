@@ -10,11 +10,9 @@ import java.util.function.Predicate;
 
 public class Util {
     public static void removeEntityEffects(LivingEntity entity, Predicate<StatusEffectInstance> predicate) {
-        if (entity.world.isClient()) {
             Set<StatusEffect> toRemove = new HashSet<>();
             for (StatusEffectInstance instance : entity.getStatusEffects()) if (predicate.test(instance)) toRemove.add(instance.getEffectType());
 
             for (StatusEffect effect : toRemove) entity.removeStatusEffect(effect);
-        }
     }
 }
