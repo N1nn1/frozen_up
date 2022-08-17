@@ -14,7 +14,7 @@
   "item.frozenup.truffle_muffin": "Truffle Muffin",
   "item.frozenup.chilloo_spawn_egg": "Chilloo Spawn Egg",
   "item.frozenup.chilloo_feather": "Chilloo Feather",
-  "item.frozenup.empty_mug": "Empty Mug",
+  "item.frozenup.empty_mug": "Mug",
   "item.frozenup.mug_of_chocolate_milk": "Mug of Chocolate Milk",
   "item.frozenup.mug_of_truffle_hot_chocolate": "Mug of Truffle Hot Chocolate",
   "item.frozenup.mug_of_milk": "Mug of Milk",
@@ -34,8 +34,6 @@
   "block.frozenup.mug_of_milk": "Mug of Milk",
   "block.frozenup.mug_of_chocolate_milk": "Mug of Chocolate Milk",
   "block.frozenup.mug_of_truffle_hot_chocolate": "Mug of Truffle Hot Chocolate",
-  "block.frozenup.cut_ice_vertical_slab": "Cut Ice Vertical Slab",
-  "block.frozenup.cut_ice_cube_vertical_slab": "Cut Ice Cube Vertical Slab",
 
   "entity.frozenup.chilloo": "Chilloo",
 

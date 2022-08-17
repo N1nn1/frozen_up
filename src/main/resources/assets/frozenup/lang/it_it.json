@@ -1,0 +1,48 @@
+{
+  "itemGroup.frozenup.item_group": "Frozen Up",
+  "mod.frozenup.contact.discord": "Discord",
+  "mod.frozenup.wiki": "Wiki",
+
+  "advancements.frozenup.tame_a_chilloo.title" : "Sembra morbido da morire!",
+  "advancements.frozenup.tame_a_chilloo.description" : "Addomestica un chilloo",
+  "advancements.frozenup.retrieve_item_from_tamed_chilloo.title" : "È mio ora",
+  "advancements.frozenup.retrieve_item_from_tamed_chilloo.description" : "Prendi un oggetto da un chilloo addomesticato",
+
+  "item.frozenup.frozenup": "Frozen Up",
+  "item.frozenup.frozen_truffle": "Tartufo congelato",
+  "item.frozenup.truffle": "Tartufo",
+  "item.frozenup.truffle_muffin": "Muffin al tartufo",
+  "item.frozenup.chilloo_spawn_egg": "Uovo generatore di chilloo",
+  "item.frozenup.chilloo_feather": "Piuma di chilloo",
+  "item.frozenup.empty_mug": "Tazza",
+  "item.frozenup.mug_of_chocolate_milk": "Tazza di latte al cioccolato",
+  "item.frozenup.mug_of_truffle_hot_chocolate": "Tazza con cioccolata calda al tartufo",
+  "item.frozenup.mug_of_milk": "Tazza di latte",
+
+  "block.frozenup.cut_ice": "Ghiaccio squadrato",
+  "block.frozenup.cut_ice_stairs": "Scalini di ghiaccio squadrato",
+  "block.frozenup.cut_ice_slab": "Lastra di ghiaccio squadrato",
+  "block.frozenup.cut_ice_cubes": "Cubetti di ghiaccio squadrato",
+  "block.frozenup.cut_ice_cube_stairs": "Scalini di cubetti di ghiaccio squadrato",
+  "block.frozenup.cut_ice_cube_slab": "Lastra di cubetti di ghiaccio squadrato",
+  "block.frozenup.cut_ice_cube_wall": "Muretto di cubetti di ghiaccio squadrato",
+  "block.frozenup.chilloo_feather_block": "Blocco di piume di chilloo",
+  "block.frozenup.chilloo_feather_covering": "Rivestimento di piume di chilloo",
+  "block.frozenup.truffle_cake": "Torta al cioccolato con tartufo",
+  "block.frozenup.chilloo_feather_lamp": "Lampada di piume di chilloo",
+  "block.frozenup.empty_mug": "Tazza",
+  "block.frozenup.mug_of_milk": "Tazza di latte",
+  "block.frozenup.mug_of_chocolate_milk": "Tazza di latte al cioccolato",
+  "block.frozenup.mug_of_truffle_hot_chocolate": "Tazza con cioccolata calda al tartufo",
+
+  "entity.frozenup.chilloo": "Chilloo",
+
+  "subtitles.frozenup.entity.chilloo.ambient": "Chilloo cinguetta felicemente",
+  "subtitles.frozenup.entity.chilloo.hurt": "Chilloo chiede aiuto",
+  "subtitles.frozenup.entity.chilloo.death": "Chilloo muore",
+  "subtitles.frozenup.entity.chilloo.eat": "Chilloo mastica",
+  "subtitles.frozenup.entity.chilloo.spit": "Chilloo sputa",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_on": "Lampada accesa",
+  "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off": "Lampada spenta",
+  "subtitles.item.block.mug.drink": "Sorseggiare"
+}
