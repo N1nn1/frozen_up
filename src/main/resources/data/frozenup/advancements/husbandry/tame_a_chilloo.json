@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:husbandry/tame_an_animal",
+  "display": {
+    "icon": {
+      "item": "frozenup:chilloo_feather"
+    },
+    "title": {
+      "translate": "advancements.frozenup.tame_a_chilloo.title"
+    },
+    "description": {
+      "translate": "advancements.frozenup.tame_a_chilloo.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "tame_a_chilloo": {
+      "trigger": "frozenup:tame_a_chilloo"
+    }
+  },
+  "requirements": [
+    [
+      "tame_a_chilloo"
+    ]
+  ]
+}

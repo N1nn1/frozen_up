@@ -1,6 +1,7 @@
 package com.ninni.frozenup.entity;
 
 import com.ninni.frozenup.FrozenUpTags;
+import com.ninni.frozenup.criterion.FrozenUpCriteria;
 import com.ninni.frozenup.entity.ai.goal.DigInGrassGoal;
 import com.ninni.frozenup.item.FrozenUpItems;
 import com.ninni.frozenup.sound.FrozenUpSoundEvents;
@@ -42,6 +43,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -184,6 +186,7 @@ public class ChillooEntity extends TameableEntity implements Shearable {
                 if (!stackInHand.isEmpty() && itemStack.isEmpty() && !player.shouldCancelInteraction()) {
                     player.giveItemStack(stackInHand);
                     stackInHand.decrement(1);
+                    if (player instanceof ServerPlayerEntity) FrozenUpCriteria.RETRIEVE_ITEM_FROM_TAMED_CHILLOO.trigger((ServerPlayerEntity) player);
                     if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
                     return ActionResult.SUCCESS;
                 }
@@ -214,6 +217,7 @@ public class ChillooEntity extends TameableEntity implements Shearable {
                 this.setTarget(null);
                 this.setSitting(true);
                 this.world.sendEntityStatus(this, (byte)7);
+                if (player instanceof ServerPlayerEntity) FrozenUpCriteria.TAME_A_CHILLOO.trigger((ServerPlayerEntity) player);
                 return ActionResult.SUCCESS;
             }
 

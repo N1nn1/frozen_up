@@ -2,6 +2,7 @@ package com.ninni.frozenup;
 
 import com.google.common.reflect.Reflection;
 import com.ninni.frozenup.block.FrozenUpBlocks;
+import com.ninni.frozenup.criterion.FrozenUpCriteria;
 import com.ninni.frozenup.item.FrozenUpItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -20,6 +21,7 @@ public class FrozenUp implements ModInitializer {
     @SuppressWarnings("UnstableApiUsage")
     @Override
     public void onInitialize() {
+        FrozenUpCriteria.init();
         Reflection.initialize(
             FrozenUpBlocks.class,
             FrozenUpItems.class,
