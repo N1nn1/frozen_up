@@ -231,7 +231,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
         Vec3 vec3d = this.getBoundingBox().getCenter();
         RandomSource random = this.level.getRandom();
         ItemStack stack = FrozenUpItems.TRUFFLE.get().getDefaultInstance();
-        if (!this.isSilent()) this.level.playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT.get(), this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+        if (!this.isSilent()) this.level.playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT.get(), this.getSoundSource(), 1.5F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
         if (!player.getAbilities().instabuild) player.getItemInHand(player.getUsedItemHand()).shrink(1);
         for (int i = 0; i < 10; ++i) {
             double velX = random.nextGaussian() * 0.075D;

@@ -27,8 +27,12 @@ public class FrozenUpSoundEvents {
     public static final RegistryObject<SoundEvent> BLOCK_CHILLOO_FEATHER_LAMP_TOGGLE_OFF = chillooFeatherLamp("toggle_off");
     private static RegistryObject<SoundEvent> chillooFeatherLamp(String type) { return block("chilloo_feather_lamp", type); }
 
+    public static final RegistryObject<SoundEvent> ITEM_MUG_DRINK = mug("drink");
+    private static RegistryObject<SoundEvent> mug(String type) { return item("mug", type); }
+
     private static RegistryObject<SoundEvent> block(String block, String type) { return register("block." + block + "." + type); }
     private static RegistryObject<SoundEvent> entity(String entity, String type) { return register("entity." + entity + "." + type); }
+    private static RegistryObject<SoundEvent> item(String item, String type) { return register("item." + item + "." + type); }
 
     private static RegistryObject<SoundEvent> register(String name) {
         return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(MOD_ID, name)));

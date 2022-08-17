@@ -1,10 +1,10 @@
 package com.ninni.frozenup.block;
 
 import com.ninni.frozenup.init.FrozenUpBlocks;
+import com.ninni.frozenup.init.FrozenUpSoundEvents;
 import com.ninni.frozenup.item.AbstractDrinkableMugItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -64,7 +64,7 @@ public class MugBlock extends HorizontalDirectionalBlock {
             item.finishUsingItem(new ItemStack(item), world, player);
             world.setBlockAndUpdate(pos, FrozenUpBlocks.EMPTY_MUG.get().defaultBlockState().setValue(FACING, state.getValue(FACING)));
             if (!world.isClientSide) {
-                world.playSound(null, player, SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 1.0f, 1.0f);
+                world.playSound(null, player, FrozenUpSoundEvents.ITEM_MUG_DRINK.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
             }
 
             return InteractionResult.sidedSuccess(world.isClientSide);

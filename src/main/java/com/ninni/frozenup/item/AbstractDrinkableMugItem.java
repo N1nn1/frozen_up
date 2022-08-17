@@ -1,6 +1,8 @@
 package com.ninni.frozenup.item;
 
 import com.ninni.frozenup.init.FrozenUpItems;
+import com.ninni.frozenup.init.FrozenUpSoundEvents;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,4 +42,13 @@ public abstract class AbstractDrinkableMugItem extends BlockItem {
         return ItemUtils.startUsingInstantly(world, player, hand);
     }
 
+    @Override
+    public SoundEvent getDrinkingSound() {
+        return FrozenUpSoundEvents.ITEM_MUG_DRINK.get();
+    }
+
+    @Override
+    public SoundEvent getEatingSound() {
+        return FrozenUpSoundEvents.ITEM_MUG_DRINK.get();
+    }
 }

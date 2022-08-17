@@ -34,9 +34,9 @@
   },
   "entity.chilloo.eat": {
     "sounds": [
-      "minecraft:mob/fox/bite1",
-      "minecraft:mob/fox/bite2",
-      "minecraft:mob/fox/bite3"
+      "frozenup:entity/chilloo/eat1",
+      "frozenup:entity/chilloo/eat2",
+      "frozenup:entity/chilloo/eat3"
     ],
     "subtitle": "subtitles.frozenup.entity.chilloo.eat"
   },
@@ -68,5 +68,13 @@
       "frozenup:block/chilloo_feather_lamp/toggle_off"
     ],
     "subtitle": "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off"
+  },
+  "item.mug.drink": {
+    "sounds": [
+      "frozenup:item/mug/drink1",
+      "frozenup:item/mug/drink2",
+      "frozenup:item/mug/drink3"
+    ],
+    "subtitle": "subtitles.item.block.mug.drink"
   }
 }
