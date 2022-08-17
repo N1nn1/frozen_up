@@ -1,5 +1,6 @@
 package com.ninni.frozenup.block;
 
+import com.ninni.frozenup.sound.FrozenUpSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
@@ -63,7 +64,7 @@ public class MugBlock extends HorizontalFacingBlock {
             item.finishUsing(new ItemStack(item), world, player);
             world.setBlockState(pos, FrozenUpBlocks.EMPTY_MUG.getDefaultState().with(FACING, state.get(FACING)));
             if (!world.isClient) {
-                world.playSoundFromEntity(null, player, SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                world.playSoundFromEntity(null, player, FrozenUpSoundEvents.ITEM_MUG_DRINK, SoundCategory.PLAYERS, 1.0f, 1.0f);
             }
 
             return ActionResult.success(world.isClient);
