@@ -1,0 +1,28 @@
+{
+  "parent": "frozenup:husbandry/obtain_truffle",
+  "display": {
+    "icon": {
+      "item": "frozenup:truffle_cake"
+    },
+    "title": {
+      "translate": "advancements.frozenup.cure_harmful_status_effects.title"
+    },
+    "description": {
+      "translate": "advancements.frozenup.cure_harmful_status_effects.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "cure_harmful_status_effects": {
+      "trigger": "frozenup:cure_harmful_status_effects"
+    }
+  },
+  "requirements": [
+    [
+      "cure_harmful_status_effects"
+    ]
+  ]
+}

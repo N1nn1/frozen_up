@@ -1,0 +1,37 @@
+{
+  "parent": "frozenup:husbandry/tame_a_chilloo",
+  "criteria": {
+    "truffle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "frozenup:truffle"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.frozenup.obtain_truffle.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "frozenup:truffle"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.frozenup.obtain_truffle.title"
+    }
+  },
+  "requirements": [
+    [
+      "truffle"
+    ]
+  ]
+}

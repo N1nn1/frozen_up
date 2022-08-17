@@ -14,7 +14,6 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import com.ninni.frozenup.FrozenUp;
-import com.ninni.frozenup.block.vanilla.TruffleCakeBlock;
 import com.ninni.frozenup.block.vanilla.PublicStairsBlock;
 import com.ninni.frozenup.item.FrozenUpItems;
 import com.ninni.frozenup.sound.FrozenUpBlockSoundGroups;

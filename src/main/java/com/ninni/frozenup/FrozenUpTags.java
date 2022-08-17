@@ -11,4 +11,5 @@ import static com.ninni.frozenup.FrozenUp.*;
 public interface FrozenUpTags {
     //itemTags
     TagKey<Item> CHILLOO_BREED_ITEMS = TagKey.of(Registry.ITEM_KEY, new Identifier(MOD_ID, "chilloo_breed_items"));
+    TagKey<Item> MUGS = TagKey.of(Registry.ITEM_KEY, new Identifier(MOD_ID, "mugs"));
 }

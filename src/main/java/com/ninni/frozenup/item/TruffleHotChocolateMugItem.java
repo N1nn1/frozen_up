@@ -15,14 +15,13 @@ public class TruffleHotChocolateMugItem extends AbstractDrinkableMugItem {
     public TruffleHotChocolateMugItem(Block block, Settings settings) { super(block, settings); }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        Util.removeEntityEffects(user, instance -> instance.getEffectType().getCategory() == StatusEffectCategory.HARMFUL);
-        if (user instanceof ServerPlayerEntity) FrozenUpCriteria.CURE_HARMFUL_STATUS_EFFECTS.trigger((ServerPlayerEntity) user);
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
+        if (entity instanceof ServerPlayerEntity serverPlayer && Util.removeEntityEffects(entity, effect -> effect.getCategory() == StatusEffectCategory.HARMFUL)) FrozenUpCriteria.CURE_HARMFUL_STATUS_EFFECTS.trigger(serverPlayer);
 
         if (!world.isClient) {
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 25 * 20, 1));
-            user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10 * 20, 1));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 25 * 20, 1));
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10 * 20, 1));
         }
-        return super.finishUsing(stack, world, user);
+        return super.finishUsing(stack, world, entity);
     }
 }

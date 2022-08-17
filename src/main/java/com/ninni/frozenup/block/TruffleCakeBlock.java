@@ -1,6 +1,7 @@
 package com.ninni.frozenup.block;
 
 
+import com.ninni.frozenup.criterion.FrozenUpCriteria;
 import com.ninni.frozenup.util.Util;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -11,6 +12,7 @@ import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
@@ -65,7 +67,7 @@ public class TruffleCakeBlock extends Block {
         else {
             player.incrementStat(Stats.EAT_CAKE_SLICE);
             player.getHungerManager().add(5, 0.4F);
-            Util.removeEntityEffects(player, instance -> instance.getEffectType().getCategory() == StatusEffectCategory.HARMFUL);
+            if (player instanceof ServerPlayerEntity serverPlayer && Util.removeEntityEffects(player, effect -> effect.getCategory() == StatusEffectCategory.HARMFUL)) FrozenUpCriteria.CURE_HARMFUL_STATUS_EFFECTS.trigger(serverPlayer);
             player.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1, 1);
             world.emitGameEvent(player, GameEvent.EAT, pos);
 
