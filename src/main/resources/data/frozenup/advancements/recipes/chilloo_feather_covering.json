@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "frozenup:cut_ice_slab_from_cut_ice_stonecutting"
+      "frozenup:chilloo_feather_covering"
     ]
   },
   "criteria": {
-    "has_item": {
+    "has_chilloo_feather_block": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "frozenup:cut_ice"
+              "frozenup:chilloo_feather_block"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "frozenup:cut_ice_slab_from_cut_ice_stonecutting"
+        "recipe": "frozenup:chilloo_feather_covering"
       }
     }
   },
   "requirements": [
     [
-      "has_item",
+      "has_chilloo_feather_block",
       "has_the_recipe"
     ]
   ]

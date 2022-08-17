@@ -6,12 +6,14 @@
     ]
   },
   "criteria": {
-    "has_cut_ice": {
+    "has_item": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "frozenup:cut_ice"
+            "items": [
+              "frozenup:cut_ice"
+            ]
           }
         ]
       }
@@ -25,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_cut_ice",
+      "has_item",
       "has_the_recipe"
     ]
   ]
