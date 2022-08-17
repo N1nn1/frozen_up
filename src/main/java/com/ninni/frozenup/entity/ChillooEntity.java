@@ -186,7 +186,6 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
 
         if (this.level.isClientSide) return this.isOwnedBy(player) || this.isTame() || item == FrozenUpItems.TRUFFLE.get() && !this.isTame() ? InteractionResult.CONSUME : InteractionResult.PASS;
         else {
-
             if (this.isTame()) {
                 ItemStack stackInHand = this.getItemBySlot(EquipmentSlot.MAINHAND);
                 if (!stackInHand.isEmpty() && itemStack.isEmpty() && !player.isSecondaryUseActive()) {
@@ -224,7 +223,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
                 return InteractionResult.SUCCESS;
             }
 
-            return super.interact(player, hand);
+            return super.mobInteract(player, hand);
         }
     }
 
