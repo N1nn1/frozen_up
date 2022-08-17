@@ -61,7 +61,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -110,6 +109,7 @@ public class ChillooEntity extends TameableEntity implements Shearable {
     @Override protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) { return dimensions.height * 0.5F; }
     public float getHeadRoll(float tickDelta) { return MathHelper.lerp(tickDelta, this.lastHeadRollProgress, this.headRollProgress) * 0.11F * (float)Math.PI; }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void tickMovement() {
         super.tickMovement();
@@ -118,11 +118,13 @@ public class ChillooEntity extends TameableEntity implements Shearable {
             ItemStack itemStack = this.getEquippedStack(EquipmentSlot.MAINHAND);
             if (this.canEat(itemStack)) {
                 if (this.eatingTime > 600) {
+                    this.heal(itemStack.getItem().getFoodComponent().getHunger());
                     ItemStack itemStack2 = itemStack.finishUsing(this.world, this);
                     if (!itemStack2.isEmpty()) this.equipStack(EquipmentSlot.MAINHAND, itemStack2);
+                    this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, 1.5F);
                     this.eatingTime = 0;
                 } else if (this.eatingTime > 560 && this.random.nextFloat() < 0.1F) {
-                    this.playSound(this.getEatSound(itemStack), 1.0F, 2.0F);
+                    this.playSound(this.getEatSound(itemStack), 1.0F, 1.0F);
                     this.world.sendEntityStatus(this, (byte) 45);
                 }
             }
@@ -175,8 +177,19 @@ public class ChillooEntity extends TameableEntity implements Shearable {
             return ActionResult.CONSUME;
         }
 
-        if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth() && this.isTamed()) feedTruffleToChilloo(player);
-        if (item == FrozenUpItems.TRUFFLE && !this.isTamed()) feedTruffleToChilloo(player);
+        if (item == FrozenUpItems.TRUFFLE && !this.isTamed()) {
+            Vec3d vec3d = this.getBoundingBox().getCenter();
+            Random random = this.world.getRandom();
+            ItemStack truffle = FrozenUpItems.TRUFFLE.getDefaultStack();
+            if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT, this.getSoundCategory(), 1.5F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+            if (!player.getAbilities().creativeMode) player.getStackInHand(player.getActiveHand()).decrement(1);
+            for (int i = 0; i < 10; ++i) {
+                double velX = random.nextGaussian() * 0.075D;
+                double velY = random.nextGaussian() * 0.075D;
+                double velZ = random.nextGaussian() * 0.075D;
+                this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, truffle), vec3d.x, vec3d.y, vec3d.z, velX, velY, velZ);
+            }
+        }
 
         if (this.world.isClient) return this.isOwner(player) || this.isTamed() || item == FrozenUpItems.TRUFFLE && !this.isTamed() ? ActionResult.CONSUME : ActionResult.PASS;
         else {
@@ -188,11 +201,6 @@ public class ChillooEntity extends TameableEntity implements Shearable {
                     stackInHand.decrement(1);
                     if (player instanceof ServerPlayerEntity) FrozenUpCriteria.RETRIEVE_ITEM_FROM_TAMED_CHILLOO.trigger((ServerPlayerEntity) player);
                     if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
-                    return ActionResult.SUCCESS;
-                }
-
-                if (item == FrozenUpItems.TRUFFLE && this.getHealth() < this.getMaxHealth()) {
-                    this.heal(Objects.requireNonNull(item.getFoodComponent()).getHunger());
                     return ActionResult.SUCCESS;
                 }
 
@@ -222,20 +230,6 @@ public class ChillooEntity extends TameableEntity implements Shearable {
             }
 
             return super.interactMob(player, hand);
-        }
-    }
-
-    public void feedTruffleToChilloo(PlayerEntity player) {
-        Vec3d vec3d = this.getBoundingBox().getCenter();
-        Random random = this.world.getRandom();
-        ItemStack stack = FrozenUpItems.TRUFFLE.getDefaultStack();
-        if (!this.isSilent()) this.world.playSoundFromEntity(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT, this.getSoundCategory(), 1.5F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
-        if (!player.getAbilities().creativeMode) player.getStackInHand(player.getActiveHand()).decrement(1);
-        for (int i = 0; i < 10; ++i) {
-            double velX = random.nextGaussian() * 0.075D;
-            double velY = random.nextGaussian() * 0.075D;
-            double velZ = random.nextGaussian() * 0.075D;
-            this.world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), vec3d.x, vec3d.y, vec3d.z, velX, velY, velZ);
         }
     }
 
