@@ -189,10 +189,11 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
 
             if (this.isTame()) {
                 ItemStack stackInHand = this.getItemBySlot(EquipmentSlot.MAINHAND);
-                if (!stackInHand.isEmpty() && itemStack.isEmpty()) {
+                if (!stackInHand.isEmpty() && itemStack.isEmpty() && !player.isSecondaryUseActive()) {
                     player.addItem(stackInHand);
                     stackInHand.shrink(1);
                     if (!this.isSilent()) this.level.playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT.get(), this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    return InteractionResult.SUCCESS;
                 }
 
                 if (item == FrozenUpItems.TRUFFLE.get() && this.getHealth() < this.getMaxHealth()) {
@@ -200,16 +201,12 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
                     return InteractionResult.SUCCESS;
                 }
 
-                if (!itemStack.is(Tags.Items.DYES) && !itemStack.is(Tags.Items.SHEARS)) {
-                    InteractionResult actionResult = super.interact(player, hand);
-                    if ((!actionResult.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
-                        this.setOrderedToSit(!this.isOrderedToSit());
-                        this.jumping = false;
-                        this.navigation.stop();
-                        this.setTarget(null);
-                        return InteractionResult.SUCCESS;
-                    }
-                    return actionResult;
+                if (!itemStack.is(Tags.Items.DYES) && this.isOwnedBy(player)) {
+                    this.setOrderedToSit(!this.isOrderedToSit());
+                    this.jumping = false;
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    return InteractionResult.SUCCESS;
                 }
 
                 DyeColor dyeColor = ((DyeItem)item).getDyeColor();
