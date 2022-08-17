@@ -1,9 +1,11 @@
 package com.ninni.frozenup.block.vanilla;
 
 
+import com.ninni.frozenup.init.FrozenUpCriteriaTriggers;
 import com.ninni.frozenup.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -67,6 +69,9 @@ public class TruffleCakeBlock extends Block {
             player.awardStat(Stats.EAT_CAKE_SLICE);
             player.getFoodData().eat(3, 0.3F);
             Util.removeEntityEffects(player, instance -> instance.getEffect().getCategory() == MobEffectCategory.HARMFUL);
+            if (player instanceof ServerPlayer serverPlayer && Util.removeEntityEffects(player, mobEffectInstance ->  mobEffectInstance.getEffect().getCategory() == MobEffectCategory.HARMFUL)) {
+                FrozenUpCriteriaTriggers.CURE_HARMFUL_STATUS_EFFECTS.trigger(serverPlayer);
+            }
             player.playSound(SoundEvents.GENERIC_EAT, 1, 1);
             world.gameEvent(player, GameEvent.EAT, pos);
 

@@ -1,13 +1,13 @@
 package com.ninni.frozenup;
 
+import com.ninni.frozenup.events.MobEvents;
 import com.ninni.frozenup.init.FrozenUpBlocks;
 import com.ninni.frozenup.init.FrozenUpEntities;
-import com.ninni.frozenup.events.MobEvents;
 import com.ninni.frozenup.init.FrozenUpItems;
 import com.ninni.frozenup.init.FrozenUpSoundEvents;
 import com.ninni.frozenup.init.FrozenUpVanillaIntegration;
+import com.ninni.frozenup.util.FrozenUpCreativeModeTab;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -17,12 +17,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(FrozenUp.MOD_ID)
 public class FrozenUp {
     public static final String MOD_ID = "frozenup";
-    public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(MOD_ID + ".item_group") {
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(FrozenUpItems.FROZENUP.get());
-        }
-    };
+    public static final CreativeModeTab ITEM_GROUP = new FrozenUpCreativeModeTab(MOD_ID + ".item_group");
 
     public FrozenUp() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

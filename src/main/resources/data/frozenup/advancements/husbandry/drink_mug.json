@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+    "drink_mug": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "tag": "frozenup:mugs"
+        }
+      }
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.frozenup.drink_mug.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "frozenup:mug_of_milk"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.frozenup.drink_mug.title"
+    }
+  },
+  "requirements": [
+    [
+      "drink_mug"
+    ]
+  ]
+}

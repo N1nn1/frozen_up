@@ -1,6 +1,6 @@
 package com.ninni.frozenup.entity;
 
-import com.ninni.frozenup.FrozenUpTags;
+import com.ninni.frozenup.init.FrozenUpItemTags;
 import com.ninni.frozenup.entity.ai.goal.DigInGrassGoal;
 import com.ninni.frozenup.init.FrozenUpCriteriaTriggers;
 import com.ninni.frozenup.init.FrozenUpEntities;
@@ -96,7 +96,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Fox.class, 6.0F, 1, 1.2));
         this.goalSelector.addGoal(4, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(FrozenUpTags.CHILLOO_BREED_ITEMS), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2, Ingredient.of(FrozenUpItemTags.CHILLOO_BREED_ITEMS), false));
         this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
         this.goalSelector.addGoal(7, new ChillooEntity.PickupItemGoal());
         this.goalSelector.addGoal(8, this.digInGrassGoal);
@@ -251,7 +251,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(FrozenUpTags.CHILLOO_BREED_ITEMS);
+        return stack.is(FrozenUpItemTags.CHILLOO_BREED_ITEMS);
     }
 
     @Override
