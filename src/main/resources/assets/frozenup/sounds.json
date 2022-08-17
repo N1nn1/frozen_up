@@ -68,5 +68,13 @@
       "frozenup:block/chilloo_feather_lamp/toggle_off"
     ],
     "subtitle": "subtitles.frozenup.block.chilloo_feather_lamp.toggle_off"
+  },
+  "item.mug.drink": {
+    "sounds": [
+      "frozenup:item/mug/drink1",
+      "frozenup:item/mug/drink2",
+      "frozenup:item/mug/drink3"
+    ],
+    "subtitle": "subtitles.item.block.mug.drink"
   }
 }
