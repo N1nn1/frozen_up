@@ -7,6 +7,8 @@
     "frozenup:cut_ice_cubes",
     "frozenup:cut_ice_cube_stairs",
     "frozenup:cut_ice_cube_slab",
-    "frozenup:cut_ice_cube_wall"
+    "frozenup:cut_ice_cube_wall",
+    "frozenup:cut_ice_vertical_slab",
+    "frozenup:cut_ice_cube_vertical_slab"
   ]
 }
