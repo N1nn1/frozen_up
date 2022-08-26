@@ -3,10 +3,10 @@ loaderVersion="[39,)"
 license="All rights reserved"
 [[mods]]
 modId="frozenup"
-version="1.19.2-1.0.0"
+version="2.0.0-forge"
 displayName="Frozen Up"
 logoFile= "frozenup.png"
-authors="Ninni"
+authors="Ninni, Coda1552, superlord9362, Mr. Esuoh, andante., Orcinus"
 description='''
 Frozen Up is a small mod that adds a bunch of new snowy features while keeping in mind the classic minecraft feel.
 '''
