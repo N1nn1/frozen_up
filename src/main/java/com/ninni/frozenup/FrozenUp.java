@@ -4,6 +4,7 @@ import com.google.common.reflect.Reflection;
 import com.ninni.frozenup.block.FrozenUpBlocks;
 import com.ninni.frozenup.criterion.FrozenUpCriteria;
 import com.ninni.frozenup.item.FrozenUpItems;
+import com.ninni.frozenup.sound.FrozenUpSoundEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
@@ -24,6 +25,7 @@ public class FrozenUp implements ModInitializer {
         FrozenUpCriteria.init();
         Reflection.initialize(
             FrozenUpBlocks.class,
+            FrozenUpSoundEvents.class,
             FrozenUpItems.class,
             FrozenUpEntities.class
         );

@@ -31,7 +31,7 @@ public class FrozenUpSoundEvents {
     private static SoundEvent item(String item, String type) { return register("item." + item + "." + type); }
 
     private static SoundEvent register(String name) {
-        Registry.register(Registry.SOUND_EVENT, new Identifier(MOD_ID, name), new SoundEvent(new Identifier(MOD_ID, name)));
-        return new SoundEvent(new Identifier(MOD_ID, name));
+        Identifier identifier = new Identifier(MOD_ID, name);
+        return Registry.register(Registry.SOUND_EVENT, identifier, new SoundEvent(identifier));
     }
 }
