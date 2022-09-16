@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "EE"
+  ],
+  "key": {
+    "#": {
+      "item": "frozenup:compacted_snow_brick"
+    },
+    "E": {
+      "item": "minecraft:snowball"
+    }
+  },
+  "result": {
+    "item": "frozenup:compacted_snow_foundation",
+    "count": 1
+  }
+}

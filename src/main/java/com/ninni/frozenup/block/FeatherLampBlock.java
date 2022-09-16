@@ -1,5 +1,6 @@
 package com.ninni.frozenup.block;
 
+import com.ninni.frozenup.sound.FrozenUpSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneTorchBlock;
@@ -13,7 +14,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import com.ninni.frozenup.sound.FrozenUpSoundEvents;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")

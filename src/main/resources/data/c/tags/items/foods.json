@@ -3,6 +3,7 @@
   "values": [
     "frozenup:truffle",
     "frozenup:truffle_muffin",
+    "frozenup:pinecone",
     "frozenup:truffle_cake"
   ]
 }

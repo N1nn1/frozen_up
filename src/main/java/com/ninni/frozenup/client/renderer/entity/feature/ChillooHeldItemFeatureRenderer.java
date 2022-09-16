@@ -1,6 +1,8 @@
 package com.ninni.frozenup.client.renderer.entity.feature;
 
 import com.ninni.frozenup.client.model.ChillooEntityModel;
+import com.ninni.frozenup.client.renderer.ChillooEntityRenderer;
+import com.ninni.frozenup.entity.ChillooEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -12,8 +14,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
-import com.ninni.frozenup.client.renderer.ChillooEntityRenderer;
-import com.ninni.frozenup.entity.ChillooEntity;
 
 @Environment(EnvType.CLIENT)
 public class ChillooHeldItemFeatureRenderer extends FeatureRenderer<ChillooEntity, ChillooEntityModel> {

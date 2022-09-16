@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "frozenup:compacted_snow_foundation"
+    ]
+  },
+  "criteria": {
+    "has_snowball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:snowball"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "frozenup:compacted_snow_foundation_from_snowball"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_snowball",
+      "has_the_recipe"
+    ]
+  ]
+}

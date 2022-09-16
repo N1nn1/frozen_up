@@ -1,5 +1,6 @@
 package com.ninni.frozenup.block;
 
+import com.ninni.frozenup.item.AbstractDrinkableMugItem;
 import com.ninni.frozenup.sound.FrozenUpSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -10,7 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.ActionResult;
@@ -23,7 +23,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import com.ninni.frozenup.item.AbstractDrinkableMugItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;

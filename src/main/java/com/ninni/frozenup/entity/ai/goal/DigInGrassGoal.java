@@ -1,5 +1,7 @@
 package com.ninni.frozenup.entity.ai.goal;
 
+import com.ninni.frozenup.FrozenUp;
+import com.ninni.frozenup.entity.ChillooEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,8 +17,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import com.ninni.frozenup.FrozenUp;
-import com.ninni.frozenup.entity.ChillooEntity;
 
 import java.util.EnumSet;
 import java.util.List;

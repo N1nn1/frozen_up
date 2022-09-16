@@ -3,8 +3,16 @@
   "minVersion": "0.8",
   "package": "com.ninni.frozenup.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": ["FoxEntityMixin"],
+  "mixins": [
+    "FoxEntityMixin",
+    "FrostWalkerEnchantmentMixin",
+    "LocateCommandMixin",
+    "PowderSnowMixin",
+    "ServerPlayerEntityMixin",
+    "WolfEntityMixin"
+  ],
   "client": [
+    "client.ClientPlayerEntityMixin",
     "client.EntityModelLayersInvoker",
     "client.EntityModelLayersMixin"
   ],

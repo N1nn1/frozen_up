@@ -1,6 +1,7 @@
 package com.ninni.frozenup.client.model;
 
 import com.google.common.collect.ImmutableList;
+import com.ninni.frozenup.entity.ChillooEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Dilation;
@@ -12,7 +13,6 @@ import net.minecraft.client.model.ModelTransform;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.util.math.MathHelper;
-import com.ninni.frozenup.entity.ChillooEntity;
 
 @SuppressWarnings("FieldCanBeLocal, unused")
 @Environment(EnvType.CLIENT)
