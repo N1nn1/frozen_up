@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "frozenup:revamped_igloo",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 32,
+    "separation": 8,
+    "salt": 14357618,
+    "spread_type": "linear"
+  }
+}
