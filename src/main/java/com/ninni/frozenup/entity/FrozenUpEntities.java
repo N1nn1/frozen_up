@@ -44,7 +44,7 @@ public class FrozenUpEntities {
                                .spawnGroup(SpawnGroup.CREATURE)
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, ReindeerEntity::canSpawn)
                                .dimensions(EntityDimensions.changing(1.3F, 1.6F))
-                               .trackRangeBlocks(8),
+                               .trackRangeChunks(8),
         new Pair<>( 0x5c392d, 0xdacabc )
     );
     public static final EntityType<PenguinEntity> PENGUIN = register(
@@ -55,7 +55,7 @@ public class FrozenUpEntities {
                                .spawnGroup(SpawnGroup.CREATURE)
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, PenguinEntity::canSpawn)
                                .dimensions(EntityDimensions.changing(0.55F, 0.9F))
-                               .trackRangeBlocks(8),
+                               .trackRangeChunks(8),
         new Pair<>( 0x292929, 0xfff089 )
     );
 
