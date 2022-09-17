@@ -33,7 +33,8 @@ public class MiscEvents {
         if (id.equals(BuiltInLootTables.IGLOO_CHEST)) {
             tableBuilder.addPool(LootPool.lootPool()
                     .add(LootItem.lootTableItem(Items.BOOK)
-                            .apply(EnchantRandomlyFunction.randomEnchantment().withEnchantment(FrozenUpEnchantments.CLOUD_JUMPER.get()).withEnchantment(FrozenUpEnchantments.HASTY_HOOVES.get()).withEnchantment(Enchantments.FROST_WALKER)))
+                            .setWeight(10)
+                            .apply(EnchantRandomlyFunction.randomEnchantment().withEnchantment(FrozenUpEnchantments.CLOUD_JUMPER.get()).withEnchantment(FrozenUpEnchantments.HASTY_HOOVES.get())))
                     .add(LootItem.lootTableItem(FrozenUpItems.COMPACTED_SNOW_BRICK.get())
                             .setWeight(3)
                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 16))))
