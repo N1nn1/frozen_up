@@ -55,6 +55,12 @@ public class FrozenUpBlocks {
     public static final RegistryObject<Block> CUT_ICE_VERTICAL_SLAB = compatRegister("quark", "cut_ice_vertical_slab", () -> new VerticalSlabBlock(BlockBehaviour.Properties.copy(CUT_ICE.get())));
     public static final RegistryObject<Block> CUT_ICE_CUBE_VERTICAL_SLAB = compatRegister("quark", "cut_ice_cube_vertical_slab", () -> new VerticalSlabBlock(BlockBehaviour.Properties.copy(CUT_ICE_CUBES.get())));
 
+    public static final RegistryObject<Block> COMPACTED_SNOW_BRICKS = BLOCKS.register("compacted_snow_bricks", () -> new Block(BlockBehaviour.Properties.of(Material.SNOW).requiresCorrectToolForDrops().strength(0.4F).sound(FrozenUpBlockSoundGroups.COMPACTED_SNOW)));
+    public static final RegistryObject<Block> COMPACTED_SNOW_BRICK_STAIRS = BLOCKS.register("compacted_snow_brick_stairs", () -> new StairBlock(COMPACTED_SNOW_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(COMPACTED_SNOW_BRICKS.get())));
+    public static final RegistryObject<Block> COMPACTED_SNOW_BRICK_SLAB = BLOCKS.register("compacted_snow_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(COMPACTED_SNOW_BRICKS.get())));
+    public static final RegistryObject<Block> COMPACTED_SNOW_BRICK_VERTICAL_SLAB = BLOCKS.register("compacted_snow_brick_vertical_slab", () -> new VerticalSlabBlock(BlockBehaviour.Properties.copy(COMPACTED_SNOW_BRICKS.get())));
+    public static final RegistryObject<Block> COMPACTED_SNOW_FOUNDATION = BLOCKS.register("compacted_snow_foundation", () -> new Block(BlockBehaviour.Properties.copy(COMPACTED_SNOW_BRICKS.get())));
+
     private static ToIntFunction<BlockState> createLightLevelFromLitBlockState(int litLevel) {
         return (state) -> (Boolean)state.getValue(BlockStateProperties.LIT) ? litLevel : 0;
     }

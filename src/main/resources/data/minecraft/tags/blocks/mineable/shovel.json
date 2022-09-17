@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "frozenup:compacted_snow_bricks",
+    "frozenup:compacted_snow_brick_stairs",
+    "frozenup:compacted_snow_brick_slab",
+    "frozenup:compacted_snow_foundation",
+    "snowed_over:compacted_snow_brick_vertical_slab"
+  ]
+}

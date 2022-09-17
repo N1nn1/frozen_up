@@ -76,5 +76,179 @@
       "frozenup:item/mug/drink3"
     ],
     "subtitle": "subtitles.item.block.mug.drink"
-  }
+  },
+  "item.pinecone.eat": {
+    "sounds": [
+      "frozenup:item/pinecone/eat1",
+      "frozenup:item/pinecone/eat2",
+      "frozenup:item/pinecone/eat3"
+    ],
+    "subtitle": "subtitles.item.frozenup.pinecone.eat"
+  },
+
+
+  "block.compacted_snow.break": {
+    "sounds": [
+      "frozenup:block/compacted_snow/heavy1",
+      "frozenup:block/compacted_snow/heavy2",
+      "frozenup:block/compacted_snow/heavy3",
+      "frozenup:block/compacted_snow/heavy4"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.compacted_snow.step": {
+    "sounds": [
+      "frozenup:block/compacted_snow/light1",
+      "frozenup:block/compacted_snow/light2",
+      "frozenup:block/compacted_snow/light3",
+      "frozenup:block/compacted_snow/light4"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.compacted_snow.hit": {
+    "sounds": [
+      "frozenup:block/compacted_snow/light1",
+      "frozenup:block/compacted_snow/light2",
+      "frozenup:block/compacted_snow/light3",
+      "frozenup:block/compacted_snow/light4"
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.compacted_snow.place": {
+    "sounds": [
+      "frozenup:block/compacted_snow/heavy1",
+      "frozenup:block/compacted_snow/heavy2",
+      "frozenup:block/compacted_snow/heavy3",
+      "frozenup:block/compacted_snow/heavy4"
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.compacted_snow.fall": {
+    "sounds": [
+      "frozenup:block/compacted_snow/light1",
+      "frozenup:block/compacted_snow/light2",
+      "frozenup:block/compacted_snow/light3",
+      "frozenup:block/compacted_snow/light4"
+    ]
+  },
+
+
+  "entity.reindeer.gallop": {
+    "sounds": [
+      "frozenup:entity/reindeer/gallop1",
+      "frozenup:entity/reindeer/gallop2",
+      "frozenup:entity/reindeer/gallop3",
+      "frozenup:entity/reindeer/gallop4",
+      "frozenup:entity/reindeer/gallop5"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.gallop"
+  },
+  "entity.reindeer.breathe": {
+    "sounds": [
+      "frozenup:entity/reindeer/breathe1",
+      "frozenup:entity/reindeer/breathe2",
+      "frozenup:entity/reindeer/breathe3"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.breathe"
+  },
+  "entity.reindeer.idle": {
+    "sounds": [
+      "frozenup:entity/reindeer/ambient1",
+      "frozenup:entity/reindeer/ambient2",
+      "frozenup:entity/reindeer/ambient3",
+      "frozenup:entity/reindeer/ambient4",
+      "frozenup:entity/reindeer/ambient5"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.idle"
+  },
+  "entity.reindeer.hurt": {
+    "sounds": [
+      "frozenup:entity/reindeer/hurt1",
+      "frozenup:entity/reindeer/hurt2",
+      "frozenup:entity/reindeer/hurt3"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.hurt"
+  },
+  "entity.reindeer.death": {
+    "sounds": [
+      "frozenup:entity/reindeer/death"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.death"
+  },
+  "entity.reindeer.angry": {
+    "sounds": [
+      "frozenup:entity/reindeer/angry1",
+      "frozenup:entity/reindeer/angry2"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.angry"
+  },
+  "entity.reindeer.eat": {
+    "sounds": [
+      "frozenup:entity/reindeer/eating1",
+      "frozenup:entity/reindeer/eating2",
+      "frozenup:entity/reindeer/eating3",
+      "frozenup:entity/reindeer/eating4"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.eat"
+  },
+  "entity.reindeer.jump": {
+    "sounds": [
+      "mob/horse/jump"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.jump"
+  },
+  "entity.reindeer.cloud_jump": {
+    "sounds": [
+      "frozenup:entity/reindeer/cloud_jump"
+    ],
+    "subtitle": "subtitles.entity.frozenup.reindeer.cloud_jump"
+  },
+
+
+  "entity.penguin.idle": {
+    "sounds": [
+      "frozenup:entity/penguin/idle1",
+      "frozenup:entity/penguin/idle2",
+      "frozenup:entity/penguin/idle3",
+      "frozenup:entity/penguin/idle4",
+      "frozenup:entity/penguin/idle5",
+      "frozenup:entity/penguin/idle6"
+    ],
+    "subtitle": "subtitles.entity.frozenup.penguin.idle"
+  },
+  "entity.penguin.hurt": {
+    "sounds": [
+      "frozenup:entity/penguin/hurt1",
+      "frozenup:entity/penguin/hurt2",
+      "frozenup:entity/penguin/hurt3",
+      "frozenup:entity/penguin/hurt4"
+    ],
+    "subtitle": "subtitles.entity.frozenup.penguin.hurt"
+  },
+  "entity.penguin.death": {
+    "sounds": [ "frozenup:entity/penguin/death" ],
+    "subtitle": "subtitles.entity.frozenup.penguin.death"
+  },
+  "entity.penguin.crack": {
+    "sounds": [
+      "frozenup:entity/penguin/crack1",
+      "frozenup:entity/penguin/crack2",
+      "frozenup:entity/penguin/crack3",
+      "frozenup:entity/penguin/crack4"
+    ],
+    "subtitle": "subtitles.entity.frozenup.penguin.crack"
+  },
+  "entity.penguin.hatch": {
+    "sounds": [ "frozenup:entity/penguin/hatch" ],
+    "subtitle": "subtitles.entity.frozenup.penguin.hatch"
+  },
+  "entity.penguin.slide": {
+    "sounds": [
+      "frozenup:entity/penguin/slide1",
+      "frozenup:entity/penguin/slide2",
+      "frozenup:entity/penguin/slide3"
+    ],
+    "subtitle": "subtitles.entity.frozenup.penguin.slide"
+  },
+  "entity.penguin.boom": { "sounds": [ "frozenup:entity/penguin/boom" ] }
 }

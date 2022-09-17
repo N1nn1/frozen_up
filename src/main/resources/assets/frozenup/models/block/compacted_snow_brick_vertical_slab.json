@@ -1,0 +1,8 @@
+{
+  "parent": "snowed_over:block/vertical_slab",
+  "textures": {
+    "bottom": "snowed_over:block/compacted_snow_bricks",
+    "top": "snowed_over:block/compacted_snow_bricks",
+    "side": "snowed_over:block/compacted_snow_bricks"
+  }
+}

@@ -12,6 +12,7 @@ public class FrozenUpItemTags {
 
     public static final TagKey<Item> CHILLOO_BREED_ITEMS = create("chilloo_breed_items");
     public static final TagKey<Item> MUGS = create("mugs");
+    public static final TagKey<Item> REINDEER_TEMPTS = create("reindeer_tempts");
 
     @NotNull
     private static TagKey<Item> create(String name) {

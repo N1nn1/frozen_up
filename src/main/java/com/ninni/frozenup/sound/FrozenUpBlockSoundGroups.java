@@ -14,4 +14,6 @@ public class FrozenUpBlockSoundGroups {
         () -> SoundEvents.WOOL_HIT,
         () -> SoundEvents.WOOL_FALL
     );
+
+    public static final SoundType COMPACTED_SNOW = new ForgeSoundType(0.3F, 1.0F, FrozenUpSoundEvents.BLOCK_COMPACTED_SNOW_BREAK, FrozenUpSoundEvents.BLOCK_COMPACTED_SNOW_STEP, FrozenUpSoundEvents.BLOCK_COMPACTED_SNOW_PLACE, FrozenUpSoundEvents.BLOCK_COMPACTED_SNOW_HIT, FrozenUpSoundEvents.BLOCK_COMPACTED_SNOW_FALL);
 }

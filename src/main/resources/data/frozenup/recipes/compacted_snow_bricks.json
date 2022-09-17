@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "frozenup:compacted_snow_brick"
+    }
+  },
+  "result": {
+    "item": "frozenup:compacted_snow_bricks",
+    "count": 1
+  }
+}

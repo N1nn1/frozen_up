@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "frozenup:compacted_snow_brick_stairs"
+    ]
+  },
+  "criteria": {
+    "has_compacted_snow_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "frozenup:compacted_snow_bricks"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "frozenup:compacted_snow_brick_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_compacted_snow_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

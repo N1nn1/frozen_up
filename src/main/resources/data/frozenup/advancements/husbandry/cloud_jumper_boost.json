@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:husbandry/tame_an_animal",
+  "display": {
+    "icon": {
+      "item": "frozenup:hoof_armor"
+    },
+    "title": {
+      "translate": "advancements.frozenup.cloud_jumper_boost.title"
+    },
+    "description": {
+      "translate": "advancements.frozenup.cloud_jumper_boost.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "cloud_jump": {
+      "trigger": "frozenup:cloud_jumper_boost"
+    }
+  },
+  "requirements": [
+    [
+      "cloud_jump"
+    ]
+  ]
+}

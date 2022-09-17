@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
+    "frozenup:reindeer",
+    "frozenup:penguin",
     "frozenup:chilloo"
   ]
 }

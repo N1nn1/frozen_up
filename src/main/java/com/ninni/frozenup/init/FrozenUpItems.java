@@ -2,13 +2,16 @@ package com.ninni.frozenup.init;
 
 import com.ninni.frozenup.FrozenUp;
 import com.ninni.frozenup.item.ChocolateMilkMugItem;
+import com.ninni.frozenup.item.HoofArmorItem;
 import com.ninni.frozenup.item.MilkMugItem;
+import com.ninni.frozenup.item.PineconeItem;
 import com.ninni.frozenup.item.TruffleHotChocolateMugItem;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -48,5 +51,20 @@ public class FrozenUpItems {
     public static final RegistryObject<Item> CHILLOO_FEATHER_LAMP = ITEMS.register("chilloo_feather_lamp", () -> new BlockItem(FrozenUpBlocks.CHILLOO_FEATHER_LAMP.get(), new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
 
     public static final RegistryObject<Item> CHILLOO_SPAWN_EGG = ITEMS.register("chilloo_spawn_egg", () -> new ForgeSpawnEggItem(FrozenUpEntities.CHILLOO, 0xffffff, 0x32383c, new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
+
+    public static final RegistryObject<Item> PINECONE = ITEMS.register("pinecone", () -> new PineconeItem(new Item.Properties().tab(FrozenUp.ITEM_GROUP).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.0F).build())));
+
+    public static final RegistryObject<Item> COMPACTED_SNOW_BRICK = ITEMS.register("compacted_snow_brick", () -> new Item(new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
+
+    public static final RegistryObject<Item> COMPACTED_SNOW_BRICKS = ITEMS.register("compacted_snow_bricks", () -> new BlockItem(FrozenUpBlocks.COMPACTED_SNOW_BRICKS.get(), new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
+    public static final RegistryObject<Item> COMPACTED_SNOW_BRICK_STAIRS = ITEMS.register("compacted_snow_brick_stairs", () -> new BlockItem(FrozenUpBlocks.COMPACTED_SNOW_BRICK_STAIRS.get(), new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
+    public static final RegistryObject<Item> COMPACTED_SNOW_BRICK_SLAB = ITEMS.register("compacted_snow_brick_slab", () -> new BlockItem(FrozenUpBlocks.COMPACTED_SNOW_BRICK_SLAB.get(), new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
+    public static final RegistryObject<Item> COMPACTED_SNOW_BRICK_VERTICAL_SLAB = ITEMS.register("compacted_snow_brick_vertical_slab", () -> new BlockItem(FrozenUpBlocks.COMPACTED_SNOW_BRICK_VERTICAL_SLAB.get(), new Item.Properties().tab(ModList.get().isLoaded("quark") ? FrozenUp.ITEM_GROUP : null)));
+    public static final RegistryObject<Item> COMPACTED_SNOW_FOUNDATION = ITEMS.register("compacted_snow_foundation", () -> new BlockItem(FrozenUpBlocks.COMPACTED_SNOW_FOUNDATION.get(), new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
+
+    public static final RegistryObject<Item> HOOF_ARMOR = ITEMS.register("hoof_armor", () -> new HoofArmorItem(new Item.Properties().stacksTo(1).tab(FrozenUp.ITEM_GROUP)));
+
+    public static final RegistryObject<Item> PENGUIN_SPAWN_EGG = ITEMS.register("penguin_spawn_egg", () -> new ForgeSpawnEggItem(FrozenUpEntities.PENGUIN, 0x292929, 0xfff089, new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
+    public static final RegistryObject<Item> REINDEER_SPAWN_EGG = ITEMS.register("reindeer_spawn_egg", () -> new ForgeSpawnEggItem(FrozenUpEntities.REINDEER, 0x5c392d, 0xdacabc, new Item.Properties().tab(FrozenUp.ITEM_GROUP)));
 
 }
