@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#frozenup:penguin_spawns_in",
+  "spawners": {
+    "type": "frozenup:penguin",
+    "weight": 5,
+    "minCount": 3,
+    "maxCount": 8
+  }
+}

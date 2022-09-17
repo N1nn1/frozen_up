@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#c:snowy_plains",
+    "minecraft:snowy_plains",
     "minecraft:frozen_ocean",
     "minecraft:deep_frozen_ocean",
     "minecraft:ice_spikes",

@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#frozenup:chilloo_spawns_in",
+  "spawners": {
+    "type": "frozenup:chilloo",
+    "weight": 20,
+    "minCount": 2,
+    "maxCount": 6
+  }
+}
