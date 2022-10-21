@@ -16,4 +16,20 @@ public class FrozenUpEnchantment extends Enchantment {
     public boolean isAcceptableItem(ItemStack stack) {
         return stack.getItem() instanceof HoofArmorItem;
     }
+
+    @Override
+    public boolean isTreasure() {
+        return true;
+    }
+
+    @Override
+    public boolean isAvailableForEnchantedBookOffer() {
+        return false;
+    }
+
+    @Override
+    public boolean isAvailableForRandomSelection() {
+        return false;
+    }
+
 }

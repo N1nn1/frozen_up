@@ -32,7 +32,7 @@ public class FrozenUpEntities {
                                .defaultAttributes(ChillooEntity::createChillooAttributes)
                                .spawnGroup(SpawnGroup.CREATURE)
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PathAwareEntity::canMobSpawn)
-                               .dimensions(EntityDimensions.changing(1.2f, 1.4f))
+                               .dimensions(EntityDimensions.changing(0.9F, 0.9F))
                                .trackRangeChunks(8),
         new Pair<>(0xffffff, 0x32383c)
     );

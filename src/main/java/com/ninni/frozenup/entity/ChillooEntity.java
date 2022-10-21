@@ -92,7 +92,7 @@ public class ChillooEntity extends TameableEntity implements Shearable {
         this.goalSelector.add(3, new FleeEntityGoal<>(this, FoxEntity.class, 6.0F, 1, 1.2));
         this.goalSelector.add(4, new AnimalMateGoal(this, 1));
         this.goalSelector.add(4, new TemptGoal(this, 1.2, Ingredient.fromTag(FrozenUpTags.CHILLOO_BREED_ITEMS), false));
-        this.goalSelector.add(6, new FollowOwnerGoal(this, 0.6, 10.0F, 2.0F, false));
+        this.goalSelector.add(6, new FollowOwnerGoal(this, 1.2D, 6.0F, 2.0F, false));
         this.goalSelector.add(7, new ChillooEntity.PickupItemGoal());
         this.goalSelector.add(8, this.digInGrassGoal);
         this.goalSelector.add(9, new WanderAroundFarGoal(this, 0.6));
