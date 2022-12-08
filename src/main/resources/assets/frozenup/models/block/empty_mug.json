@@ -1,4 +1,5 @@
 {
+  "render_type": "cutout",
   "textures": {
     "texture": "frozenup:block/mug/empty",
     "particle": "frozenup:block/mug/empty"

@@ -8,26 +8,14 @@ import com.ninni.frozenup.client.model.ReindeerEntityModel;
 import com.ninni.frozenup.client.renderer.ChillooEntityRenderer;
 import com.ninni.frozenup.client.renderer.PenguinEntityRenderer;
 import com.ninni.frozenup.client.renderer.ReindeerEntityRenderer;
-import com.ninni.frozenup.init.FrozenUpBlocks;
 import com.ninni.frozenup.init.FrozenUpEntities;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = FrozenUp.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
-
-    @SubscribeEvent
-    public static void onClientSetup(final FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(FrozenUpBlocks.EMPTY_MUG.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(FrozenUpBlocks.MUG_OF_MILK.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(FrozenUpBlocks.MUG_OF_CHOCOLATE_MILK.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(FrozenUpBlocks.MUG_OF_TRUFFLE_HOT_CHOCOLATE.get(), RenderType.cutout());
-    }
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {

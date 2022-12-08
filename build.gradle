@@ -96,6 +96,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    implementation fg.deobf("curse.maven:autoreglib-250363:4100299")
+    implementation fg.deobf("curse.maven:quark-243121:4102873")
 }
 
 jar {

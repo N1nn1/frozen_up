@@ -3,7 +3,7 @@ loaderVersion="[39,)"
 license="All rights reserved"
 [[mods]]
 modId="frozenup"
-version="2.1.0-forge"
+version="2.1.1-forge"
 displayName="Frozen Up"
 logoFile= "frozenup.png"
 authors="Ninni, Coda1552, superlord9362, Mr. Esuoh, andante., Orcinus"

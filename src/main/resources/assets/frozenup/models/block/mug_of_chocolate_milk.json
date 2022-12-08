@@ -1,4 +1,5 @@
 {
+  "render_type": "cutout",
   "textures": {
     "texture": "frozenup:block/mug/chocolate_milk",
     "particle": "frozenup:block/mug/empty"
