@@ -13,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 @Environment(EnvType.CLIENT)
 public class ChillooHeldItemFeatureRenderer extends FeatureRenderer<ChillooEntity, ChillooEntityModel> {
@@ -36,11 +36,11 @@ public class ChillooHeldItemFeatureRenderer extends FeatureRenderer<ChillooEntit
         }
         matrices.translate(this.getContextModel().head.pivotX / 16.0F, (this.getContextModel()).head.pivotY / 16.0F, (this.getContextModel()).head.pivotZ / 16.0F);
         headRoll = chilloo.getHeadRoll(tickDelta);
-        matrices.multiply(Vec3f.POSITIVE_Z.getRadialQuaternion(headRoll));
-        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(headYaw));
-        matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(headPitch));
-        matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
-        matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotation(headRoll));
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(headYaw));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotation(headPitch));
+        matrices.multiply(RotationAxis.NEGATIVE_X.rotation(90));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotation(180));
         matrices.translate(0F, -0.75F, 0.1408F);
 
 

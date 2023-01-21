@@ -35,9 +35,9 @@
   },
   "mixins": [ "frozenup.mixins.json" ],
   "depends": {
-    "fabricloader": ">=0.14",
-    "fabric": "*",
-    "minecraft": ">=1.19",
+    "fabricloader": ">=0.14.9",
+    "fabric-api": "*",
+    "minecraft": "~1.19",
     "java": ">=17"
   }
 }

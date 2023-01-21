@@ -46,10 +46,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.ItemTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -61,8 +62,6 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
-
-import static net.minecraft.tag.BlockTags.*;
 
 @SuppressWarnings("unused")
 public class PenguinEntity extends AnimalEntity {
@@ -124,7 +123,7 @@ public class PenguinEntity extends AnimalEntity {
     @Override
     public boolean isPushedByFluids() { return false; }
 
-    public static boolean isValidNaturalSpawn(EntityType<? extends AnimalEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) { return world.getBlockState(pos.down()).isIn(ANIMALS_SPAWNABLE_ON); }
+    public static boolean isValidNaturalSpawn(EntityType<? extends AnimalEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) { return world.getBlockState(pos.down()).isIn(BlockTags.ANIMALS_SPAWNABLE_ON); }
 
     public static boolean canSpawn(EntityType <PenguinEntity> entity, ServerWorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         return world.getBlockState(pos.down()).isIn(FrozenUpTags.PENGUIN_SPAWNABLE_ON);

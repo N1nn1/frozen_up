@@ -4,7 +4,6 @@ import com.ninni.frozenup.FrozenUp;
 import com.ninni.frozenup.block.vanilla.PublicStairsBlock;
 import com.ninni.frozenup.item.FrozenUpItems;
 import com.ninni.frozenup.sound.FrozenUpBlockSoundGroups;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -14,18 +13,18 @@ import net.minecraft.block.Material;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
-import net.minecraft.item.BlockItem;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.function.ToIntFunction;
 
 public class FrozenUpBlocks {
     public static final Block CHILLOO_FEATHER_BLOCK = register("chilloo_feather_block", new Block(FabricBlockSettings.of(Material.SOLID_ORGANIC).strength(0.1f).sounds(FrozenUpBlockSoundGroups.CHILLOO_FEATHER_BLOCK)));
     public static final Block CHILLOO_FEATHER_COVERING = register("chilloo_feather_covering", new FiberCoveringBlock(FabricBlockSettings.copyOf(CHILLOO_FEATHER_BLOCK)));
-    public static final Block CHILLOO_FEATHER_LAMP = register("chilloo_feather_lamp", new FeatherLampBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC).strength(0.3F).sounds(FrozenUpBlockSoundGroups.CHILLOO_FEATHER_BLOCK).luminance(createLightLevelFromLitBlockState(10))));
+    public static final Block CHILLOO_FEATHER_LAMP = register("chilloo_feather_lamp", new FeatherLampBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC).strength(0.3F).sounds(FrozenUpBlockSoundGroups.CHILLOO_FEATHER_BLOCK).luminance(createLightLevelFromLitBlockState())));
 
     public static final Block TRUFFLE_CAKE = register("truffle_cake", new TruffleCakeBlock(FabricBlockSettings.of(Material.CAKE).strength(0.5F).sounds(BlockSoundGroup.WOOL)));
 
@@ -47,18 +46,11 @@ public class FrozenUpBlocks {
     public static final Block COMPACTED_SNOW_BRICK_SLAB = register("compacted_snow_brick_slab", new SlabBlock(FabricBlockSettings.copyOf(COMPACTED_SNOW_BRICKS)));
     public static final Block COMPACTED_SNOW_FOUNDATION = register("compacted_snow_foundation", new Block(FabricBlockSettings.copyOf(COMPACTED_SNOW_BRICKS)));
 
-    private static ToIntFunction<BlockState> createLightLevelFromLitBlockState(int litLevel) {
-        return (state) -> (Boolean)state.get(Properties.LIT) ? litLevel : 0;
+    private static ToIntFunction<BlockState> createLightLevelFromLitBlockState() {
+        return (state) -> (Boolean)state.get(Properties.LIT) ? 10 : 0;
     }
 
-    private static Block register(String id, Block block, boolean registerItem) {
-        Block registered = Registry.register(Registry.BLOCK, new Identifier(FrozenUp.MOD_ID, id), block);
-        if (registerItem) {
-            Registry.register(Registry.ITEM, new Identifier(FrozenUp.MOD_ID, id), new BlockItem(registered, new FabricItemSettings().group(FrozenUp.ITEM_GROUP)));
-        }
-        return registered;
-    }
     private static Block register(String id, Block block) {
-        return register(id, block, false);
+        return Registry.register(Registries.BLOCK, new Identifier(FrozenUp.MOD_ID, id), block);
     }
 }

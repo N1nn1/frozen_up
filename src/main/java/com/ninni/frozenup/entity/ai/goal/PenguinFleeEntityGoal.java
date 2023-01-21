@@ -5,7 +5,7 @@ import com.ninni.frozenup.entity.PenguinMood;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
 
-public class PenguinFleeEntityGoal extends FleeEntityGoal {
+public class PenguinFleeEntityGoal extends FleeEntityGoal<PenguinEntity> {
 
     public PenguinFleeEntityGoal(PathAwareEntity penguin, Class fleeFromType, float distance, double slowSpeed, double fastSpeed) {
         super(penguin, fleeFromType, distance, slowSpeed, fastSpeed);

@@ -1,8 +1,9 @@
 package com.ninni.frozenup.sound;
 
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import static com.ninni.frozenup.FrozenUp.*;
 
@@ -70,6 +71,6 @@ public class FrozenUpSoundEvents {
 
     private static SoundEvent register(String name) {
         Identifier identifier = new Identifier(MOD_ID, name);
-        return Registry.register(Registry.SOUND_EVENT, identifier, new SoundEvent(identifier));
+        return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
     }
 }

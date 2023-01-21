@@ -2,7 +2,7 @@ package com.ninni.frozenup.entity.ai.goal;
 
 import com.ninni.frozenup.entity.PenguinEntity;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.registry.tag.FluidTags;
 
 import java.util.EnumSet;
 

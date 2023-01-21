@@ -7,7 +7,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.minecraft.entity.Entity;
@@ -15,12 +14,10 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
 
@@ -33,8 +30,7 @@ public class FrozenUpEntities {
                                .spawnGroup(SpawnGroup.CREATURE)
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PathAwareEntity::canMobSpawn)
                                .dimensions(EntityDimensions.changing(0.9F, 0.9F))
-                               .trackRangeChunks(8),
-        new Pair<>(0xffffff, 0x32383c)
+                               .trackRangeChunks(8)
     );
     public static final EntityType<ReindeerEntity> REINDEER = register(
         "reindeer",
@@ -44,8 +40,7 @@ public class FrozenUpEntities {
                                .spawnGroup(SpawnGroup.CREATURE)
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, ReindeerEntity::canSpawn)
                                .dimensions(EntityDimensions.changing(1.3F, 1.6F))
-                               .trackRangeChunks(8),
-        new Pair<>( 0x5c392d, 0xdacabc )
+                               .trackRangeChunks(8)
     );
     public static final EntityType<PenguinEntity> PENGUIN = register(
         "penguin",
@@ -55,8 +50,7 @@ public class FrozenUpEntities {
                                .spawnGroup(SpawnGroup.CREATURE)
                                .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.WORLD_SURFACE_WG, PenguinEntity::canSpawn)
                                .dimensions(EntityDimensions.changing(0.55F, 0.9F))
-                               .trackRangeChunks(8),
-        new Pair<>( 0x292929, 0xfff089 )
+                               .trackRangeChunks(8)
     );
 
     static {
@@ -65,22 +59,8 @@ public class FrozenUpEntities {
         BiomeModifications.addSpawn(BiomeSelectors.tag(ConventionalBiomeTags.CLIMATE_COLD), SpawnGroup.CREATURE, FrozenUpEntities.REINDEER, 5, 1, 2);
     }
 
-    @SuppressWarnings("unchecked")
-    private static <T extends Entity> EntityType<T> register(String id, FabricEntityTypeBuilder<T> entityType, Pair<Integer, Integer> spawnEggColors) {
-        EntityType<T> builtEntityType = entityType.build();
-
-        if (spawnEggColors != null) {
-            Registry.register(
-                Registry.ITEM, new Identifier(FrozenUp.MOD_ID, id + "_spawn_egg"),
-                new SpawnEggItem(
-                    (EntityType<? extends MobEntity>) builtEntityType,
-                    spawnEggColors.getLeft(), spawnEggColors.getRight(),
-                    new FabricItemSettings().maxCount(64).group(FrozenUp.ITEM_GROUP)
-                )
-            );
-        }
-
-        return Registry.register(Registry.ENTITY_TYPE, new Identifier(FrozenUp.MOD_ID, id), builtEntityType);
+    private static <T extends Entity> EntityType<T> register(String id, FabricEntityTypeBuilder<T> entityType) {
+        return Registry.register(Registries.ENTITY_TYPE, new Identifier(FrozenUp.MOD_ID, id), entityType.build());
     }
 
     @Environment(EnvType.CLIENT) public static Identifier texture(String path) { return FrozenUpClient.texture("entity/" + path); }
