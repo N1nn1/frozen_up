@@ -1,16 +1,7 @@
 package com.ninni.frozenup.network;
 
-import com.ninni.frozenup.client.screen.ReindeerInventoryMenu;
-import com.ninni.frozenup.client.screen.ReindeerInventoryScreen;
-import com.ninni.frozenup.entity.ReindeerEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
+import com.ninni.frozenup.util.ClientEventsHandler;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -40,36 +31,18 @@ public class OpenReindeerScreenPacket {
     }
 
     public static void handle(OpenReindeerScreenPacket packet, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            LocalPlayer clientPlayer = minecraft.player;
-            Entity entity = null;
-            if (clientPlayer != null) {
-                entity = clientPlayer.level.getEntity(packet.getEntityId());
-            }
-            if (entity instanceof ReindeerEntity reindeer) {
-                SimpleContainer inventory = new SimpleContainer(packet.getSize());
-                Inventory playerInventory = clientPlayer.getInventory();
-                ReindeerInventoryMenu reindeerContainer = new ReindeerInventoryMenu(packet.getContainerId(), playerInventory, inventory, reindeer);
-                clientPlayer.containerMenu = reindeerContainer;
-                ReindeerInventoryScreen reindeerScreen = new ReindeerInventoryScreen(reindeerContainer, playerInventory, reindeer);
-                minecraft.setScreen(reindeerScreen);
-            }
-        });
+        ctx.get().enqueueWork(() -> ClientEventsHandler.openReindeerInventoryScreen(packet));
         ctx.get().setPacketHandled(true);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getContainerId() {
         return this.containerId;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getSize() {
         return this.size;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getEntityId() {
         return this.entityId;
     }

@@ -19,16 +19,16 @@ public class ReindeerInventoryMenu extends AbstractContainerMenu {
         this.horse = reindeer;
         container.startOpen(inventory.player);
         this.addSlot(new Slot(container, 0, 8, 18) {
-            public boolean mayPlace(ItemStack p_39677_) {
-                return p_39677_.is(Items.SADDLE) && !this.hasItem() && reindeer.isSaddleable();
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(Items.SADDLE) && !this.hasItem() && reindeer.isSaddleable();
             }
             public boolean isActive() {
                 return reindeer.isSaddleable();
             }
         });
         this.addSlot(new Slot(container, 1, 8, 36) {
-            public boolean mayPlace(ItemStack p_39690_) {
-                return reindeer.isArmor(p_39690_);
+            public boolean mayPlace(ItemStack stack) {
+                return reindeer.isArmor(stack);
             }
 
             public boolean isActive() {
@@ -52,18 +52,18 @@ public class ReindeerInventoryMenu extends AbstractContainerMenu {
 
     }
 
-    public boolean stillValid(Player pPlayer) {
-        return !this.horse.hasInventoryChanged(this.horseContainer) && this.horseContainer.stillValid(pPlayer) && this.horse.isAlive() && this.horse.distanceTo(pPlayer) < 8.0F;
+    public boolean stillValid(Player player) {
+        return !this.horse.hasInventoryChanged(this.horseContainer) && this.horseContainer.stillValid(player) && this.horse.isAlive() && this.horse.distanceTo(player) < 8.0F;
     }
 
-    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(pIndex);
+        Slot slot = this.slots.get(index);
         if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
             int i = this.horseContainer.getContainerSize();
-            if (pIndex < i) {
+            if (index < i) {
                 if (!this.moveItemStackTo(itemstack1, i, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
@@ -78,11 +78,11 @@ public class ReindeerInventoryMenu extends AbstractContainerMenu {
             } else if (i <= 2 || !this.moveItemStackTo(itemstack1, 2, i, false)) {
                 int j = i + 27;
                 int k = j + 9;
-                if (pIndex >= j && pIndex < k) {
+                if (index >= j && index < k) {
                     if (!this.moveItemStackTo(itemstack1, i, j, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (pIndex < j) {
+                } else if (index < j) {
                     if (!this.moveItemStackTo(itemstack1, j, k, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -103,8 +103,8 @@ public class ReindeerInventoryMenu extends AbstractContainerMenu {
         return itemstack;
     }
 
-    public void removed(Player pPlayer) {
-        super.removed(pPlayer);
-        this.horseContainer.stopOpen(pPlayer);
+    public void removed(Player player) {
+        super.removed(player);
+        this.horseContainer.stopOpen(player);
     }
 }

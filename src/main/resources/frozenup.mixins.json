@@ -7,8 +7,7 @@
   "mixins": [
     "FoxEntityMixin",
     "LocateCommandMixin",
-    "PowderSnowMixin",
-    "ServerPlayerMixin"
+    "PowderSnowMixin"
   ],
   "client": [
     "LocalPlayerMixin"

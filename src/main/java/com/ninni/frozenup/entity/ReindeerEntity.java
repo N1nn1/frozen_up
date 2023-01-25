@@ -1,13 +1,17 @@
 package com.ninni.frozenup.entity;
 
+import com.ninni.frozenup.client.screen.ReindeerInventoryMenu;
 import com.ninni.frozenup.init.FrozenUpCriteriaTriggers;
 import com.ninni.frozenup.init.FrozenUpEnchantments;
 import com.ninni.frozenup.init.FrozenUpItemTags;
 import com.ninni.frozenup.init.FrozenUpItems;
 import com.ninni.frozenup.init.FrozenUpSoundEvents;
+import com.ninni.frozenup.network.FrozenUpNetworkHandler;
+import com.ninni.frozenup.network.OpenReindeerScreenPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,6 +22,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -38,7 +44,11 @@ import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.DispenserMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -52,6 +62,10 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -227,6 +241,24 @@ public class ReindeerEntity extends AbstractHorse {
         }
         this.doPlayerRide(player);
         return InteractionResult.sidedSuccess(this.level.isClientSide());
+    }
+
+    @Override
+    public void openCustomInventoryScreen(Player player) {
+        if (!this.level.isClientSide && (!this.isVehicle() || this.hasPassenger(player)) && this.isTamed() && player instanceof ServerPlayer serverPlayer) {
+            if (serverPlayer.containerMenu != serverPlayer.inventoryMenu)
+                serverPlayer.closeContainer();
+
+            serverPlayer.nextContainerCounter();
+            FrozenUpNetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new OpenReindeerScreenPacket(serverPlayer.containerCounter, this.getInventorySize(), this.getId()));
+            serverPlayer.containerMenu = new ReindeerInventoryMenu(serverPlayer.containerCounter, serverPlayer.getInventory(), this.inventory, this);
+            serverPlayer.initMenu(serverPlayer.containerMenu);
+            MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(serverPlayer, serverPlayer.containerMenu));
+        }
+    }
+
+    public SimpleContainer getInventory() {
+        return this.inventory;
     }
 
     public InteractionResult interactReindeer(Player player, ItemStack stack) {
