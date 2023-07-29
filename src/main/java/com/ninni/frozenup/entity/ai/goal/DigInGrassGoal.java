@@ -8,7 +8,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.predicate.block.BlockStatePredicate;
 import net.minecraft.registry.tag.BlockTags;
@@ -31,7 +31,7 @@ public class DigInGrassGoal extends Goal {
 
     public DigInGrassGoal(ChillooEntity chilloo) {
         this.chilloo = chilloo;
-        this.world = chilloo.world;
+        this.world = chilloo.getWorld();
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK, Control.JUMP));
     }
 
@@ -70,7 +70,7 @@ public class DigInGrassGoal extends Goal {
                 if (this.world.getBlockState(downPos).isIn(BlockTags.DIRT)) {
                     if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                         this.world.syncWorldEvent(2001, downPos, Block.getRawIdFromState(Blocks.DIRT.getDefaultState()));
-                        List<ItemStack> items = this.world.getServer().getLootManager().getTable(DIGGING_LOOT).generateLoot(new LootContext.Builder((ServerWorld) this.world).random(this.world.getRandom()).build(LootContextTypes.EMPTY));
+                        List<ItemStack> items = this.world.getServer().getLootManager().getLootTable(DIGGING_LOOT).generateLoot(new LootContextParameterSet.Builder((ServerWorld) this.world).build(LootContextTypes.EMPTY));
                         this.chilloo.equipStack(EquipmentSlot.MAINHAND, items.isEmpty() ? ItemStack.EMPTY : items.get(0));
                     }
                     this.chilloo.onDiggingInGrass();

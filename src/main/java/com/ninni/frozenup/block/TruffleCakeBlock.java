@@ -82,7 +82,7 @@ public class TruffleCakeBlock extends Block {
     }
 
     @Override public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) { return direction == Direction.DOWN && !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos); }
-    @Override public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) { return world.getBlockState(pos.down()).getMaterial().isSolid(); }
+    @Override public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) { return world.getBlockState(pos.down()).isSolid(); }
     @Override protected void appendProperties(StateManager.Builder<Block, BlockState> builder) { builder.add(BITES); }
     @Override public int getComparatorOutput(BlockState state, World world, BlockPos pos) { return getComparatorOutput(state.get(BITES)); }
     public static int getComparatorOutput(int bites) { return (7 - bites) * 2; }

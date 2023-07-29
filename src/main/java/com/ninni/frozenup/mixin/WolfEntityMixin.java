@@ -19,7 +19,7 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
     }
 
     @Inject(method = "initGoals", at = @At("TAIL"))
-    private void chaseDogsGoal(CallbackInfo ci) {
+    private void FU$initGoals(CallbackInfo ci) {
         this.targetSelector.add(7, new ActiveTargetGoal<>(this, ReindeerEntity.class, false));
     }
 }

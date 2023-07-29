@@ -34,7 +34,7 @@ public class FrozenUpLootTableAdditions {
                                           .with(ItemEntry.builder(FrozenUpItems.PINECONE)
                                                          .conditionally(SurvivesExplosionLootCondition.builder())
                                                          .conditionally(TableBonusLootCondition.builder(Enchantments.FORTUNE, PINECONE_DROP_CHANCE)))
-                                          .conditionally(InvertedLootCondition.builder(AlternativeLootCondition.builder(WITH_SHEARS, WITH_SILK_TOUCH))));
+                                          .conditionally(InvertedLootCondition.builder(WITH_SHEARS.or(WITH_SILK_TOUCH))));
             }
             if (id.equals(LootTables.IGLOO_CHEST_CHEST)) {
                 tableBuilder.pool(LootPool.builder()

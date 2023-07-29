@@ -28,7 +28,7 @@ public abstract class ServerPlayerEntityMixin {
     @Shadow private int screenHandlerSyncId;
 
     @Inject(at = @At("HEAD"), method = "openHorseInventory", cancellable = true)
-    private void openHorseInventory(AbstractHorseEntity horse, Inventory inventory, CallbackInfo ci) {
+    private void FU$openHorseInventory(AbstractHorseEntity horse, Inventory inventory, CallbackInfo ci) {
         ServerPlayerEntity $this = (ServerPlayerEntity) (Object) this;
         if (horse instanceof ReindeerEntity reindeer) {
             ci.cancel();

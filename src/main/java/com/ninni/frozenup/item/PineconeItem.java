@@ -28,7 +28,7 @@ public class PineconeItem extends Item {
             serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
         }
         if (!world.isClient) {
-            user.damage(DamageSource.GENERIC, 3);
+            user.damage(world.getDamageSources().generic(), 3);
             user.removeStatusEffect(StatusEffects.POISON);
             user.removeStatusEffect(StatusEffects.WEAKNESS);
             user.removeStatusEffect(StatusEffects.WITHER);

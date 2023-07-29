@@ -90,7 +90,7 @@ public class MugBlock extends HorizontalFacingBlock {
         PlayerEntity player = ctx.getPlayer();
         Arm arm = player != null ? player.getMainArm() : Arm.RIGHT;
         Arm activeArm = ctx.getHand() == Hand.MAIN_HAND ? Arm.RIGHT : Arm.LEFT;
-        Direction facing = ctx.getPlayerFacing();
+        Direction facing = ctx.getHorizontalPlayerFacing();
 
         return state == null
             ? null

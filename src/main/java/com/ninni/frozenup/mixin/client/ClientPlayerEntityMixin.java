@@ -22,12 +22,12 @@ public class ClientPlayerEntityMixin {
     @Shadow public Input input;
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/input/Input;tick(ZF)V", shift = At.Shift.AFTER), method = "tickMovement", locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void SO$TickMovement(CallbackInfo info, boolean flag) {
+    private void FU$TickMovement(CallbackInfo info, boolean flag) {
         ClientPlayerEntity $this = (ClientPlayerEntity)(Object)this;
         Entity ridingEntity = $this.getVehicle();
         if (ridingEntity instanceof ReindeerEntity reindeer) {
             BlockPos blockPos = reindeer.getBlockPos();
-            World world = reindeer.world;
+            World world = reindeer.getWorld();
             if (!reindeer.isOnGround() && reindeer.hasCloudJumper(reindeer.getEquippedStack(EquipmentSlot.CHEST)) && reindeer.hasCloudJumpData() && !world.getBlockState(blockPos.down(64)).isOf(Blocks.AIR) && world.getBlockState(blockPos.down(3)).isOf(Blocks.AIR)) {
                 if (!flag && this.input.jumping) {
                     Vec3d velocity = reindeer.getVelocity();

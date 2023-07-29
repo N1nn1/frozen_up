@@ -9,6 +9,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -45,7 +46,7 @@ public class ChillooHeldItemFeatureRenderer extends FeatureRenderer<ChillooEntit
 
 
         ItemStack itemStack = chilloo.getEquippedStack(EquipmentSlot.MAINHAND);
-        this.heldItemRenderer.renderItem(chilloo, itemStack, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light);
+        this.heldItemRenderer.renderItem(chilloo, itemStack, ModelTransformationMode.GROUND, false, matrices, vertexConsumers, light);
         matrices.pop();
     }
 }

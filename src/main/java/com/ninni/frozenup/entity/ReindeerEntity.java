@@ -50,6 +50,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.EntityView;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -107,7 +108,7 @@ public class ReindeerEntity extends AbstractHorseEntity {
 
     @Override
     protected void updateSaddle() {
-        if (!this.world.isClient()) {
+        if (!this.getWorld().isClient()) {
             super.updateSaddle();
             this.equipArmor(this.items.getStack(1));
             this.setEquipmentDropChance(EquipmentSlot.CHEST, 0.0f);
@@ -124,18 +125,18 @@ public class ReindeerEntity extends AbstractHorseEntity {
     public void tick() {
         super.tick();
         this.setNoDrag(this.canCloudJump() && !this.isLeashed());
-        if (!this.world.isClient()) {
-            boolean flag = this.world.isNight();
+        if (!this.getWorld().isClient()) {
+            boolean flag = this.getWorld().isNight();
             this.dataTracker.set(CAN_CLOUD_JUMP, flag);
         }
-        if (this.world.isClient && this.canCloudJump() && this.getVelocity().lengthSquared() > 0.03 ) {
+        if (this.getWorld().isClient && this.canCloudJump() && this.getVelocity().lengthSquared() > 0.03 ) {
             Vec3d vec3d = this.getRotationVec(0.0f);
             float f = MathHelper.cos(this.getYaw() * ((float)Math.PI / 180)) * 0.3f;
             float g = MathHelper.sin(this.getYaw() * ((float)Math.PI / 180)) * 0.3f;
             float h = 1.2f - this.random.nextFloat() * 0.7f;
             for (int i = 0; i < 2; ++i) {
-                this.world.addParticle(ParticleTypes.END_ROD, this.getX() - vec3d.x * (double)h * 0.75 + (double)f, this.getY() - vec3d.y + 1, this.getZ() - vec3d.z * (double)h + (double)g, 0.0, 0.0, 0.0);
-                this.world.addParticle(ParticleTypes.END_ROD, this.getX() - vec3d.x * (double)h * 0.75 - (double)f, this.getY() - vec3d.y + 1, this.getZ() - vec3d.z * (double)h - (double)g, 0.0, 0.0, 0.0);
+                this.getWorld().addParticle(ParticleTypes.END_ROD, this.getX() - vec3d.x * (double)h * 0.75 + (double)f, this.getY() - vec3d.y + 1, this.getZ() - vec3d.z * (double)h + (double)g, 0.0, 0.0, 0.0);
+                this.getWorld().addParticle(ParticleTypes.END_ROD, this.getX() - vec3d.x * (double)h * 0.75 - (double)f, this.getY() - vec3d.y + 1, this.getZ() - vec3d.z * (double)h - (double)g, 0.0, 0.0, 0.0);
             }
         }
     }
@@ -168,7 +169,7 @@ public class ReindeerEntity extends AbstractHorseEntity {
                 this.addHastyHoovesEnchantment();
             }
             if (EnchantmentHelper.getLevel(Enchantments.FROST_WALKER, this.getEquippedStack(EquipmentSlot.CHEST)) > 0) {
-                FrostWalkerEnchantment.freezeWater(this, this.world, pos, EnchantmentHelper.getEquipmentLevel(Enchantments.FROST_WALKER, this));
+                FrostWalkerEnchantment.freezeWater(this, this.getWorld(), pos, EnchantmentHelper.getEquipmentLevel(Enchantments.FROST_WALKER, this));
             }
         } else { this.removeHastyHoovesSpeedBoost(); }
     }
@@ -193,7 +194,7 @@ public class ReindeerEntity extends AbstractHorseEntity {
         }
     }
     public boolean hasCloudJumper(ItemStack stack) { return EnchantmentHelper.getLevel(FrozenUpEnchantments.CLOUD_JUMPER, stack) > 0; }
-    public boolean canCloudJump() { return this.hasCloudJumpData() && this.hasCloudJumper(getEquippedStack(EquipmentSlot.CHEST)) && this.world.getBlockState(this.getBlockPos().down(3)).isOf(Blocks.AIR) && this.world.getBlockState(this.getBlockPos().down(2)).isOf(Blocks.AIR) && this.world.getBlockState(this.getBlockPos().down(1)).isOf(Blocks.AIR) && !this.isOnGround(); }
+    public boolean canCloudJump() { return this.hasCloudJumpData() && this.hasCloudJumper(getEquippedStack(EquipmentSlot.CHEST)) && this.getWorld().getBlockState(this.getBlockPos().down(3)).isOf(Blocks.AIR) && this.getWorld().getBlockState(this.getBlockPos().down(2)).isOf(Blocks.AIR) && this.getWorld().getBlockState(this.getBlockPos().down(1)).isOf(Blocks.AIR) && !this.isOnGround(); }
     public boolean hasHastyHooves(ItemStack stack) { return EnchantmentHelper.getLevel(FrozenUpEnchantments.HASTY_HOOVES, stack) > 0; }
     public static int getHastyHooves(LivingEntity entity) { return EnchantmentHelper.getEquipmentLevel(FrozenUpEnchantments.HASTY_HOOVES, entity); }
 
@@ -203,7 +204,7 @@ public class ReindeerEntity extends AbstractHorseEntity {
 
         if (this.isTame() && player.shouldCancelInteraction()) {
             this.openInventory(player);
-            return ActionResult.success(this.world.isClient);
+            return ActionResult.success(this.getWorld().isClient);
         }
 
         if (this.hasPassengers()) { return super.interactMob(player, hand); }
@@ -216,23 +217,23 @@ public class ReindeerEntity extends AbstractHorseEntity {
 
             if (!this.isTame()) {
                 this.playAngrySound();
-                return ActionResult.success(this.world.isClient);
+                return ActionResult.success(this.getWorld().isClient);
             }
 
             boolean bl = !this.isSaddled() && itemStack.isOf(Items.SADDLE);
             if (this.isHorseArmor(itemStack) || bl) {
                 this.openInventory(player);
-                return ActionResult.success(this.world.isClient);
+                return ActionResult.success(this.getWorld().isClient);
             }
         }
         this.putPlayerOnBack(player);
-        return ActionResult.success(this.world.isClient);
+        return ActionResult.success(this.getWorld().isClient);
     }
 
     public ActionResult interactReindeer(PlayerEntity player, ItemStack stack) {
         boolean bl = this.receiveFood(player, stack);
         if (!player.getAbilities().creativeMode) { stack.decrement(1); }
-        if (this.world.isClient) { return ActionResult.CONSUME; } else { return bl ? ActionResult.SUCCESS : ActionResult.PASS; }
+        if (this.getWorld().isClient) { return ActionResult.CONSUME; } else { return bl ? ActionResult.SUCCESS : ActionResult.PASS; }
     }
 
     @Override
@@ -270,7 +271,7 @@ public class ReindeerEntity extends AbstractHorseEntity {
 
         if (j > 0 && (bl || !this.isTame()) && this.getTemper() < this.getMaxTemper()) {
             bl = true;
-            if (!this.world.isClient) { this.addTemper(j); }
+            if (!this.getWorld().isClient) { this.addTemper(j); }
         }
 
         if (bl) {
@@ -285,18 +286,17 @@ public class ReindeerEntity extends AbstractHorseEntity {
         this.setEating();
         if (!this.isSilent()) {
             SoundEvent soundEvent = this.getEatSound();
-            if (soundEvent != null) { this.world.playSound(null, this.getX(), this.getY(), this.getZ(), soundEvent, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F); }
+            if (soundEvent != null) { this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), soundEvent, this.getSoundCategory(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F); }
         }
     }
 
     @Override
     public boolean isHorseArmor(ItemStack item) { return item.getItem() == FrozenUpItems.HOOF_ARMOR; }
 
-    private void setEating() { if (!this.world.isClient) { this.setHorseFlag(64, true); } }
-
+    private void setEating() { if (!this.getWorld().isClient) { this.setHorseFlag(64, true); } }
 
     @Override
-    public void updatePassengerPosition(Entity passenger) {
+    public void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
         if (this.hasPassenger(passenger)) {
             float f = MathHelper.cos(this.bodyYaw * 0.0175F);
             float g = MathHelper.sin(this.bodyYaw * 0.0175F);
@@ -361,7 +361,7 @@ public class ReindeerEntity extends AbstractHorseEntity {
         super.startJumping(height);
         boolean flag = this.canCloudJump();
         if (flag) {
-            FrozenUpCriteria.CLOUD_JUMPER_BOOST.trigger((ServerPlayerEntity) this.getPrimaryPassenger());
+            FrozenUpCriteria.CLOUD_JUMPER_BOOST.trigger((ServerPlayerEntity) this.getFirstPassenger());
         }
     }
 
@@ -369,5 +369,10 @@ public class ReindeerEntity extends AbstractHorseEntity {
     public static boolean canSpawn(EntityType <ReindeerEntity> entity, ServerWorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         BlockState state = world.getBlockState(pos.down());
         return state.isOf(Blocks.GRASS_BLOCK) && world.getBaseLightLevel(pos, 0) > 8;
+    }
+
+    @Override
+    public EntityView method_48926() {
+        return this.getWorld();
     }
 }

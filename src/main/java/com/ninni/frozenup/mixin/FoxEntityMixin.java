@@ -21,12 +21,12 @@ public abstract class FoxEntityMixin extends AnimalEntity {
     }
 
     @Inject(method = "initGoals", at = @At("TAIL"))
-    private void chaseDogsGoal(CallbackInfo ci) {
+    private void FU$initGoals(CallbackInfo ci) {
         this.followChillooGoal = new ActiveTargetGoal<>(this, AnimalEntity.class, 10, false, false, entity -> entity instanceof ChillooEntity);
     }
 
     @Inject(method = "addTypeSpecificGoals", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/goal/GoalSelector;add(ILnet/minecraft/entity/ai/goal/Goal;)V", ordinal = 3))
-    private void addFollowChillooGoal(CallbackInfo ci) {
+    private void FU$addTypeSpecificGoals(CallbackInfo ci) {
         this.targetSelector.add(4, this.followChillooGoal);
     }
 }
