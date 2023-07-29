@@ -3,9 +3,10 @@ package com.ninni.frozenup.mixin;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.arguments.ResourceOrTagLocationArgument;
-import net.minecraft.data.worldgen.Structures;
+import net.minecraft.commands.arguments.ResourceOrTagKeyArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.commands.LocateCommand;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,13 +14,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(LocateCommand.class)
 public class LocateCommandMixin {
     private static final SimpleCommandExceptionType IGLOO_NULL = new SimpleCommandExceptionType(Component.translatable("snowed_over.commands.locate.revamped_igloo"));
 
     @Inject(at = @At("HEAD"), method = "locateStructure")
-    private static void execute(CommandSourceStack stack, ResourceOrTagLocationArgument.Result<Structure> result, CallbackInfoReturnable<Integer> cir)  throws CommandSyntaxException {
-        if (result.test(Structures.IGLOO)) {
+    private static void FU$locateStructure(CommandSourceStack p_214472_, ResourceOrTagKeyArgument.Result<Structure> result, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
+        Optional<ResourceKey<Structure>> optional = result.unwrap().left();
+        if (optional.isPresent() && optional.get().location().equals(new ResourceLocation("igloo"))) {
             throw IGLOO_NULL.create();
         }
     }

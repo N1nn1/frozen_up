@@ -1,15 +1,15 @@
 package com.ninni.frozenup.client.renderer.entity.feature;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.ninni.frozenup.client.model.ChillooEntityModel;
 import com.ninni.frozenup.client.renderer.ChillooEntityRenderer;
 import com.ninni.frozenup.entity.ChillooEntity;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -35,16 +35,16 @@ public class ChillooHeldItemFeatureRenderer extends RenderLayer<ChillooEntity, C
         }
         matrices.translate(this.getParentModel().head.x / 16.0F, (this.getParentModel()).head.y / 16.0F, (this.getParentModel()).head.z / 16.0F);
         headRoll = chilloo.getHeadRoll(tickDelta);
-        matrices.mulPose(Vector3f.ZP.rotationDegrees(headRoll));
-        matrices.mulPose(Vector3f.YP.rotationDegrees(headYaw));
-        matrices.mulPose(Vector3f.XP.rotationDegrees(headPitch));
-        matrices.mulPose(Vector3f.XN.rotationDegrees(90));
-        matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
+        matrices.mulPose(Axis.ZP.rotationDegrees(headRoll));
+        matrices.mulPose(Axis.YP.rotationDegrees(headYaw));
+        matrices.mulPose(Axis.XP.rotationDegrees(headPitch));
+        matrices.mulPose(Axis.XN.rotationDegrees(90));
+        matrices.mulPose(Axis.ZP.rotationDegrees(180));
         matrices.translate(0F, -0.75F, 0.1408F);
 
 
         ItemStack itemStack = chilloo.getItemBySlot(EquipmentSlot.MAINHAND);
-        this.heldItemRenderer.renderItem(chilloo, itemStack, ItemTransforms.TransformType.GROUND, false, matrices, vertexConsumers, light);
+        this.heldItemRenderer.renderItem(chilloo, itemStack, ItemDisplayContext.GROUND, false, matrices, vertexConsumers, light);
         matrices.popPose();
     }
 }

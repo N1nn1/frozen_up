@@ -11,7 +11,6 @@ import com.ninni.frozenup.network.OpenReindeerScreenPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -22,7 +21,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -44,11 +42,7 @@ import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.DispenserMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -64,7 +58,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -120,7 +113,7 @@ public class ReindeerEntity extends AbstractHorse {
 
     @Override
     protected void updateContainerEquipment() {
-        if (!this.level.isClientSide()) {
+        if (!this.level().isClientSide()) {
             super.updateContainerEquipment();
             this.equipArmor(this.inventory.getItem(1));
             this.setDropChance(EquipmentSlot.CHEST, 0.0F);
@@ -137,18 +130,18 @@ public class ReindeerEntity extends AbstractHorse {
 
         this.setDiscardFriction(this.canCloudJump() && !this.isLeashed());
 
-        if (!level.isClientSide()) {
-            boolean flag = this.level.isNight();
+        if (!level().isClientSide()) {
+            boolean flag = this.level().isNight();
             this.entityData.set(CAN_CLOUD_JUMP, flag);
         }
-        if (this.level.isClientSide() && this.canCloudJump() && this.getDeltaMovement().lengthSqr() > 0.03 ) {
+        if (this.level().isClientSide() && this.canCloudJump() && this.getDeltaMovement().lengthSqr() > 0.03 ) {
             Vec3 vec3d = this.getViewVector(0.0f);
             float f = Mth.cos(this.getYRot() * ((float)Math.PI / 180)) * 0.3f;
             float g = Mth.sin(this.getYRot() * ((float)Math.PI / 180)) * 0.3f;
             float h = 1.2f - this.random.nextFloat() * 0.7f;
             for (int i = 0; i < 2; ++i) {
-                this.level.addParticle(ParticleTypes.END_ROD, this.getX() - vec3d.x * (double)h * 0.75 + (double)f, this.getY() - vec3d.y + 1, this.getZ() - vec3d.z * (double)h + (double)g, 0.0, 0.0, 0.0);
-                this.level.addParticle(ParticleTypes.END_ROD, this.getX() - vec3d.x * (double)h * 0.75 - (double)f, this.getY() - vec3d.y + 1, this.getZ() - vec3d.z * (double)h - (double)g, 0.0, 0.0, 0.0);
+                this.level().addParticle(ParticleTypes.END_ROD, this.getX() - vec3d.x * (double)h * 0.75 + (double)f, this.getY() - vec3d.y + 1, this.getZ() - vec3d.z * (double)h + (double)g, 0.0, 0.0, 0.0);
+                this.level().addParticle(ParticleTypes.END_ROD, this.getX() - vec3d.x * (double)h * 0.75 - (double)f, this.getY() - vec3d.y + 1, this.getZ() - vec3d.z * (double)h - (double)g, 0.0, 0.0, 0.0);
             }
         }
     }
@@ -180,9 +173,9 @@ public class ReindeerEntity extends AbstractHorse {
 
     @Override
     protected void onChangedBlock(BlockPos pos) {
-        if (this.isArmor(this.getItemBySlot(EquipmentSlot.CHEST)) && this.isVehicle() && this.isOnGround()) {
+        if (this.isArmor(this.getItemBySlot(EquipmentSlot.CHEST)) && this.isVehicle() && this.onGround()) {
             if (EnchantmentHelper.getItemEnchantmentLevel(FrozenUpEnchantments.HASTY_HOOVES.get(), this.getItemBySlot(EquipmentSlot.CHEST)) > 0) { this.addHastyHoovesEnchantment(); }
-            if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FROST_WALKER, this.getItemBySlot(EquipmentSlot.CHEST)) > 0) { FrostWalkerEnchantment.onEntityMoved(this, this.level, pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FROST_WALKER, this)); }
+            if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FROST_WALKER, this.getItemBySlot(EquipmentSlot.CHEST)) > 0) { FrostWalkerEnchantment.onEntityMoved(this, this.level(), pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FROST_WALKER, this)); }
         } else { this.removeHastyHoovesSpeedBoost(); }
     }
 
@@ -207,7 +200,7 @@ public class ReindeerEntity extends AbstractHorse {
     }
 
     public boolean hasCloudJumper(ItemStack stack) { return EnchantmentHelper.getItemEnchantmentLevel(FrozenUpEnchantments.CLOUD_JUMPER.get(), stack) > 0; }
-    public boolean canCloudJump() { return this.hasCloudJumpData() && this.hasCloudJumper(getItemBySlot(EquipmentSlot.CHEST)) && this.level.getBlockState(this.blockPosition().below(3)).is(Blocks.AIR) && this.level.getBlockState(this.blockPosition().below(2)).is(Blocks.AIR) && this.level.getBlockState(this.blockPosition().below(1)).is(Blocks.AIR) && !this.isOnGround(); }
+    public boolean canCloudJump() { return this.hasCloudJumpData() && this.hasCloudJumper(getItemBySlot(EquipmentSlot.CHEST)) && this.level().getBlockState(this.blockPosition().below(3)).is(Blocks.AIR) && this.level().getBlockState(this.blockPosition().below(2)).is(Blocks.AIR) && this.level().getBlockState(this.blockPosition().below(1)).is(Blocks.AIR) && !this.onGround(); }
     public boolean hasHastyHooves(ItemStack stack) { return EnchantmentHelper.getItemEnchantmentLevel(FrozenUpEnchantments.HASTY_HOOVES.get(), stack) > 0; }
     public static int getHastyHooves(LivingEntity entity) { return EnchantmentHelper.getEnchantmentLevel(FrozenUpEnchantments.HASTY_HOOVES.get(), entity); }
 
@@ -217,7 +210,7 @@ public class ReindeerEntity extends AbstractHorse {
 
         if (this.isTamed() && player.isSecondaryUseActive()) {
             this.openCustomInventoryScreen(player);
-            return InteractionResult.sidedSuccess(this.level.isClientSide());
+            return InteractionResult.sidedSuccess(this.level().isClientSide());
         }
 
         if (this.isVehicle()) { return super.mobInteract(player, hand); }
@@ -230,22 +223,22 @@ public class ReindeerEntity extends AbstractHorse {
 
             if (!this.isTamed()) {
                 this.makeMad();
-                return InteractionResult.sidedSuccess(this.level.isClientSide());
+                return InteractionResult.sidedSuccess(this.level().isClientSide());
             }
 
             boolean bl = !this.isSaddled() && itemStack.is(Items.SADDLE);
             if (bl) {
                 this.openCustomInventoryScreen(player);
-                return InteractionResult.sidedSuccess(this.level.isClientSide());
+                return InteractionResult.sidedSuccess(this.level().isClientSide());
             }
         }
         this.doPlayerRide(player);
-        return InteractionResult.sidedSuccess(this.level.isClientSide());
+        return InteractionResult.sidedSuccess(this.level().isClientSide());
     }
 
     @Override
     public void openCustomInventoryScreen(Player player) {
-        if (!this.level.isClientSide && (!this.isVehicle() || this.hasPassenger(player)) && this.isTamed() && player instanceof ServerPlayer serverPlayer) {
+        if (!this.level().isClientSide && (!this.isVehicle() || this.hasPassenger(player)) && this.isTamed() && player instanceof ServerPlayer serverPlayer) {
             if (serverPlayer.containerMenu != serverPlayer.inventoryMenu)
                 serverPlayer.closeContainer();
 
@@ -264,7 +257,7 @@ public class ReindeerEntity extends AbstractHorse {
     public InteractionResult interactReindeer(Player player, ItemStack stack) {
         boolean bl = this.handleEating(player, stack);
         if (!player.getAbilities().instabuild) { stack.shrink(1); }
-        if (this.level.isClientSide()) { return InteractionResult.CONSUME; } else { return bl ? InteractionResult.SUCCESS : InteractionResult.PASS; }
+        if (this.level().isClientSide()) { return InteractionResult.CONSUME; } else { return bl ? InteractionResult.SUCCESS : InteractionResult.PASS; }
     }
 
     @Override
@@ -302,7 +295,7 @@ public class ReindeerEntity extends AbstractHorse {
 
         if (j > 0 && (bl || !this.isTamed()) && this.getTemper() < this.getMaxTemper()) {
             bl = true;
-            if (!this.level.isClientSide()) { this.modifyTemper(j); }
+            if (!this.level().isClientSide()) { this.modifyTemper(j); }
         }
 
         if (bl) {
@@ -317,7 +310,7 @@ public class ReindeerEntity extends AbstractHorse {
         this.setEating();
         if (!this.isSilent()) {
             SoundEvent soundevent = this.getEatingSound();
-            if (soundevent != null) { this.level.playSound(null, this.getX(), this.getY(), this.getZ(), soundevent, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F); }
+            if (soundevent != null) { this.level().playSound(null, this.getX(), this.getY(), this.getZ(), soundevent, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F); }
         }
     }
 
@@ -326,10 +319,10 @@ public class ReindeerEntity extends AbstractHorse {
         return pStack.getItem() == FrozenUpItems.HOOF_ARMOR.get();
     }
 
-    private void setEating() { if (!this.level.isClientSide()) { this.setFlag(64, true); } }
+    private void setEating() { if (!this.level().isClientSide()) { this.setFlag(64, true); } }
 
     @Override
-    public void positionRider(Entity passenger) {
+    public void positionRider(Entity passenger, MoveFunction moveFunction) {
         if (this.hasPassenger(passenger)) {
             float f = Mth.cos(this.yBodyRot * 0.0175F);
             float g = Mth.sin(this.yBodyRot * 0.0175F);
@@ -397,7 +390,7 @@ public class ReindeerEntity extends AbstractHorse {
     @Override
     public void handleStartJump(int pJumpPower) {
         super.handleStartJump(pJumpPower);
-        if (!this.level.isClientSide() && canCloudJump()) {
+        if (!this.level().isClientSide() && canCloudJump()) {
             FrozenUpCriteriaTriggers.CLOUD_JUMPER_BOOST.trigger((ServerPlayer) this.getControllingPassenger());
         }
     }

@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 import java.util.EnumSet;
@@ -31,7 +32,7 @@ public class DigInGrassGoal extends Goal {
 
     public DigInGrassGoal(ChillooEntity chilloo) {
         this.chilloo = chilloo;
-        this.world = chilloo.level;
+        this.world = chilloo.level();
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
     }
 
@@ -73,7 +74,7 @@ public class DigInGrassGoal extends Goal {
                 if (this.world.getBlockState(downPos).is(BlockTags.DIRT)) {
                     if (this.world.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
                         this.world.levelEvent(2001, downPos, Block.getId(Blocks.DIRT.defaultBlockState()));
-                        List<ItemStack> items = this.world.getServer().getLootTables().get(DIGGING_LOOT).getRandomItems(new LootContext.Builder((ServerLevel) this.world).withRandom(this.world.getRandom()).create(LootContextParamSets.EMPTY));
+                        List<ItemStack> items = this.world.getServer().getLootData().getLootTable(DIGGING_LOOT).getRandomItems(new LootParams.Builder((ServerLevel) this.world).create(LootContextParamSets.EMPTY));
                         this.chilloo.setItemSlot(EquipmentSlot.MAINHAND, items.isEmpty() ? ItemStack.EMPTY : items.get(0));
                     }
                     this.chilloo.onDiggingInGrass();

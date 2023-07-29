@@ -13,6 +13,7 @@ import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -20,11 +21,14 @@ import net.minecraftforge.fml.common.Mod;
 public class MobEvents {
 
     @SubscribeEvent
-    public static void onEntityAttributeInit(EntityAttributeCreationEvent event) {
-        SpawnPlacements.register(FrozenUpEntities.CHILLOO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PathfinderMob::checkMobSpawnRules);
-        SpawnPlacements.register(FrozenUpEntities.PENGUIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE_WG, PenguinEntity::canSpawn);
-        SpawnPlacements.register(FrozenUpEntities.REINDEER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE_WG, ReindeerEntity::canSpawn);
+    public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
+        event.register(FrozenUpEntities.CHILLOO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PathfinderMob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+        event.register(FrozenUpEntities.PENGUIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE_WG, PenguinEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.AND);
+        event.register(FrozenUpEntities.REINDEER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE_WG, ReindeerEntity::canSpawn, SpawnPlacementRegisterEvent.Operation.AND);
+    }
 
+    @SubscribeEvent
+    public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(FrozenUpEntities.PENGUIN.get(), PenguinEntity.createPenguinAttributes().build());
         event.put(FrozenUpEntities.REINDEER.get(), ReindeerEntity.createReindeerAttributes().build());
         event.put(FrozenUpEntities.CHILLOO.get(), ChillooEntity.createChillooAttributes().build());

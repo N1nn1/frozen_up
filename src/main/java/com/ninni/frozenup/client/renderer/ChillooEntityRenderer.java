@@ -29,7 +29,7 @@ public class ChillooEntityRenderer extends MobRenderer<ChillooEntity, ChillooEnt
 
     @Override
     protected boolean isShaking(ChillooEntity entity) {
-        if (entity.isSheared() && entity.getLevel().getBiome(entity.blockPosition()).is(Tags.Biomes.IS_COLD)) return true;
+        if (entity.isSheared() && entity.level().getBiome(entity.blockPosition()).is(Tags.Biomes.IS_COLD)) return true;
         return super.isShaking(entity);
     }
 

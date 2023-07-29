@@ -121,21 +121,21 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!this.level.isClientSide && this.isAlive() && this.isEffectiveAi()) {
+        if (!this.level().isClientSide && this.isAlive() && this.isEffectiveAi()) {
             ++this.eatingTime;
             ItemStack itemStack = this.getItemBySlot(EquipmentSlot.MAINHAND);
             if (this.canEat(itemStack)) {
                 if (this.eatingTime > 600) {
-                    ItemStack itemStack2 = itemStack.finishUsingItem(this.level, this);
+                    ItemStack itemStack2 = itemStack.finishUsingItem(this.level(), this);
                     if (!itemStack2.isEmpty()) this.setItemSlot(EquipmentSlot.MAINHAND, itemStack2);
                     this.eatingTime = 0;
                 } else if (this.eatingTime > 560 && this.random.nextFloat() < 0.1F) {
                     this.playSound(this.getEatingSound(itemStack), 1.0F, 1.0F);
-                    this.level.broadcastEntityEvent(this, (byte) 45);
+                    this.level().broadcastEntityEvent(this, (byte) 45);
                 }
             }
         }
-        if (this.level.isClientSide) this.digInGrassTimer = Math.max(0, this.digInGrassTimer - 1);
+        if (this.level().isClientSide) this.digInGrassTimer = Math.max(0, this.digInGrassTimer - 1);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
         this.digInGrassTimer = this.digInGrassGoal.getTimer();
         super.customServerAiStep();
 
-        long time = this.level.getGameTime();
+        long time = this.level().getGameTime();
         if (this.isSheared()) {
             if (this.random.nextInt((int) (time - this.timeSinceSheared)) > 20 * 210) {
                 this.timeSinceSheared = time;
@@ -157,12 +157,12 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
         super.tick();
 
         if (!this.isSheared()) {
-            if (this.getLevel().getBiome(this.blockPosition()).is(Tags.Biomes.IS_HOT_OVERWORLD)) {
+            if (this.level().getBiome(this.blockPosition()).is(Tags.Biomes.IS_HOT_OVERWORLD)) {
                 for (int i = 0; i < 0.25; ++i) {
                     double velX = this.random.nextGaussian() * -5;
                     double velY = this.random.nextGaussian() * -5;
                     double velZ = this.random.nextGaussian() * -5;
-                    this.level.addParticle(ParticleTypes.FALLING_WATER, this.getRandomX(0.4), this.getY(1) - 0.5, this.getRandomZ(0.4), velX, velY, velZ);
+                    this.level().addParticle(ParticleTypes.FALLING_WATER, this.getRandomX(0.4), this.getY(1) - 0.5, this.getRandomZ(0.4), velX, velY, velZ);
                 }
             }
         }
@@ -174,7 +174,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
         Item item = itemStack.getItem();
 
         if (itemStack.is(Tags.Items.SHEARS)) {
-            if (!this.level.isClientSide && this.readyForShearing()) {
+            if (!this.level().isClientSide && this.readyForShearing()) {
                 this.shear(SoundSource.PLAYERS);
                 this.gameEvent(GameEvent.SHEAR, player);
                 itemStack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
@@ -186,7 +186,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
         if (item == FrozenUpItems.TRUFFLE.get() && this.getHealth() < this.getMaxHealth() && this.isTame()) feedTruffleToChilloo(player);
         if (item == FrozenUpItems.TRUFFLE.get() && !this.isTame()) feedTruffleToChilloo(player);
 
-        if (this.level.isClientSide) return this.isOwnedBy(player) || this.isTame() || item == FrozenUpItems.TRUFFLE.get() && !this.isTame() ? InteractionResult.CONSUME : InteractionResult.PASS;
+        if (this.level().isClientSide) return this.isOwnedBy(player) || this.isTame() || item == FrozenUpItems.TRUFFLE.get() && !this.isTame() ? InteractionResult.CONSUME : InteractionResult.PASS;
         else {
             if (this.isTame()) {
                 ItemStack stackInHand = this.getItemBySlot(EquipmentSlot.MAINHAND);
@@ -196,7 +196,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
                     if (player instanceof ServerPlayer serverPlayer) {
                         FrozenUpCriteriaTriggers.RETRIEVE_ITEM_FROM_TAMED_CHILLOO.trigger(serverPlayer);
                     }
-                    if (!this.isSilent()) this.level.playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT.get(), this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    if (!this.isSilent()) this.level().playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT.get(), this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
                     return InteractionResult.SUCCESS;
                 }
 
@@ -224,7 +224,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
                 this.navigation.stop();
                 this.setTarget(null);
                 this.setOrderedToSit(true);
-                this.level.broadcastEntityEvent(this, (byte)7);
+                this.level().broadcastEntityEvent(this, (byte)7);
                 if (player instanceof ServerPlayer serverPlayer) {
                     FrozenUpCriteriaTriggers.TAME_A_CHILLOO.trigger(serverPlayer);
                 }
@@ -237,15 +237,15 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
 
     public void feedTruffleToChilloo(Player player) {
         Vec3 vec3d = this.getBoundingBox().getCenter();
-        RandomSource random = this.level.getRandom();
+        RandomSource random = this.level().getRandom();
         ItemStack stack = FrozenUpItems.TRUFFLE.get().getDefaultInstance();
-        if (!this.isSilent()) this.level.playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT.get(), this.getSoundSource(), 1.5F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+        if (!this.isSilent()) this.level().playSound(null, this, FrozenUpSoundEvents.ENTITY_CHILLOO_EAT.get(), this.getSoundSource(), 1.5F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
         if (!player.getAbilities().instabuild) player.getItemInHand(player.getUsedItemHand()).shrink(1);
         for (int i = 0; i < 10; ++i) {
             double velX = random.nextGaussian() * 0.075D;
             double velY = random.nextGaussian() * 0.075D;
             double velZ = random.nextGaussian() * 0.075D;
-            this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, stack), vec3d.x, vec3d.y, vec3d.z, velX, velY, velZ);
+            this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, stack), vec3d.x, vec3d.y, vec3d.z, velX, velY, velZ);
         }
     }
 
@@ -287,7 +287,7 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
             if (!itemStack.isEmpty()) {
                 for(int i = 0; i < 8; ++i) {
                     Vec3 vec3d = (new Vec3(((double)this.random.nextFloat() - 0.5) * 0.1, Math.random() * 0.1 + 0.1, 0.0)).xRot(-this.getXRot() * 0.0175F).yRot(-this.getYRot() * 0.0175F);
-                    this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemStack), this.getX() + this.getLookAngle().x / 2.0, this.getY(), this.getZ() + this.getLookAngle().z / 2.0, vec3d.x, vec3d.y + 0.05, vec3d.z);
+                    this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemStack), this.getX() + this.getLookAngle().x / 2.0, this.getY(), this.getZ() + this.getLookAngle().z / 2.0, vec3d.x, vec3d.y + 0.05, vec3d.z);
                 }
             }
         } else super.handleEntityEvent(status);
@@ -306,19 +306,19 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
         } else return this.digInGrassTimer > 0 ? 0.62831855F : this.getXRot() * 0.017453292F;
     }
 
-    private boolean canEat(ItemStack stack) { return stack.getItem().isEdible() && this.onGround; }
+    private boolean canEat(ItemStack stack) { return stack.getItem().isEdible() && this.onGround(); }
 
     private void spit(ItemStack stack) {
-        if (!stack.isEmpty() && !this.level.isClientSide) {
-            ItemEntity itemEntity = new ItemEntity(this.level, this.getX() + this.getLookAngle().x, this.getY() + 1.0, this.getZ() + this.getLookAngle().z, stack);
+        if (!stack.isEmpty() && !this.level().isClientSide) {
+            ItemEntity itemEntity = new ItemEntity(this.level(), this.getX() + this.getLookAngle().x, this.getY() + 1.0, this.getZ() + this.getLookAngle().z, stack);
             itemEntity.setPickUpDelay(40);
             itemEntity.setThrower(this.getUUID());
             this.playSound(FrozenUpSoundEvents.ENTITY_CHILLOO_SPIT.get(), 1.0F, 1.0F);
-            this.level.addFreshEntity(itemEntity);
+            this.level().addFreshEntity(itemEntity);
         }
     }
 
-    private void dropItem(ItemStack stack) { this.level.addFreshEntity(new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), stack)); }
+    private void dropItem(ItemStack stack) { this.level().addFreshEntity(new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), stack)); }
 
     @Override
     protected void pickUpItem(ItemEntity item) {
@@ -400,9 +400,9 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
 
     @Override
     public void shear(SoundSource category) {
-        this.level.playSound(null, this, SoundEvents.SHEEP_SHEAR, category, 1.0f, 1.0f);
+        this.level().playSound(null, this, SoundEvents.SHEEP_SHEAR, category, 1.0f, 1.0f);
         this.setSheared(true);
-        if (this.isSheared()) this.timeSinceSheared = this.level.getGameTime();
+        if (this.isSheared()) this.timeSinceSheared = this.level().getGameTime();
         for (int i = 0, l = 2 + this.random.nextInt(5); i < l; i++) {
             ItemEntity itemEntity = this.spawnAtLocation(FrozenUpItems.CHILLOO_FEATHER.get(), 1);
             if (itemEntity == null) continue;
@@ -425,19 +425,19 @@ public class ChillooEntity extends TamableAnimal implements Shearable {
             else if (ChillooEntity.this.getTarget() == null && ChillooEntity.this.getLastHurtByMob() == null) {
                 if (!ChillooEntity.this.isPathFinding()) return false;
                 else if (ChillooEntity.this.getRandom().nextInt(reducedTickDelay(10)) != 0) return false;
-                else return !ChillooEntity.this.level.getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER).isEmpty() && ChillooEntity.this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
+                else return !ChillooEntity.this.level().getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER).isEmpty() && ChillooEntity.this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
             } else return false;
         }
 
         @Override
         public void tick() {
-            List<ItemEntity> list = ChillooEntity.this.level.getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
+            List<ItemEntity> list = ChillooEntity.this.level().getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
             if (ChillooEntity.this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && !list.isEmpty()) ChillooEntity.this.getNavigation().createPath(list.get(0), 1);
         }
 
         @Override
         public void start() {
-            List<ItemEntity> list = ChillooEntity.this.level.getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
+            List<ItemEntity> list = ChillooEntity.this.level().getEntitiesOfClass(ItemEntity.class, ChillooEntity.this.getBoundingBox().inflate(8.0, 8.0, 8.0), ChillooEntity.PICKABLE_DROP_FILTER);
             if (!list.isEmpty()) ChillooEntity.this.getNavigation().createPath(list.get(0), 1);
         }
     }

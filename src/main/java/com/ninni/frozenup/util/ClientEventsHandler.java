@@ -17,7 +17,7 @@ public class ClientEventsHandler {
         LocalPlayer clientPlayer = minecraft.player;
         Entity entity = null;
         if (clientPlayer != null) {
-            entity = clientPlayer.level.getEntity(packet.getEntityId());
+            entity = clientPlayer.level().getEntity(packet.getEntityId());
         }
         if (entity instanceof ReindeerEntity reindeer) {
             SimpleContainer inventory = new SimpleContainer(packet.getSize());

@@ -86,7 +86,7 @@ public class TruffleCakeBlock extends Block {
     }
 
     @Override public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) { return direction == Direction.DOWN && !state.canSurvive(world, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, direction, neighborState, world, pos, neighborPos); }
-    @Override public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) { return world.getBlockState(pos.below()).getMaterial().isSolid(); }
+    @Override public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) { return world.getBlockState(pos.below()).isSolid(); }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(BITES); }
     @Override public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) { return getComparatorOutput(state.getValue(BITES)); }
     public static int getComparatorOutput(int bites) { return (7 - bites) * 2; }

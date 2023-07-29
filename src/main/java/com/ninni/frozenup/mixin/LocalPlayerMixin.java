@@ -27,9 +27,9 @@ public class LocalPlayerMixin {
         Entity ridingEntity = $this.getVehicle();
         if (ridingEntity instanceof ReindeerEntity reindeer) {
             BlockPos blockPos = reindeer.blockPosition();
-            Level world = reindeer.level;
+            Level world = reindeer.level();
             if (reindeer.hasCloudJumpData()) {
-                if (!reindeer.isOnGround() && reindeer.hasCloudJumper(reindeer.getItemBySlot(EquipmentSlot.CHEST)) && reindeer.hasCloudJumpData() && !world.getBlockState(blockPos.below(64)).is(Blocks.AIR) && world.getBlockState(blockPos.below(3)).is(Blocks.AIR)) {
+                if (!reindeer.onGround() && reindeer.hasCloudJumper(reindeer.getItemBySlot(EquipmentSlot.CHEST)) && reindeer.hasCloudJumpData() && !world.getBlockState(blockPos.below(64)).is(Blocks.AIR) && world.getBlockState(blockPos.below(3)).is(Blocks.AIR)) {
                     if (!flag && this.input.jumping) {
                         Vec3 velocity = reindeer.getDeltaMovement();
                         reindeer.lerpMotion(velocity.x, velocity.y + 0.35D, velocity.z);

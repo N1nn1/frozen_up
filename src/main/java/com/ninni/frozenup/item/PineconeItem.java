@@ -29,7 +29,7 @@ public class PineconeItem extends Item {
             serverPlayerEntity.awardStat(Stats.ITEM_USED.get(this));
         }
         if (!world.isClientSide()) {
-            user.hurt(DamageSource.GENERIC, 3);
+            user.hurt(world.damageSources().generic(), 3);
             user.removeEffect(MobEffects.POISON);
             user.removeEffect(MobEffects.WEAKNESS);
             user.removeEffect(MobEffects.WITHER);

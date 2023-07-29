@@ -1,6 +1,7 @@
 package com.ninni.frozenup.init;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -16,7 +17,7 @@ public class FrozenUpItemTags {
 
     @NotNull
     private static TagKey<Item> create(String name) {
-        return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(MOD_ID, name));
+        return TagKey.create(Registries.ITEM, new ResourceLocation(MOD_ID, name));
     }
 
 }

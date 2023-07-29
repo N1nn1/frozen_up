@@ -2,6 +2,7 @@ package com.ninni.frozenup.init;
 
 import com.ninni.frozenup.FrozenUp;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
@@ -13,7 +14,7 @@ public class FrozenUpBiomeTags {
     public static final TagKey<Biome> CHILLOO = create("chilloo_spawns_in");
 
     private static TagKey<Biome> create(String id) {
-        return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(FrozenUp.MOD_ID, id));
+        return TagKey.create(Registries.BIOME, new ResourceLocation(FrozenUp.MOD_ID, id));
     }
 
 }

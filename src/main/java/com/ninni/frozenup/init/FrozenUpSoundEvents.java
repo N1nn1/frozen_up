@@ -61,6 +61,6 @@ public class FrozenUpSoundEvents {
     public static final RegistryObject<SoundEvent> ENTITY_REINDEER_CLOUD_JUMP = register("entity.reindeer.cloud_jump");
 
     private static RegistryObject<SoundEvent> register(String name) {
-        return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(MOD_ID, name)));
+        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(MOD_ID, name)));
     }
 }

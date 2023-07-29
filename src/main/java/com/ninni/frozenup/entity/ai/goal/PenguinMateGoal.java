@@ -19,7 +19,7 @@ import net.minecraft.world.level.GameRules;
 
      @Override
      public boolean canUse() {
-         if (this.penguin.hasEgg() || !this.penguin.isOnGround()) return false;
+         if (this.penguin.hasEgg() || !this.penguin.onGround()) return false;
          return super.canUse();
      }
 

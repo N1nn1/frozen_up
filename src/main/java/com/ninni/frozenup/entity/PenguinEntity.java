@@ -74,7 +74,11 @@ public class PenguinEntity extends Animal {
         super(entityType, world);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.moveControl = new PenguinMoveControl(this);
-        this.maxUpStep = 1.0F;
+    }
+
+    @Override
+    public float maxUpStep() {
+        return 1.0F;
     }
 
     @Override
@@ -167,7 +171,7 @@ public class PenguinEntity extends Animal {
                 double velocityX = this.random.nextGaussian() * -5;
                 double velocityY = this.random.nextGaussian() * -5;
                 double velocityZ = this.random.nextGaussian() * -5;
-                this.level.addParticle(ParticleTypes.SPLASH, this.getRandomX(0.5), this.getRandomY() + 0.5, this.getRandomZ(0.5), velocityX, velocityY, velocityZ);
+                this.level().addParticle(ParticleTypes.SPLASH, this.getRandomX(0.5), this.getRandomY() + 0.5, this.getRandomZ(0.5), velocityX, velocityY, velocityZ);
             }
         }
 
@@ -176,10 +180,10 @@ public class PenguinEntity extends Animal {
         if (this.getEggTicks() == 0 && !this.isNoAi()) {
             setHasEgg(false);
             this.playSound(FrozenUpSoundEvents.ENTITY_PENGUIN_HATCH.get(), 1, 1);
-            Optional.ofNullable(FrozenUpEntities.PENGUIN.get().create(level)).ifPresent(entity -> {
+            Optional.ofNullable(FrozenUpEntities.PENGUIN.get().create(level())).ifPresent(entity -> {
                 entity.setAge(-24000);
                 entity.moveTo(this.blockPosition().getX(), this.blockPosition().getY(), this.blockPosition().getZ(), 0.0F, 0.0F);
-                level.addFreshEntity(entity);
+                level().addFreshEntity(entity);
             });
             setEggTicks(1);
         }
@@ -189,7 +193,7 @@ public class PenguinEntity extends Animal {
                 double velocityX = this.random.nextGaussian() * 0.15;
                 double velocityY = this.random.nextGaussian() * 0.15;
                 double velocityZ = this.random.nextGaussian() * 0.15;
-                this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, this.getBlockStateOn()), this.getRandomX(1), this.getRandomY() - 0.5, this.getRandomZ(1) - 0.75, velocityX, velocityY, velocityZ);
+                this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, this.getBlockStateOn()), this.getRandomX(1), this.getRandomY() - 0.5, this.getRandomZ(1) - 0.75, velocityX, velocityY, velocityZ);
             }
         }
         if (this.wasEyeInWater && this.isPathFinding() && !this.hasEgg()){
@@ -197,7 +201,7 @@ public class PenguinEntity extends Animal {
                 double velocityX = this.random.nextGaussian() * 0.15;
                 double velocityY = this.random.nextGaussian() * 0.15;
                 double velocityZ = this.random.nextGaussian() * 0.15;
-                this.level.addParticle(ParticleTypes.BUBBLE, this.getRandomX(1), this.getRandomY() - 0.5, this.getRandomZ(1) - 0.75, velocityX, velocityY, velocityZ);
+                this.level().addParticle(ParticleTypes.BUBBLE, this.getRandomX(1), this.getRandomY() - 0.5, this.getRandomZ(1) - 0.75, velocityX, velocityY, velocityZ);
             }
         }
     }
@@ -291,7 +295,7 @@ public class PenguinEntity extends Animal {
 
         @Override
         public void tick() {
-            if (this.operation == Operation.STRAFE || this.operation == Operation.JUMPING || this.mob.isOnGround()) { super.tick();}
+            if (this.operation == Operation.STRAFE || this.operation == Operation.JUMPING || this.mob.onGround()) { super.tick();}
                 if (this.operation == Operation.MOVE_TO && !this.penguin.getNavigation().isDone()) {
                     double d = this.wantedX - this.penguin.getX();
                     double e = this.wantedY - this.penguin.getY();
