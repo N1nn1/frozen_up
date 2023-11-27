@@ -1,8 +1,8 @@
 package com.ninni.frozenup;
 
 import com.google.common.reflect.Reflection;
+import com.ninni.frozenup.advancements.FrozenUpCriteriaTriggers;
 import com.ninni.frozenup.block.FrozenUpBlocks;
-import com.ninni.frozenup.criterion.FrozenUpCriteria;
 import com.ninni.frozenup.enchantments.FrozenUpEnchantments;
 import com.ninni.frozenup.entity.FrozenUpEntities;
 import com.ninni.frozenup.item.FrozenUpItems;
@@ -14,11 +14,11 @@ public class FrozenUp implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        FrozenUpCriteria.init();
         Reflection.initialize(
             FrozenUpBlocks.class,
             FrozenupCreativeItemGroup.class,
             FrozenUpSoundEvents.class,
+            FrozenUpCriteriaTriggers.class,
             FrozenUpLootTableAdditions.class,
             FrozenUpEnchantments.class,
             FrozenUpItems.class,

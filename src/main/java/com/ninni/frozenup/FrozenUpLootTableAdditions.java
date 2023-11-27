@@ -29,13 +29,14 @@ public class FrozenUpLootTableAdditions {
 
     static {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (id.equals(Blocks.SPRUCE_LEAVES.getLootTableId())) {
-                tableBuilder.pool(LootPool.builder()
-                                          .with(ItemEntry.builder(FrozenUpItems.PINECONE)
-                                                         .conditionally(SurvivesExplosionLootCondition.builder())
-                                                         .conditionally(TableBonusLootCondition.builder(Enchantments.FORTUNE, PINECONE_DROP_CHANCE)))
-                                          .conditionally(InvertedLootCondition.builder(AlternativeLootCondition.builder(WITH_SHEARS, WITH_SILK_TOUCH))));
-            }
+            //TODO
+            //if (id.equals(Blocks.SPRUCE_LEAVES.getLootTableId())) {
+            //    tableBuilder.pool(LootPool.builder()
+            //                              .with(ItemEntry.builder(FrozenUpItems.PINECONE)
+            //                                             .conditionally(SurvivesExplosionLootCondition.builder())
+            //                                             .conditionally(TableBonusLootCondition.builder(Enchantments.FORTUNE, PINECONE_DROP_CHANCE)))
+            //                              .conditionally(InvertedLootCondition.builder(AlternativeLootCondition.builder(WITH_SHEARS, WITH_SILK_TOUCH))));
+            //}
             if (id.equals(LootTables.IGLOO_CHEST_CHEST)) {
                 tableBuilder.pool(LootPool.builder()
                                           .with(ItemEntry.builder(Items.BOOK)

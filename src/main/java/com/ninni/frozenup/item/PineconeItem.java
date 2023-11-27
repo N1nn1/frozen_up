@@ -4,6 +4,9 @@ import com.ninni.frozenup.sound.FrozenUpSoundEvents;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageSources;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -28,7 +31,7 @@ public class PineconeItem extends Item {
             serverPlayerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
         }
         if (!world.isClient) {
-            user.damage(DamageSource.GENERIC, 3);
+            user.damage(user.getDamageSources().genericKill(), 3);
             user.removeStatusEffect(StatusEffects.POISON);
             user.removeStatusEffect(StatusEffects.WEAKNESS);
             user.removeStatusEffect(StatusEffects.WITHER);

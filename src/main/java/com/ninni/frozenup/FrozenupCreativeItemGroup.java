@@ -3,8 +3,13 @@ package com.ninni.frozenup;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
+import net.minecraft.registry.BuiltinRegistries;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import static com.ninni.frozenup.FrozenUp.MOD_ID;
@@ -63,44 +68,51 @@ public class FrozenupCreativeItemGroup {
             entries.addAfter(Items.BEETROOT, TRUFFLE);
             entries.addAfter(Items.SUSPICIOUS_STEW, MUG_OF_MILK, MUG_OF_CHOCOLATE_MILK, MUG_OF_TRUFFLE_HOT_CHOCOLATE);
         });
+    }
 
-        FabricItemGroup.builder(new Identifier(MOD_ID,"item_group")).icon(FROZENUP::getDefaultStack).entries((featureFlagSet, output, bl) -> {
-            //spawn eggs
-            output.add(CHILLOO_SPAWN_EGG);
-            output.add(REINDEER_SPAWN_EGG);
-            output.add(PENGUIN_SPAWN_EGG);
-            //truffle related items
-            output.add(FROZEN_TRUFFLE);
-            output.add(TRUFFLE);
-            output.add(TRUFFLE_MUFFIN);
-            output.add(TRUFFLE_CAKE);
-            //misc items
-            output.add(PINECONE);
-            output.add(HOOF_ARMOR);
-            //mugs
-            output.add(EMPTY_MUG);
-            output.add(MUG_OF_MILK);
-            output.add(MUG_OF_CHOCOLATE_MILK);
-            output.add(MUG_OF_TRUFFLE_HOT_CHOCOLATE);
-            //snow bricks
-            output.add(COMPACTED_SNOW_BRICK);
-            output.add(COMPACTED_SNOW_BRICKS);
-            output.add(COMPACTED_SNOW_BRICK_STAIRS);
-            output.add(COMPACTED_SNOW_BRICK_SLAB);
-            output.add(COMPACTED_SNOW_FOUNDATION);
-            //chilloo related items
-            output.add(CHILLOO_FEATHER);
-            output.add(CHILLOO_FEATHER_BLOCK);
-            output.add(CHILLOO_FEATHER_COVERING);
-            output.add(CHILLOO_FEATHER_LAMP);
-            //ice blocks
-            output.add(CUT_ICE);
-            output.add(CUT_ICE_STAIRS);
-            output.add(CUT_ICE_SLAB);
-            output.add(CUT_ICE_CUBES);
-            output.add(CUT_ICE_CUBE_STAIRS);
-            output.add(CUT_ICE_CUBE_SLAB);
-            output.add(CUT_ICE_CUBE_WALL);
-        }).build();
+
+    public static final ItemGroup ITEM_GROUP = register("item_group", FabricItemGroup.builder().icon(FROZENUP::getDefaultStack).displayName(Text.translatable("spawn.item_group")).entries((featureFlagSet, output) -> {
+
+                //spawn eggs
+                output.add(CHILLOO_SPAWN_EGG);
+                output.add(REINDEER_SPAWN_EGG);
+                output.add(PENGUIN_SPAWN_EGG);
+                //truffle related items
+                output.add(FROZEN_TRUFFLE);
+                output.add(TRUFFLE);
+                output.add(TRUFFLE_MUFFIN);
+                output.add(TRUFFLE_CAKE);
+                //misc items
+                output.add(PINECONE);
+                output.add(HOOF_ARMOR);
+                //mugs
+                output.add(EMPTY_MUG);
+                output.add(MUG_OF_MILK);
+                output.add(MUG_OF_CHOCOLATE_MILK);
+                output.add(MUG_OF_TRUFFLE_HOT_CHOCOLATE);
+                //snow bricks
+                output.add(COMPACTED_SNOW_BRICK);
+                output.add(COMPACTED_SNOW_BRICKS);
+                output.add(COMPACTED_SNOW_BRICK_STAIRS);
+                output.add(COMPACTED_SNOW_BRICK_SLAB);
+                output.add(COMPACTED_SNOW_FOUNDATION);
+                //chilloo related items
+                output.add(CHILLOO_FEATHER);
+                output.add(CHILLOO_FEATHER_BLOCK);
+                output.add(CHILLOO_FEATHER_COVERING);
+                output.add(CHILLOO_FEATHER_LAMP);
+                //ice blocks
+                output.add(CUT_ICE);
+                output.add(CUT_ICE_STAIRS);
+                output.add(CUT_ICE_SLAB);
+                output.add(CUT_ICE_CUBES);
+                output.add(CUT_ICE_CUBE_STAIRS);
+                output.add(CUT_ICE_CUBE_SLAB);
+                output.add(CUT_ICE_CUBE_WALL);
+            }).build()
+    );
+
+    private static ItemGroup register(String id, ItemGroup tab) {
+        return Registry.register(Registries.ITEM_GROUP, new Identifier(FrozenUp.MOD_ID, id), tab);
     }
 }

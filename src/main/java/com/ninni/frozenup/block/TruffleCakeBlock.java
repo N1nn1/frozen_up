@@ -1,7 +1,7 @@
 package com.ninni.frozenup.block;
 
 
-import com.ninni.frozenup.criterion.FrozenUpCriteria;
+import com.ninni.frozenup.advancements.FrozenUpCriteriaTriggers;
 import com.ninni.frozenup.util.Util;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -67,7 +67,7 @@ public class TruffleCakeBlock extends Block {
         else {
             player.incrementStat(Stats.EAT_CAKE_SLICE);
             player.getHungerManager().add(5, 0.4F);
-            if (player instanceof ServerPlayerEntity serverPlayer && Util.removeEntityEffects(player, effect -> effect.getCategory() == StatusEffectCategory.HARMFUL)) FrozenUpCriteria.CURE_HARMFUL_STATUS_EFFECTS.trigger(serverPlayer);
+            if (player instanceof ServerPlayerEntity serverPlayer && Util.removeEntityEffects(player, effect -> effect.getCategory() == StatusEffectCategory.HARMFUL)) FrozenUpCriteriaTriggers.CURE_HARMFUL_STATUS_EFFECTS.trigger(serverPlayer);
             player.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1, 1);
             world.emitGameEvent(player, GameEvent.EAT, pos);
 
@@ -81,11 +81,37 @@ public class TruffleCakeBlock extends Block {
         }
     }
 
-    @Override public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) { return direction == Direction.DOWN && !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos); }
-    @Override public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) { return world.getBlockState(pos.down()).getMaterial().isSolid(); }
-    @Override protected void appendProperties(StateManager.Builder<Block, BlockState> builder) { builder.add(BITES); }
-    @Override public int getComparatorOutput(BlockState state, World world, BlockPos pos) { return getComparatorOutput(state.get(BITES)); }
-    public static int getComparatorOutput(int bites) { return (7 - bites) * 2; }
-    @Override public boolean hasComparatorOutput(BlockState state) { return true; }
-    @Override public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) { return false; }
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        return direction == Direction.DOWN && !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        return world.getBlockState(pos.down()).isSolid();
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(BITES);
+    }
+
+    @Override
+    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        return getComparatorOutput(state.get(BITES));
+    }
+
+    public static int getComparatorOutput(int bites) {
+        return (7 - bites) * 2;
+    }
+
+    @Override
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+        return false;
+    }
 }

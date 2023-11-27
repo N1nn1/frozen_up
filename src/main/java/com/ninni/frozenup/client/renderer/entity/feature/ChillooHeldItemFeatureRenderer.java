@@ -7,8 +7,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
+import net.minecraft.client.render.entity.model.FoxEntityModel;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -30,22 +32,27 @@ public class ChillooHeldItemFeatureRenderer extends FeatureRenderer<ChillooEntit
 
         matrices.push();
         float headRoll;
+
         if (baby) {
             matrices.scale(0.75F, 0.75F, 0.75F);
             matrices.translate(0.0, 0.5, 0.2);
         }
-        matrices.translate(this.getContextModel().head.pivotX / 16.0F, (this.getContextModel()).head.pivotY / 16.0F, (this.getContextModel()).head.pivotZ / 16.0F);
+
+        matrices.translate(this.getContextModel().head.pivotX / 16.0F, this.getContextModel().head.pivotY / 16.0F, this.getContextModel().head.pivotZ / 16.0F);
+
         headRoll = chilloo.getHeadRoll(tickDelta);
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotation(headRoll));
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(headYaw));
-        matrices.multiply(RotationAxis.POSITIVE_X.rotation(headPitch));
-        matrices.multiply(RotationAxis.NEGATIVE_X.rotation(90));
-        matrices.multiply(RotationAxis.POSITIVE_Z.rotation(180));
+
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(headRoll));
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(headYaw));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(headPitch));
+
+        matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(90));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180));
         matrices.translate(0F, -0.75F, 0.1408F);
 
 
         ItemStack itemStack = chilloo.getEquippedStack(EquipmentSlot.MAINHAND);
-        this.heldItemRenderer.renderItem(chilloo, itemStack, ModelTransformation.Mode.GROUND, false, matrices, vertexConsumers, light);
+        this.heldItemRenderer.renderItem(chilloo, itemStack, ModelTransformationMode.GROUND, false, matrices, vertexConsumers, light);
         matrices.pop();
     }
 }

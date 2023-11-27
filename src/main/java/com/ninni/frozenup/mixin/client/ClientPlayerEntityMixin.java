@@ -27,7 +27,7 @@ public class ClientPlayerEntityMixin {
         Entity ridingEntity = $this.getVehicle();
         if (ridingEntity instanceof ReindeerEntity reindeer) {
             BlockPos blockPos = reindeer.getBlockPos();
-            World world = reindeer.world;
+            World world = reindeer.getWorld();
             if (!reindeer.isOnGround() && reindeer.hasCloudJumper(reindeer.getEquippedStack(EquipmentSlot.CHEST)) && reindeer.hasCloudJumpData() && !world.getBlockState(blockPos.down(64)).isOf(Blocks.AIR) && world.getBlockState(blockPos.down(3)).isOf(Blocks.AIR)) {
                 if (!flag && this.input.jumping) {
                     Vec3d velocity = reindeer.getVelocity();

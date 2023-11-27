@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
   "id": "frozenup",
-  "version": "${version}",
+  "version": "2.2.0-fabric",
+
   "name": "Frozen Up",
   "description": "Frozen Up is a small mod that adds a bunch of new snowy features while keeping in mind the classic minecraft feel.",
   "authors": [
@@ -20,12 +21,14 @@
     "issues": "https://github.com/N1nn1/frozen_up/issues"
   },
   "custom": {
-    "modmenu": { "links": {
-      "mod.frozenup.contact.discord": "https://discord.moddingplayground.net",
-      "mod.frozenup.wiki": "https://github.com/N1nn1/frozen_up/wiki"
-    } }
+    "modmenu": {
+      "links": {
+        "mod.frozenup.contact.discord": "https://discord.gg/fT4MKzUTZS",
+        "mod.frozenup.wiki": "https://github.com/N1nn1/frozen_up/wiki"
+      }
+    }
   },
-  "license": "MIT",
+  "license": "All Rights Reserved",
   "icon": "assets/frozenup/textures/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -35,9 +38,9 @@
   },
   "mixins": [ "frozenup.mixins.json" ],
   "depends": {
-    "fabricloader": ">=0.14.9",
+    "fabricloader": ">=0.14.24",
     "fabric-api": "*",
-    "minecraft": "~1.19",
+    "minecraft": "~1.20",
     "java": ">=17"
   }
 }

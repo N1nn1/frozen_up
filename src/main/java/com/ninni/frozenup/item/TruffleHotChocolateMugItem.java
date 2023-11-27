@@ -1,6 +1,6 @@
 package com.ninni.frozenup.item;
 
-import com.ninni.frozenup.criterion.FrozenUpCriteria;
+import com.ninni.frozenup.advancements.FrozenUpCriteriaTriggers;
 import com.ninni.frozenup.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +16,7 @@ public class TruffleHotChocolateMugItem extends AbstractDrinkableMugItem {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
-        if (entity instanceof ServerPlayerEntity serverPlayer && Util.removeEntityEffects(entity, effect -> effect.getCategory() == StatusEffectCategory.HARMFUL)) FrozenUpCriteria.CURE_HARMFUL_STATUS_EFFECTS.trigger(serverPlayer);
+        if (entity instanceof ServerPlayerEntity serverPlayer && Util.removeEntityEffects(entity, effect -> effect.getCategory() == StatusEffectCategory.HARMFUL)) FrozenUpCriteriaTriggers.CURE_HARMFUL_STATUS_EFFECTS.trigger(serverPlayer);
 
         if (!world.isClient) {
             entity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 25 * 20, 1));
